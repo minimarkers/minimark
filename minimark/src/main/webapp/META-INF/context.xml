@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/minimark" reloadable="true">
+    <!--
+    <Resource
+        auth="Container"
+        name="jdbc/minimarkDS"
+        type="javax.sql.DataSource"
+        driverClassName="org.hsqldb.jdbcDriver"
+        password=""
+        username="sa"
+        url="jdbc:hsqldb:mem:minimark"
+        maxActive="5"/>
+   -->
+   <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="25" name="jdbc/minimarkDS" password="minimark" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/minimark" username="minimark"/>
+
+</Context>

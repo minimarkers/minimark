@@ -1,0 +1,24 @@
+- &User-parancoe
+  username: parancoe
+  password: parancoe
+  enabled: true
+  authorities: 
+    - *Authority-parancoe
+- &User-admin
+  username: admin
+  password: admin
+  enabled: true
+  authorities: 
+    - *Authority-admin
+- &User-lucioBenfante
+  username: lucio.benfante
+  password: lucio.benfante
+  enabled: true
+  authorities: 
+    - *Authority-parancoe
+- &User-nicolaOrio
+  username: nicola.orio
+  password: nicola.orio
+  enabled: true
+  authorities:
+    - *Authority-parancoe

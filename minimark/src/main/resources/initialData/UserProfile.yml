@@ -1,0 +1,10 @@
+- &UserProfile-parancoe
+  name: Parancoe
+  email: info@parancoe.org
+  site: www.parancoe.org
+  user: *User-parancoe
+- &UserProfile-admin
+  name: Administrator
+  email: info@parancoe.org
+  site: www.parancoe.org
+  user: *User-admin

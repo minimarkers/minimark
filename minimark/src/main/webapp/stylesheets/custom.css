@@ -1,0 +1,188 @@
+/* Link */
+
+a, a:visited {
+	color: rgb(42,71,115);
+	text-decoration: none;
+}
+
+a:hover, a:focus {
+	color: #f00;
+	text-decoration: none;
+}
+
+img {
+	border: 0px;
+}
+
+object, embed {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+param {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+/* Link end */
+
+#languages {
+    float: right;
+    text-align: right;
+    padding-right: 25px;
+    font-size: 85%;
+}
+
+#languages span.selected {
+    font-weight: bold;
+}
+
+#languages a {
+    color:#222;
+    text-decoration:none;
+    border-bottom:1px solid #ccc;
+}
+
+#languages a:hover {
+    border-bottom:1px solid #aaa;
+}
+
+#loginTitle {
+    font: 30px "Georgia", "Times New Roman", serif;
+    text-align: center;
+    color: silver;
+    margin: 1em;
+}
+
+#loginMessageBox {
+    margin: 1em;
+}
+
+#loginBox {
+    width: 450px;
+    margin: 0 auto;
+}
+
+h1#logo {
+    margin-bottom: 0;
+    height: 85px;
+}
+
+/* Actions */
+.action-add, .action-add:hover {
+    background: url(../images/silk/icons/add.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+}
+
+.action-edit, .action-edit:hover {
+    background: url(../images/silk/icons/pencil.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+}
+
+.action-delete, .action-delete:hover {
+    background: url(../images/silk/icons/delete.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+}
+
+.action-detail-go, .action-detail-goe:hover {
+    background: url(../images/silk/icons/table_go.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+}
+
+/* Actions end */
+
+/* Forms */
+
+input, textarea, select {
+/*    background:#F9F9F9 none repeat scroll 0 0; */
+    border:1px solid #8AB3D1;
+    padding: 4px;
+}
+
+input[type=hidden] {
+    display: none;
+}
+
+input.full-size {
+    width:341px;
+}
+
+form label, form input {
+    display:block;
+    float:left;
+    height: 16px;
+    line-height: 16px;
+    margin-bottom:10px;
+    padding: 4px;
+}
+
+form br {
+    clear:left;
+}
+form p {
+    padding:1em 0 2em;
+}
+form label {
+    padding-right:5px;
+    text-align:right;
+    width:10em;
+}
+form optgroup option {
+    font-weight:600;
+    text-indent:1.5em;
+}
+
+form textarea {
+    height:15em;
+    overflow:auto;
+    width:341px;
+    margin-bottom: 10px;
+}
+
+form .checkbox-label {
+    text-align: left;
+}
+
+form .submit-button {
+    background:#D3E0EA none repeat scroll 0 0;
+    height: auto;
+    margin-left: 10.5em;
+}
+
+div .form-aligned {
+    margin-left: 10.5em;
+}
+
+div.form-help-text span {
+    font-size: 0.9em;
+    color: silver;
+}
+
+div.form-help-text {
+    line-height: 0.9em;
+    margin-bottom: 10px;
+}
+
+#errors {
+    color:red;
+}
+
+.errorBox {
+    display: block;
+    color: red;
+    margin-left: 10.5em;
+}
+
+.fieldInError {
+    background-color: #ffebeb;
+}
+
+/* Forms end */

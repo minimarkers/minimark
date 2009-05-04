@@ -1,0 +1,9 @@
+- &CourseTeacher-igLCMBenfante
+  course: *Course-igLCM
+  userProfile: *UserProfile-lucioBenfante
+- &CourseTeacher-igMLCBenfante
+  course: *Course-igMLC
+  userProfile: *UserProfile-lucioBenfante
+- &CourseTeacher-igPGTOrio
+  course: *Course-igPGT
+  userProfile: *UserProfile-nicolaOrio

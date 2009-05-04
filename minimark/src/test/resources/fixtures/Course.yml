@@ -1,0 +1,15 @@
+- &Course-igLCM
+  name: Informatica Generale
+  description: IG per LCM
+  mainGroup: Facoltà di Lettere e Filosofia
+  secondaryGroup: LCM
+- &Course-igMLC
+  name: Informatica Generale
+  description: IG per MLC
+  mainGroup: Facoltà di Lettere e Filosofia
+  secondaryGroup: MLC
+- &Course-igPGT
+  name: Informatica Generale
+  description: IG per PGT
+  mainGroup: Facoltà di Lettere e Filosofia
+  secondaryGroup: PGT

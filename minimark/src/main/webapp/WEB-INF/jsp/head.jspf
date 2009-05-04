@@ -1,0 +1,4 @@
+<title>minimark</title>
+<%@ include file="meta.jspf" %>
+<%@ include file="stylesheets.jspf" %>
+<%@ include file="javascripts.jspf" %>

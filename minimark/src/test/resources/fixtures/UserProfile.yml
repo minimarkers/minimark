@@ -1,0 +1,10 @@
+- &UserProfile-lucioBenfante
+  name: Lucio Benfante
+  email: lucio@benfante.com
+  site: www.benfante.com
+  user: *User-lucioBenfante
+- &UserProfile-nicolaOrio
+  name: Nicola Orio
+  email: orio@dei.unipd.it
+  site: www.dei.unipd.it
+  user: *User-nicolaOrio
