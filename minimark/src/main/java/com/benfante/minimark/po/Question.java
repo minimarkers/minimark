@@ -2,6 +2,9 @@ package com.benfante.minimark.po;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -12,6 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 import org.parancoe.persistence.po.hibernate.EntityBase;
 
 /**
@@ -35,6 +42,7 @@ public class Question extends EntityBase {
     protected Course course;
     protected String visualization;
     private List<AssessmentQuestion> assessments;
+    private SortedSet<TagQuestionLink> tags = new TreeSet<TagQuestionLink>();
 
     @Lob
     public String getContent() {
@@ -94,4 +102,61 @@ public class Question extends EntityBase {
     public void setAssessments(List<AssessmentQuestion> assessments) {
         this.assessments = assessments;
     }
+
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @Sort(type = SortType.NATURAL)
+    public SortedSet<TagQuestionLink> getTags() {
+        return tags;
+    }
+
+    public void setTags(SortedSet<TagQuestionLink> tags) {
+        this.tags = tags;
+    }
+
+    private String tagList;
+
+    @Transient
+    public String getTagList() {
+        if (this.tagList == null) {
+            this.tagList = buildTagList();
+        }
+        return tagList;
+    }
+
+    public void setTagList(String tagList) {
+        this.tagList = tagList;
+    }
+
+    /**
+     * Build the comma-separated list of tags.
+     */
+    public String buildTagList() {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for (TagQuestionLink tag : getTags()) {
+            if (!first) {
+                result.append(", ");
+            } else {
+                first = false;
+            }
+            result.append(tag.getTag().getName());
+        }
+        return result.toString();
+    }
+
+
+    @Transient
+    public String getTypeCode() {
+        String result = null;
+        if (this instanceof OpenQuestion) {
+            result = "OpenQuestion";
+        } else if (this instanceof ClosedQuestion) {
+            result ="ClosedQuestion";
+        } else {
+            result = "UnknownQuestionType";
+        }
+        return result;
+    }
+
 }

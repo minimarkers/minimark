@@ -13,9 +13,9 @@
         <display:column property="secondaryGroup"  titleKey="SecondaryGroup"/>
         <display:column>
             <a class="action-edit" href="${cp}/course/edit.html?id=${cc.id}"><spring:message code="Edit" text="?Edit?"/></a>
-            <a class="action-detail-go" href="${cp}/question/list.html?courseId=${cc.id}"><spring:message code="Questions" text="?Questions?"/></a>
             <spring:message code='confirmDeleteCourse' text='?confirmDeleteCourse?' var="confirmDeleteCourseMessage"/>
             <a class="action-delete" href="${cp}/course/delete.html?id=${cc.id}" onclick="return confirm('${confirmDeleteCourseMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
+            <a class="action-detail-go" href="${cp}/question/list.html?courseId=${cc.id}"><spring:message code="Questions" text="?Questions?"/></a>
         </display:column>
     </display:table>
 </div>

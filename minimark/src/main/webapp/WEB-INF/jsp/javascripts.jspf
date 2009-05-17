@@ -2,4 +2,18 @@
 <script src="${cp}/javascripts/scriptaculous.js?load=effects" type="text/javascript"></script>
 <script src="${cp}/javascripts/selects.js" type="text/javascript"></script>
 <script src="${cp}/javascripts/window.js" type="text/javascript"></script>
+<script type='text/javascript' src='/minimark/dwr/interface/fixedAnswerABo.js'></script>
+<script type='text/javascript' src='/minimark/dwr/engine.js'></script>
+<script type='text/javascript' src='/minimark/dwr/util.js'></script>
 <script src="${cp}/javascripts/parancoe.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+document.observe('dom:loaded', function() {
+  parancoe.util.initDWR();
+  <c:if test="${not (noFocus == 'true')}">
+  parancoe.util.focusFirstElementInPage();
+  </c:if>
+});
+
+</script>

@@ -12,6 +12,7 @@
        http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
     
     <context:component-scan base-package="com.benfante.minimark.controllers"/>
+    <context:component-scan base-package="com.benfante.minimark.ajax"/>
  
     <bean id="methodHandler" parent="abstractMethodHandler">
         <property name="webBindingInitializer">
@@ -27,6 +28,7 @@
                 PATTERN_TYPE_APACHE_ANT
                 /admin/**=ROLE_ADMIN
                 /course/**=ROLE_ADMIN,ROLE_PARANCOE
+                /question/**=ROLE_ADMIN,ROLE_PARANCOE
                 /**=IS_AUTHENTICATED_ANONYMOUSLY
             </value>
         </constructor-arg>

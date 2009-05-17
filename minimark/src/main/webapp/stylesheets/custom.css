@@ -90,8 +90,29 @@ h1#logo {
     border: 0px solid!important;
 }
 
-.action-detail-go, .action-detail-goe:hover {
+.action-detail-go, .action-detail-go:hover {
     background: url(../images/silk/icons/table_go.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+}
+
+.action-back, .action-back:hover {
+    background: url(../images/silk/icons/arrow_left.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+}
+
+.action-cancel, .action-cancel:hover {
+    background: url(../images/silk/icons/cancel.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+}
+
+.action-confirm, .action-confirm:hover {
+    background: url(../images/silk/icons/accept.png) no-repeat center left;
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
@@ -121,7 +142,15 @@ form label, form input {
     height: 16px;
     line-height: 16px;
     margin-bottom:10px;
-    padding: 4px;
+}
+
+form select {
+    display:block;
+    float:left;
+    height: 24px;
+    line-height: 16px;
+    margin-bottom:10px;
+    padding: 0;
 }
 
 form br {
@@ -155,6 +184,7 @@ form .submit-button {
     background:#D3E0EA none repeat scroll 0 0;
     height: auto;
     margin-left: 10.5em;
+    cursor: pointer;
 }
 
 div .form-aligned {
@@ -183,6 +213,15 @@ div.form-help-text {
 
 .fieldInError {
     background-color: #ffebeb;
+}
+
+textarea.rowEditing {
+    height:3em;
+    width: 25em;
+}
+
+div.formButtons {
+    margin: 1em;
 }
 
 /* Forms end */

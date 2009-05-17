@@ -97,6 +97,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.parancoe</groupId>
+            <artifactId>parancoe-plugin-dwr</artifactId>
+            <version>2.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- common db driver(s) -->
         <!-- HSQLDB -->
         <dependency>

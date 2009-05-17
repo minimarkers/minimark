@@ -10,13 +10,16 @@
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
-<% String cp = request.getContextPath();
+<%
+{
+    String cp = request.getContextPath();
     pageContext.setAttribute("cp", cp);
 
     ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
 
     BaseConf conf = (BaseConf) ctx.getBean("conf");
-    pageContext.setAttribute("conf", conf);  
+    pageContext.setAttribute("conf", conf);
+}
 %>
 
 

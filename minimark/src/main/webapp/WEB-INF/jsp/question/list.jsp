@@ -5,13 +5,16 @@
 <p>${course.description}</p>
 
 <div>
-    <a class="action-add" href="${cp}/question/create.html"><spring:message code="addQuestion" text="?addQuestion?"/></a>
+    <a class="action-add" href="${cp}/question/create.html?courseId=${course.id}"><spring:message code="addQuestion" text="?addQuestion?"/></a>
 </div>
 
 <div class="displaytag">
     <display:table  id="curr"  name="questions" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" >
+        <display:column titleKey="Type"><spring:message code="${curr.typeCode}" text="?${curr.typeCode}?"/></display:column>
         <display:column property="title" titleKey="Title"/>
         <display:column property="content"  titleKey="Content"/>
+        <display:column property="weight"  titleKey="Weight"/>
+        <display:column property="tagList"  titleKey="Tags"/>
         <display:column>
             <a class="action-edit" href="${cp}/question/edit.html?id=${curr.id}"><spring:message code="Edit" text="?Edit?"/></a>
             <spring:message code='confirmDeleteQuestion' text='?confirmDeleteQuestion?' var="confirmDeleteQuestionMessage"/>

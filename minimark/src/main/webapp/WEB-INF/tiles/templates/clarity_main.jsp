@@ -30,7 +30,7 @@
         </div>
 
         <div id="footer">
-            <p class="validate"><a href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/">CSS</a><br /><a href="#content">Top</a></p>
+            <p class="validate"><a href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/">CSS</a><br /><a href="#">Top</a></p>
 
             <!-- Please leave this line intact -->
             <p>Template design by <a href="http://www.sixshootermedia.com">Six Shooter Media</a>.<br />
