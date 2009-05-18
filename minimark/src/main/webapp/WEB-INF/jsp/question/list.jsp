@@ -10,9 +10,34 @@
 
 <div class="displaytag">
     <display:table  id="curr"  name="questions" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" >
-        <display:column titleKey="Type"><spring:message code="${curr.typeCode}" text="?${curr.typeCode}?"/></display:column>
+        <display:column titleKey="Type">
+            <c:choose>
+                <c:when test="${curr.class.name == 'com.benfante.minimark.po.OpenQuestion'}">                    
+                    <c:choose>
+                        <c:when test="${curr.visualization == 'short'}">
+                            <img src="${cp}/images/silk/icons/textfield.png" title="<spring:message code="OpenQuestion" text="?OpenQuestion?"/> (<spring:message code="short" text="?short?"/>)" alt="<spring:message code="OpenQuestion" text="?OpenQuestion?"/> (<spring:message code="short" text="?short?"/>)" />
+                        </c:when>
+                        <c:when test="${curr.visualization == 'long'}">
+                            <img src="${cp}/images/silk/icons/textfield_add.png" title="<spring:message code="OpenQuestion" text="?OpenQuestion?"/> (<spring:message code="long" text="?long?"/>)" alt="<spring:message code="OpenQuestion" text="?OpenQuestion?"/> (<spring:message code="long" text="?long?"/>)" />
+                        </c:when>
+                        <c:otherwise><spring:message code="UnknownVisualization" text="?UnknownVisualization?"/></c:otherwise>
+                    </c:choose>
+                </c:when>
+                <c:when test="${curr.class.name == 'com.benfante.minimark.po.ClosedQuestion'}">
+                    <c:choose>
+                        <c:when test="${curr.multipleAnswer}">
+                            <img src="${cp}/images/silk/icons/text_list_numbers.png" title="<spring:message code="ClosedQuestion" text="?ClosedQuestion?"/> (<spring:message code="multiple" text="?multiple?"/>)" alt="<spring:message code="ClosedQuestion" text="?ClosedQuestion?"/> (<spring:message code="multiple" text="?multiple?"/>)" />
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${cp}/images/silk/icons/text_list_bullets.png" title="<spring:message code="ClosedQuestion" text="?ClosedQuestion?"/> (<spring:message code="single" text="?single?"/>)" alt="<spring:message code="ClosedQuestion" text="?ClosedQuestion?"/> (<spring:message code="single" text="?single?"/>)" />
+                        </c:otherwise>
+                    </c:choose>
+                </c:when>
+                <c:otherwise><spring:message code="UnknownQuestionType" text="?UnknownQuestionType?"/></c:otherwise>
+            </c:choose>
+        </display:column>
         <display:column property="title" titleKey="Title"/>
-        <display:column property="content"  titleKey="Content"/>
+        <display:column property="filteredContent"  titleKey="Content"/>
         <display:column property="weight"  titleKey="Weight"/>
         <display:column property="tagList"  titleKey="Tags"/>
         <display:column>

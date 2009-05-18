@@ -5,6 +5,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 
 /**
@@ -26,5 +27,16 @@ public class ClosedQuestion extends Question {
 
     public void setFixedAnswers(List<FixedAnswer> fixedAnswers) {
         this.fixedAnswers = fixedAnswers;
+    }
+
+    @Transient
+    public boolean isMultipleAnswer() {
+        int count = 0;
+        for (FixedAnswer fixedAnswer : getFixedAnswers()) {
+            if (fixedAnswer.getCorrect()) {
+                count++;
+            }
+        }
+        return (count > 1);
     }
 }

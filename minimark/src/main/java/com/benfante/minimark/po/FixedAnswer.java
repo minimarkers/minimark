@@ -1,5 +1,6 @@
 package com.benfante.minimark.po;
 
+import com.benfante.minimark.util.TextFilterUtils;
 import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -65,6 +66,11 @@ public class FixedAnswer extends EntityBase {
     @Transient
     public String getJavascriptEscapedContent() {
         return StringEscapeUtils.escapeJavaScript(this.content);
+    }
+
+    @Transient
+    public String getFilteredContent() {
+        return TextFilterUtils.formatText(this.content, this.contentFilter);
     }
 
 }

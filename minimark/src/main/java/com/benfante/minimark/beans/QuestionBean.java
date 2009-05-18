@@ -2,6 +2,7 @@ package com.benfante.minimark.beans;
 
 import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.FixedAnswer;
+import com.benfante.minimark.util.TextFilterUtils;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
@@ -115,4 +116,8 @@ public class QuestionBean {
         this.fixedAnswers = fixedAnswers;
     }
 
+    public String getFilteredContent() {
+        return TextFilterUtils.formatText(this.content, this.contentFilter);
+    }
+    
 }

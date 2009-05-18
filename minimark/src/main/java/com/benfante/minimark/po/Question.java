@@ -1,5 +1,6 @@
 package com.benfante.minimark.po;
 
+import com.benfante.minimark.util.TextFilterUtils;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.SortedSet;
@@ -157,6 +158,11 @@ public class Question extends EntityBase {
             result = "UnknownQuestionType";
         }
         return result;
+    }
+
+    @Transient
+    public String getFilteredContent() {
+        return TextFilterUtils.formatText(this.content, this.contentFilter);
     }
 
 }

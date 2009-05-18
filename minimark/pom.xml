@@ -126,6 +126,12 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>net.java.dev.textile-j</groupId>
+            <artifactId>textile-j</artifactId>
+            <version>2.2.864</version>
+        </dependency>
+
         <!-- Servlet/JSP APIs provided by your container -->
         <dependency>
             <groupId>javax.servlet</groupId>
