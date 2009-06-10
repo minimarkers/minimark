@@ -26,6 +26,7 @@ public class Course extends EntityBase {
     private String name;
     @NotBlank
     private String description;
+    private String incumbent;
     private String mainGroup;
     private String secondaryGroup;
     private List<CourseTeacher> courseTeachers = new LinkedList<CourseTeacher>();
@@ -87,6 +88,14 @@ public class Course extends EntityBase {
 
     public void setAssessments(List<Assessment> assessments) {
         this.assessments = assessments;
+    }
+
+    public String getIncumbent() {
+        return incumbent;
+    }
+
+    public void setIncumbent(String incumbent) {
+        this.incumbent = incumbent;
     }
 
     /**

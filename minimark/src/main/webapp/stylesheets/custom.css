@@ -1,3 +1,8 @@
+body {
+    font-size: 14px;
+    padding-top: 5px;
+}
+
 /* Link */
 
 a, a:visited {
@@ -63,9 +68,30 @@ param {
     margin: 0 auto;
 }
 
+#header {
+    padding-top: 0px;
+}
+
 h1#logo {
     margin-bottom: 0;
     height: 85px;
+}
+
+ul#nav {
+    margin-top: 5px;
+    padding: 5px;
+}
+
+#content div.summary {
+    background-color: #eeeeee;
+    border: solid #cccccc 3px;
+    padding: 4px;
+    margin: 10px;
+}
+
+#content div.summary p {
+    margin: 0;
+    padding: 0;
 }
 
 /* Actions */
@@ -118,6 +144,13 @@ h1#logo {
     border: 0px solid!important;
 }
 
+.action-start, .action-start:hover {
+    background: url(../images/silk/icons/cog_go.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+}
+
 /* Actions end */
 
 /* Forms */
@@ -140,7 +173,7 @@ form label, form input {
     display:block;
     float:left;
     height: 16px;
-    line-height: 16px;
+    line-height: 24px;
     margin-bottom:10px;
 }
 
@@ -183,8 +216,9 @@ form .checkbox-label {
 form .submit-button {
     background:#D3E0EA none repeat scroll 0 0;
     height: auto;
-    margin-left: 10.5em;
     cursor: pointer;
+    float: none;
+    display: inline;
 }
 
 div .form-aligned {
@@ -197,8 +231,13 @@ div.form-help-text span {
 }
 
 div.form-help-text {
-    line-height: 0.9em;
+    line-height: 0.8em;
     margin-bottom: 10px;
+}
+
+span.form-help-text {
+    font-size: 0.8em;
+    color: silver;
 }
 
 #errors {
@@ -221,7 +260,36 @@ textarea.rowEditing {
 }
 
 div.formButtons {
-    margin: 1em;
+    margin: 1em 1em 1em 10.5em;
+}
+
+#content .calendar-icon {
+    margin: 0px;
+    border: none;
 }
 
 /* Forms end */
+
+/* Assessment start */
+
+.assessment {
+    width: 270px;
+    border: solid #eeeeee 3px;
+    margin: 10px;
+    padding: 4px;
+    float: left;
+}
+
+.assessment .course {
+    font-weight: bold;
+}
+
+.assessment .incumbent {
+    font-style: italic;
+}
+
+.assessment .actions {
+    text-align: right;
+    border-top: solid #eeeeee 1px;
+}
+/* Assessment start */

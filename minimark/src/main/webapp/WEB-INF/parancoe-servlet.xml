@@ -29,6 +29,7 @@
                 /admin/**=ROLE_ADMIN
                 /course/**=ROLE_ADMIN,ROLE_PARANCOE
                 /question/**=ROLE_ADMIN,ROLE_PARANCOE
+                /assessment/**=ROLE_ADMIN,ROLE_PARANCOE
                 /**=IS_AUTHENTICATED_ANONYMOUSLY
             </value>
         </constructor-arg>

@@ -1,6 +1,6 @@
 <%@ include file="common.jspf" %>
 
-<h3>About</h3>
+<h3><spring:message code="About" text="?About?"/></h3>
 
 <p class="about">
 
@@ -8,13 +8,12 @@
 
 		</p>
 
-<h3>Links</h3>
+<h3><spring:message code="Links" text="?Links?"/></h3>
 
 <ul>
 
-    <li><a href="http://www.sixshootermedia.com"><span>&raquo;</span> Six Shooter Media</a></li>
-    <li><a href="http://www.sixshootermedia.com/free-templates/"><span>&raquo;</span> Free Templates</a></li>
-    <li><a href="http://www.opendesigns.org"><span>&raquo;</span> Open Designs</a></li>
+    <li><a href="http://www.unipd.it"><span>&raquo;</span> Universit&agrave; di Padova</a></li>
+    <li><a href="http://www.lettere.unipd.it"><span>&raquo;</span> Facolt&agrave; di Lett. e Fil.</a></li>
     <li><a href="http://www.google.com"><span>&raquo;</span> Google</a></li>
 
 </ul>

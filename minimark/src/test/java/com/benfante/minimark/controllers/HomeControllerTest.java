@@ -40,7 +40,7 @@ public class HomeControllerTest extends ControllerTest {
         req = new MockHttpServletRequest("GET", "/home/welcome.html");
         ModelAndView mv = methodHandler.handle(req, res, controller);
         assertEquals("welcome", mv.getViewName());
-        assertNotNull(mv.getModel().get("something"));
+        assertNotNull(mv.getModel().get("assessments"));
     }
     
 }

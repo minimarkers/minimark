@@ -1,26 +1,22 @@
 <%@ include file="common.jspf" %>
 <c:choose>
-    <c:when test="${requestScope.lang eq 'it'}">
-        Questa &egrave; l'applicazione template per il framework
-        <a href="http://www.parancoe.org">Parancoe</a>.<br/>
-        <br/>
-        Da questo punto di partenza puoi iniziare a costruire la
-        tua nuova applicazione, sfruttando tutti i benefici che
-        derivano dall'uso di Parancoe.<br/>
-        <br/>
-        Per maggiori informazioni visita il sito di Parancoe:<br/>
-        <br/>
-        <a href="http://www.parancoe.org">http://www.parancoe.org</a>.<br/>
+    <c:when test="${empty assessments}">
+        <spring:message code="NoActiveAssessments" text="?NoActiveAssessments?"/>
     </c:when>
     <c:otherwise>
-        This is the template application of the
-        <a href="http://www.parancoe.org">Parancoe</a> framework.<br/>
-        <br/>
-        From this starting point you can build your own application,
-        with all benefits of the using of the Parancoe Framework.<br/>
-        <br/>
-        For more infos, visit the Parancoe framework Web site:<br/>
-        <br/>
-        <a href="http://www.parancoe.org">http://www.parancoe.org</a>.<br/>
+        <c:forEach var="assessment" items="${assessments}">
+            <div class="assessment">
+                <div class="course">${assessment.course.name}</div>
+                <div class="title">${assessment.title}</div>
+                <div class="description">${assessment.description}</div>
+                <c:if test="${!empty assessment.course.incumbent}">
+                    <div class="incumbent">${assessment.course.incumbent}</div>
+                </c:if>
+                <div class="actions">
+                    <a href="${cp}/assessmentFilling/logon.html?id=${assessment.id}" class="action-start"><spring:message code="start" text="?start?"/></a>
+                </div>
+            </div>
+        </c:forEach>
+
     </c:otherwise>
 </c:choose>
