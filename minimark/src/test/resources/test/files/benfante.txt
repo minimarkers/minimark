@@ -1,0 +1,35 @@
+c ==============
+c DOMANDE APERTE: definizioni
+c ==============
+
+d|001|A|u|Si dia una definizione di bit.
+
+c ===============
+c RISPOSTE CHIUSE: hardware e software
+c ===============
+
+d|109|R|s|A cosa servono le periferiche di un calcolatore elettronico?
+y|consentono all'utente di interagire con il calcolatore
+y|rendono pi&ugrave; intuitivo l'uso dei sistemi informatici
+n|consentono a pi&ugrave; utenti di utilizzare lo stesso sistema informatico
+
+c ===============
+c RISPOSTE APERTE: hardware e software
+c ===============
+
+d|409|C|s|Quali sono le due principali caratteristiche che rendono potente un calcolatore?
+y|una elevata frequenza di clock della CPU
+y|una elevata dimensione della memoria centrale
+n|una connessione ad Internet molto veloce
+n|la presenza di molti programmi applicativi
+
+c =============
+c DOMANDE CORTE: information retrieval
+c =============
+
+d|622|T|u|Dati i seguenti documenti:<br>
+T1 = {Emily Elizabeth Dickinson nasce il 10 dicembre del 1830 ad Amherst}<br>
+T2 = {Fra i primi in Italia a cogliere il valore poetico della Dickinson.}<br>
+T3 = {Il corpus poetico della Dickinson &egrave; straordinariamente originale}<br>
+T4 = {A quale et&agrave; cominci&ograve; Emily Dickinson a scrivere versi?}<br>
+Quali documenti saranno restituiti in risposta alla query <I>Emily OR poetico</I>?

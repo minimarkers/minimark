@@ -17,14 +17,14 @@ import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.proxy.dwr.Util;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Ajax methods for managin the fixed answers.
  *
  * @author Lucio Benfante
  */
-@Component
+@Service
 @RemoteProxy(name = "fixedAnswerABo")
 public class FixedAnswerABo {
 

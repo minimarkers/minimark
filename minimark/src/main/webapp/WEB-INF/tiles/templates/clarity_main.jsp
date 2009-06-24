@@ -20,13 +20,15 @@
         <div id="container">
 
             <div id="content">
+                <p:flash type="notice"/>
+                <p:flash type="error"/>
                 <tiles:insertAttribute name="main"/>
             </div>
-
+<%--
             <div id="sidebar">
                 <tiles:insertAttribute name="sidebar"/>
             </div>
-
+--%>
         </div>
 
         <div id="footer">

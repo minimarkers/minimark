@@ -3,6 +3,10 @@ body {
     padding-top: 5px;
 }
 
+#content {
+    width: 100%;
+}
+
 /* Link */
 
 a, a:visited {
@@ -158,7 +162,7 @@ ul#nav {
 input, textarea, select {
 /*    background:#F9F9F9 none repeat scroll 0 0; */
     border:1px solid #8AB3D1;
-    padding: 4px;
+    padding: 3px 0;
 }
 
 input[type=hidden] {
@@ -169,21 +173,31 @@ input.full-size {
     width:341px;
 }
 
-form label, form input {
+form label, form input, form select, form textarea {
     display:block;
     float:left;
-    height: 16px;
-    line-height: 24px;
     margin-bottom:10px;
 }
 
-form select {
-    display:block;
-    float:left;
-    height: 24px;
+form label {
+    height: 20px;
+    line-height: 20px;
+}
+
+form input {
+    height: 16px;
     line-height: 16px;
-    margin-bottom:10px;
-    padding: 0;
+    padding: 3px 3px;
+}
+
+form input[type=file] {
+    height: 24px;
+    width: inherit;
+}
+
+form select {
+    height: 24px;
+    line-height: 24px;
 }
 
 form br {
@@ -197,6 +211,7 @@ form label {
     text-align:right;
     width:10em;
 }
+
 form optgroup option {
     font-weight:600;
     text-indent:1.5em;
@@ -206,7 +221,7 @@ form textarea {
     height:15em;
     overflow:auto;
     width:341px;
-    margin-bottom: 10px;
+    padding: 3px 3px;
 }
 
 form .checkbox-label {
@@ -270,6 +285,32 @@ div.formButtons {
 
 /* Forms end */
 
+/* Error/notice start */
+
+div.notice_flash {
+    background-color: #dffadd;
+    padding: 5px;
+    margin: 5px;
+    border: dotted gray thin;
+}
+
+div.notice_flash p {
+    margin: 0!important;
+}
+
+div.error_flash {
+    background-color: #faddde;
+    padding: 5px;
+    margin: 5px;
+    border: dotted gray thin;
+}
+
+div.error_flash p {
+    margin: 0!important;
+}
+
+/* Error/notice end */
+
 /* Assessment start */
 
 .assessment {
@@ -292,4 +333,11 @@ div.formButtons {
     text-align: right;
     border-top: solid #eeeeee 1px;
 }
-/* Assessment start */
+
+/* Assessment end */
+
+.midWidth {
+    width: 48%;
+    float: left;
+    padding: 5px;
+}

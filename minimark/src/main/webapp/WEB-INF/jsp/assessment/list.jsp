@@ -6,7 +6,7 @@
 </div>
 
 <div class="displaytag">
-    <display:table  id="ca"  name="assessments" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" >
+    <display:table  id="ca"  name="assessments" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" requestURI="${cp}/assessment/list.html" >
         <display:column property="title" titleKey="Title"/>
         <display:column property="description"  titleKey="Description"/>
         <display:column titleKey="Course">${ca.course.name}</display:column>
@@ -27,6 +27,7 @@
             <a class="action-edit" href="${cp}/assessment/edit.html?id=${ca.id}"><spring:message code="Edit" text="?Edit?"/></a>
             <spring:message code='confirmDeleteAssessment' text='?confirmDeleteAssessment?' var="confirmDeleteAssessmentMessage"/>
             <a class="action-delete" href="${cp}/assessment/delete.html?id=${ca.id}" onclick="return confirm('${confirmDeleteAssessmentMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
+            <a class="action-detail-go" href="${cp}/assessment/questions.html?id=${ca.id}"><spring:message code="Questions" text="?Questions?"/></a>
             <a class="action-detail-go" href="${cp}/results/list.html?assessmentId=${ca.id}"><spring:message code="Results" text="?Results?"/></a>
         </display:column>
     </display:table>

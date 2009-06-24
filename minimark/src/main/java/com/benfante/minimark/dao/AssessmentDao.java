@@ -11,6 +11,7 @@ import org.parancoe.persistence.dao.generic.GenericDao;
  */
 @Dao(entity = Assessment.class)
 public interface AssessmentDao extends GenericDao<Assessment, Long> {
+    List<Assessment> findByTitle(String title);
     List<Assessment> findByTeacherUsername(String username);
     List<Assessment> findByActiveOrderByAssessmentDate(Boolean active);
 }

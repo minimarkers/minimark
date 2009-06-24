@@ -1,0 +1,10 @@
+- &OpenQuestion-001
+  title: OpenQuestion 001
+  contentFilter: html
+  content: A test question (001)
+  course: *Course-igMLC
+- &OpenQuestion-002
+  title: OpenQuestion 002
+  contentFilter: html
+  content: A test question (002)
+  course: *Course-igLCM

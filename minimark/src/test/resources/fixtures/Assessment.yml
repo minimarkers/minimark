@@ -1,0 +1,6 @@
+- &Assessment-igLCM1
+  course: *Course-igLCM
+  title: igLCM1
+  description: igLCM1 test assessment
+  assessmentDate: 2009-08-15
+  active: true

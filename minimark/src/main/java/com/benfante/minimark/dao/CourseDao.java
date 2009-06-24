@@ -12,4 +12,5 @@ import org.parancoe.persistence.dao.generic.GenericDao;
 @Dao(entity=Course.class)
 public interface CourseDao extends GenericDao<Course, Long> {
     List<Course> findByTeacherUsername(String username);
+    List<Course> findByNameAndMainGroupAndSecondaryGroup(String name, String mainGroup, String secondaryGroup);
 }

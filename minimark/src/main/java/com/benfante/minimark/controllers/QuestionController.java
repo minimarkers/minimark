@@ -55,6 +55,7 @@ public class QuestionController {
         questionBean.setId(question.getId());
         questionBean.setTitle(question.getTitle());
         questionBean.setContent(question.getContent());
+        questionBean.setContentFilter(question.getContentFilter());
         questionBean.setVisualization(question.getVisualization());
         questionBean.setWeight(question.getWeight());
         questionBean.setTags(question.getTagList());

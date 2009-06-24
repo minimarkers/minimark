@@ -1,9 +1,12 @@
 package com.benfante.minimark.controllers;
 
+import com.benfante.minimark.beans.QuestionBean;
+import com.benfante.minimark.blo.QuestionBo;
 import com.benfante.minimark.blo.UserProfileBo;
 import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.dao.CourseDao;
 import com.benfante.minimark.po.Assessment;
+import com.benfante.minimark.po.Course;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -28,6 +31,9 @@ import org.springframework.web.bind.support.SessionStatus;
 public class AssessmentController {
 
     public static final String ASSESSMENT_ATTR_NAME = "assessment";
+    public static final String ASSESSMENT_QUESTIONS_ATTR_NAME = "assessmentQuestions";
+    public static final String QUESTION_SEARCH_ATTR_NAME = "questionSearch";
+    public static final String QUESTION_SEARCH_RESULT_ATTR_NAME = "questionSearchResult";
     public static final String EDIT_VIEW = "assessment/edit";
     public static final String LIST_VIEW = "assessment/list";
     @Resource
@@ -36,6 +42,8 @@ public class AssessmentController {
     private CourseDao courseDao;
     @Resource
     private UserProfileBo userProfileBo;
+    @Resource
+    private QuestionBo questionBo;
 
     @RequestMapping
     public String edit(@RequestParam("id") Long id, Model model) {
@@ -60,7 +68,8 @@ public class AssessmentController {
     }
 
     @RequestMapping
-    public String list(Model model) {
+    public String list(Model model, SessionStatus status) {
+        status.setComplete(); // clean start
         List<Assessment> assessments = assessmentDao.findByTeacherUsername(userProfileBo.getAuthenticatedUsername());
         model.addAttribute("assessments", assessments);
         return LIST_VIEW;
@@ -83,5 +92,20 @@ public class AssessmentController {
         }
         assessmentDao.delete(assessment);
         return "redirect:list.html";
+    }
+
+    @RequestMapping
+    public void questions(@RequestParam("id") Long id, Model model) {
+        Assessment assessment = assessmentDao.get(id);
+        if (assessment == null) {
+            throw new RuntimeException("Assessment not found");
+        }
+        model.addAttribute(ASSESSMENT_ATTR_NAME, assessment);
+        final QuestionBean questionBean = new QuestionBean();
+        Course courseBean = new Course();
+        courseBean.setId(assessment.getCourse().getId());
+        model.addAttribute(QUESTION_SEARCH_ATTR_NAME,questionBean);
+        model.addAttribute(QUESTION_SEARCH_RESULT_ATTR_NAME, questionBo.search(questionBean));
+        model.addAttribute(ASSESSMENT_QUESTIONS_ATTR_NAME, assessment.getQuestions());
     }
 }

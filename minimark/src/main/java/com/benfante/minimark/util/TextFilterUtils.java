@@ -14,6 +14,8 @@ import org.apache.commons.lang.StringEscapeUtils;
  * @author Lucio Benfante
  */
 public class TextFilterUtils {
+    public static final String TEXTILE_FILTER_CODE = "textile";
+    public static final String HTML_FILTER_CODE = "html";
 
     private static final Pattern replaceTypoCodePattern = Pattern.compile(
             "<typo:code\\b([^>]*)>(.*?)</typo:code>", Pattern.DOTALL);
@@ -26,7 +28,7 @@ public class TextFilterUtils {
         String result = null;
         if (txt != null) {
             txt = filterTypoCode(txt);
-            if ("textile".equals(fltr)) {
+            if (TEXTILE_FILTER_CODE.equals(fltr)) {
                 StringWriter writer = new StringWriter();
                 HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);
                 // avoid the <html> and <body> tags

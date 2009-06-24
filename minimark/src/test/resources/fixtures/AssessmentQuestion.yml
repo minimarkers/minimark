@@ -1,0 +1,4 @@
+- &AssessmentQuestion-igLCM1002
+  assessment: *Assessment-igLCM1
+  question: *OpenQuestion-002
+  ordering: 1

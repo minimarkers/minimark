@@ -5,9 +5,10 @@
 <script src="${cp}/javascripts/calendar.js" type="text/javascript"></script>
 <script src="${cp}/javascripts/calendar-setup.js" type="text/javascript"></script>
 <script src="${cp}/javascripts/calendar-lang/calendar-${requestScope.lang}.js" type="text/javascript"></script>
-<script type='text/javascript' src='${cp}/dwr/interface/fixedAnswerABo.js'></script>
 <script type='text/javascript' src='${cp}/dwr/engine.js'></script>
 <script type='text/javascript' src='${cp}/dwr/util.js'></script>
+<script type='text/javascript' src='${cp}/dwr/interface/fixedAnswerABo.js'></script>
+<script type='text/javascript' src='${cp}/dwr/interface/questionABo.js'></script>
 <script src="${cp}/javascripts/parancoe.js" type="text/javascript"></script>
 
 <script type="text/javascript">

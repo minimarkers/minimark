@@ -35,5 +35,19 @@
         </constructor-arg>
     </bean>
     <!-- end security section -->
-        
+
+    <!-- begin dwr section -->
+    <!-- **WARNING** In production set debug to false.
+        It's useful only for debug. In production it's a security hole.
+        If debug="true" point your browser to /<your context>/dwr/index.html
+    -->
+    <dwr:controller id="dwrController" debug="true"/>
+    <dwr:configuration>
+        <dwr:convert class="java.lang.Exception" type="exception" />
+        <dwr:convert class="java.lang.StackTraceElement" type="bean"/>
+        <dwr:convert class="com.benfante.minimark.beans.QuestionBean" type="bean"/>
+        <dwr:convert class="com.benfante.minimark.po.Course" type="bean"/>
+    </dwr:configuration>
+    <!-- end dwr section -->
+
 </beans>

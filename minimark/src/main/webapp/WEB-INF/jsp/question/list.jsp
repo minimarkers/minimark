@@ -9,7 +9,7 @@
 </div>
 
 <div class="displaytag">
-    <display:table  id="curr"  name="questions" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" >
+    <display:table  id="curr"  name="questions" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" requestURI="${cp}/question/list.html">
         <display:column titleKey="Type">
             <c:choose>
                 <c:when test="${curr.class.name == 'com.benfante.minimark.po.OpenQuestion'}">                    

@@ -1,7 +1,10 @@
 package com.benfante.minimark;
 
+import com.benfante.minimark.po.Assessment;
+import com.benfante.minimark.po.AssessmentQuestion;
 import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.CourseTeacher;
+import com.benfante.minimark.po.OpenQuestion;
 import com.benfante.minimark.po.UserProfile;
 import org.parancoe.plugins.security.Authority;
 import org.parancoe.plugins.security.User;
@@ -16,7 +19,7 @@ public abstract class MinimarkBaseTest extends BaseTest {
 
     @Override
     public Class[] getFixtureClasses() {
-        return new Class[] {User.class, Authority.class, UserProfile.class, Course.class, CourseTeacher.class};
+        return new Class[] {User.class, Authority.class, UserProfile.class, Course.class, CourseTeacher.class, OpenQuestion.class, Assessment.class, AssessmentQuestion.class};
     }
 
 

@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import org.parancoe.persistence.po.hibernate.EntityBase;
@@ -62,6 +63,7 @@ public class Assessment extends EntityBase {
     }
 
     @OneToMany(mappedBy = "assessment")
+    @OrderBy("ordering ASC")
     public List<AssessmentQuestion> getQuestions() {
         return questions;
     }

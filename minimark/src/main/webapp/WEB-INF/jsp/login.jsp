@@ -18,6 +18,8 @@
         <input id="password" class="loginField" type='password' name='j_password' tabindex="2"/><br/>
         <label for="remember">&nbsp;</label>
         <input id="remember" type="checkbox" name="_acegi_security_remember_me" tabindex="3"/><span style="float: left;"> <spring:message code="remember_me"/></span><br/>
-        <input id="submit" name="submit" type="submit" value="<spring:message code='sign_in'/>" tabindex="4" class="submit-button"/>
+        <div class="formButtons">
+            <input id="submit" name="submit" type="submit" value="<spring:message code='sign_in'/>" tabindex="4" class="submit-button"/>
+        </div>
     </form>
 </div>
