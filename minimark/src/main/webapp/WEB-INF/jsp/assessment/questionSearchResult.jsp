@@ -37,6 +37,6 @@
     <display:column property="weight"  title="${WeightTitle}"/>
     <display:column property="tagList"  title="${TagsTitle}"/>
     <display:column>
-        <a class="action-right" href="#" onclick="addQuestion(${curr.id})"><spring:message code="Add" text="?Add?"/></a>
+        <a class="action-right" href="#" onclick="addQuestion(${curr.id}); return false;" title="<spring:message code="Add" text="?Add?"/>"></a>
     </display:column>
 </display:table>

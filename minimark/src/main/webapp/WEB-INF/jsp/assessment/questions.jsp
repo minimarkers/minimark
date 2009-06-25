@@ -60,6 +60,18 @@
         questionABo.addQuestionToAssessment(id, ${assessment.id});
     }
 
+    function removeQuestion(id) {
+        questionABo.removeQuestionFromAssessment(id, ${assessment.id});
+    }
+
+    function moveUpQuestion(id) {
+        questionABo.moveUpQuestionInAssessment(id, ${assessment.id});
+    }
+
+    function moveDownQuestion(id) {
+        questionABo.moveDownQuestionInAssessment(id, ${assessment.id});
+    }
+
     function showQuestionFields() {
         hideVariableQuestionFields();
         if ($('type').value == 'open') {

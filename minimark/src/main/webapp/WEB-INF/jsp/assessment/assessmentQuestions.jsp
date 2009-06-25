@@ -5,23 +5,23 @@
 <spring:message code="Content" text="?Content?" var="ContentTitle"/>
 <spring:message code="Weight" text="?Weight?" var="WeightTitle"/>
 <spring:message code="Tags" text="?Tags?" var="TagsTitle"/>
-<display:table id="curr"  name="assessmentQuestions" sort="list" defaultsort="1" defaultorder="ascending" >
+<display:table id="curr"  name="assessmentQuestions" >
     <display:column title="${TypeTitle}">
         <c:choose>
-            <c:when test="${curr.class.name == 'com.benfante.minimark.po.OpenQuestion'}">
+            <c:when test="${curr.question.class.name == 'com.benfante.minimark.po.OpenQuestion'}">
                 <c:choose>
-                    <c:when test="${curr.visualization == 'short'}">
+                    <c:when test="${curr.question.visualization == 'short'}">
                         <img src="${cp}/images/silk/icons/textfield.png" title="<spring:message code="OpenQuestion" text="?OpenQuestion?"/> (<spring:message code="short" text="?short?"/>)" alt="<spring:message code="OpenQuestion" text="?OpenQuestion?"/> (<spring:message code="short" text="?short?"/>)" />
                     </c:when>
-                    <c:when test="${curr.visualization == 'long'}">
+                    <c:when test="${curr.question.visualization == 'long'}">
                         <img src="${cp}/images/silk/icons/textfield_add.png" title="<spring:message code="OpenQuestion" text="?OpenQuestion?"/> (<spring:message code="long" text="?long?"/>)" alt="<spring:message code="OpenQuestion" text="?OpenQuestion?"/> (<spring:message code="long" text="?long?"/>)" />
                     </c:when>
                     <c:otherwise><spring:message code="UnknownVisualization" text="?UnknownVisualization?"/></c:otherwise>
                 </c:choose>
             </c:when>
-            <c:when test="${curr.class.name == 'com.benfante.minimark.po.ClosedQuestion'}">
+            <c:when test="${curr.question.class.name == 'com.benfante.minimark.po.ClosedQuestion'}">
                 <c:choose>
-                    <c:when test="${curr.multipleAnswer}">
+                    <c:when test="${curr.question.multipleAnswer}">
                         <img src="${cp}/images/silk/icons/text_list_numbers.png" title="<spring:message code="ClosedQuestion" text="?ClosedQuestion?"/> (<spring:message code="multiple" text="?multiple?"/>)" alt="<spring:message code="ClosedQuestion" text="?ClosedQuestion?"/> (<spring:message code="multiple" text="?multiple?"/>)" />
                     </c:when>
                     <c:otherwise>
@@ -32,13 +32,13 @@
             <c:otherwise><spring:message code="UnknownQuestionType" text="?UnknownQuestionType?"/></c:otherwise>
         </c:choose>
     </display:column>
-    <display:column property="title" title="${TitleTitle}"/>
-    <display:column property="filteredContent"  title="${ContentTitle}"/>
-    <display:column property="weight"  title="${WeightTitle}"/>
-    <display:column property="tagList"  title="${TagsTitle}"/>
+    <display:column property="question.title" title="${TitleTitle}"/>
+    <display:column property="question.filteredContent"  title="${ContentTitle}"/>
+    <display:column property="question.weight"  title="${WeightTitle}"/>
+    <display:column property="question.tagList"  title="${TagsTitle}"/>
     <display:column>
-        <a class="action-edit" href="${cp}/question/edit.html?id=${curr.id}"><spring:message code="Edit" text="?Edit?"/></a>
-        <spring:message code='confirmDeleteQuestion' text='?confirmDeleteQuestion?' var="confirmDeleteQuestionMessage"/>
-        <a class="action-delete" href="${cp}/question/delete.html?id=${curr.id}" onclick="return confirm('${confirmDeleteQuestionMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
+        <a class="action-up" href="#" onclick="moveUpQuestion(${curr.id}); return false;" title="<spring:message code="Up" text="?Up?"/>"></a>
+        <a class="action-down" href="#" onclick="moveDownQuestion(${curr.id}); return false;" title="<spring:message code="Down" text="?Down?"/>"></a>
+        <a class="action-cancel" href="#" onclick="removeQuestion(${curr.id}); return false;" title="<spring:message code="Remove" text="?Remove?"/>"></a>
     </display:column>
 </display:table>

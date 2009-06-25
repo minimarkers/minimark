@@ -1,6 +1,7 @@
 package com.benfante.minimark.dao;
 
 import com.benfante.minimark.po.AssessmentQuestion;
+import java.util.List;
 import org.parancoe.persistence.dao.generic.Dao;
 import org.parancoe.persistence.dao.generic.GenericDao;
 
@@ -10,5 +11,6 @@ import org.parancoe.persistence.dao.generic.GenericDao;
  */
 @Dao(entity = AssessmentQuestion.class)
 public interface AssessmentQuestionDao extends GenericDao<AssessmentQuestion, Long> {
-    public Long getNextOrdering(Long assessmentId);
+    Long getNextOrdering(Long assessmentId);
+    List<AssessmentQuestion> findByAssessmentId(Long assessmentId);
 }

@@ -8,8 +8,7 @@ import com.benfante.minimark.beans.QuestionBean;
 import com.benfante.minimark.blo.AssessmentBo;
 import com.benfante.minimark.blo.QuestionBo;
 import com.benfante.minimark.controllers.AssessmentController;
-import com.benfante.minimark.dao.AssessmentDao;
-import com.benfante.minimark.dao.QuestionDao;
+import com.benfante.minimark.dao.AssessmentQuestionDao;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.directwebremoting.Browser;
@@ -20,7 +19,6 @@ import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.ui.dwr.Util;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.RequestContext;
 
 /**
  * Ajax methods for managing the questions.
@@ -36,7 +34,7 @@ public class QuestionABo {
     @Resource
     private AssessmentBo assessmentBo;
     @Resource
-    private AssessmentDao assessmentDao;
+    private AssessmentQuestionDao assessmentQuestionDao;
 
     @RemoteMethod
     public void updateQuestionSearchResult(final QuestionBean questionBean) {
@@ -56,8 +54,31 @@ public class QuestionABo {
         });
     }
 
+    @RemoteMethod
     public void addQuestionToAssessment(Long questionId, final Long assessmentId) {
         assessmentBo.addQuestionToAssessment(questionId, assessmentId);
+        refreshAssessmentQuestions(assessmentId);
+    }
+
+    @RemoteMethod
+    public void removeQuestionFromAssessment(Long assessmentQuestionId, final Long assessmentId) {
+        assessmentBo.removeQuestionFromAssessment(assessmentQuestionId);
+        refreshAssessmentQuestions(assessmentId);
+    }
+
+    @RemoteMethod
+    public void moveUpQuestionInAssessment(Long assessmentQuestionId, final Long assessmentId) {
+        assessmentBo.moveUpQuestionInAssessment(assessmentQuestionId, assessmentId);
+        refreshAssessmentQuestions(assessmentId);
+    }
+
+    @RemoteMethod
+    public void moveDownQuestionInAssessment(Long assessmentQuestionId, final Long assessmentId) {
+        assessmentBo.moveDownQuestionInAssessment(assessmentQuestionId, assessmentId);
+        refreshAssessmentQuestions(assessmentId);
+    }
+
+    private void refreshAssessmentQuestions(final Long assessmentId) throws UnsupportedOperationException {
         final WebContext ctx = WebContextFactory.get();
         ScriptSession scriptSession = ctx.getScriptSession();
         Browser.withSession(scriptSession.getId(), new Runnable() {
@@ -65,12 +86,13 @@ public class QuestionABo {
             public void run() {
                 try {
                     HttpServletRequest req = ctx.getHttpServletRequest();
-                    req.setAttribute(AssessmentController.ASSESSMENT_QUESTIONS_ATTR_NAME, assessmentDao.get(assessmentId).getQuestions());
-                    Util.setValue("assessmentQuestions", ctx.forwardToString("/WEB-INF/jsp/assessment/questionSearchResult.jsp"), false);
+                    req.setAttribute(AssessmentController.ASSESSMENT_QUESTIONS_ATTR_NAME, assessmentQuestionDao.findByAssessmentId(assessmentId));
+                    Util.setValue("assessmentQuestions", ctx.forwardToString("/WEB-INF/jsp/assessment/assessmentQuestions.jsp"), false);
                 } catch (Exception ex) {
                     Util.setValue("assessmentQuestions", ex.getMessage());
                 }
             }
         });
     }
+
 }

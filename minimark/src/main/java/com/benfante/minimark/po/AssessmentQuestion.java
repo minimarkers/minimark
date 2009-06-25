@@ -13,7 +13,8 @@ import org.parancoe.persistence.po.hibernate.EntityBase;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="AssessmentQuestion.getNextOrdering", query="select max(aq.ordering)+1 from AssessmentQuestion aq where aq.assessment.id = ?")
+    @NamedQuery(name="AssessmentQuestion.getNextOrdering", query="select max(aq.ordering)+1 from AssessmentQuestion aq where aq.assessment.id = ?"),
+    @NamedQuery(name="AssessmentQuestion.findByAssessmentId", query="from AssessmentQuestion aq where aq.assessment.id = ? order by aq.ordering")
 })
 public class AssessmentQuestion extends EntityBase {
     protected Assessment assessment;
