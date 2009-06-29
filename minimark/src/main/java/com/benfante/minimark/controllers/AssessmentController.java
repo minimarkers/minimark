@@ -104,6 +104,7 @@ public class AssessmentController {
         final QuestionBean questionBean = new QuestionBean();
         Course courseBean = new Course();
         courseBean.setId(assessment.getCourse().getId());
+        questionBean.setCourse(courseBean);
         model.addAttribute(QUESTION_SEARCH_ATTR_NAME,questionBean);
         model.addAttribute(QUESTION_SEARCH_RESULT_ATTR_NAME, questionBo.search(questionBean));
         model.addAttribute(ASSESSMENT_QUESTIONS_ATTR_NAME, assessment.getQuestions());
