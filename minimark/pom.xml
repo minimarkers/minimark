@@ -50,6 +50,33 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.0-beta-1</version>
+                <configuration>
+                    <wait>false</wait>
+                    <container>
+                        <containerId>tomcat6x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.tomcat.manager.url>http://localhost:28080/manager</cargo.tomcat.manager.url>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password>adminPwd1</cargo.remote.password>
+                        </properties>
+                        <deployables>
+                            <deployable>
+                                <groupId>net.scarabocio</groupId>
+                                <artifactId>scarabocio</artifactId>
+                                <type>war</type>
+                            </deployable>
+                        </deployables>
+                    </configuration>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <repositories>
