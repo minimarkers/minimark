@@ -1,10 +1,6 @@
 <%@include file="/WEB-INF/jsp/common.jspf" %>
 <h3><spring:message code="YourAssessments"  text="?YourAssessments?"/></h3>
 
-<div>
-    <a class="action-add" href="${cp}/assessment/create.html"><spring:message code="addAssessment" text="?addAssessment?"/></a>
-</div>
-
 <div class="displaytag">
     <display:table  id="ca"  name="assessments" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" requestURI="${cp}/assessment/list.html" >
         <display:column property="title" titleKey="Title"/>
