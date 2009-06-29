@@ -1,9 +1,15 @@
 package com.benfante.minimark.po;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.Cascade;
 import org.parancoe.persistence.po.hibernate.EntityBase;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
@@ -26,6 +32,8 @@ public class AssessmentFilling extends EntityBase {
     @Expression("password == assessment.password")
     protected String password;
     protected Boolean loggedIn;
+    protected Date submittedDate;
+    protected List<QuestionFilling> questions = new LinkedList<QuestionFilling>();
 
     @ManyToOne
     public Assessment getAssessment() {
@@ -83,6 +91,26 @@ public class AssessmentFilling extends EntityBase {
 
     public void setLoggedIn(Boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    public Date getSubmittedDate() {
+        return submittedDate;
+    }
+
+    public void setSubmittedDate(Date submittedDate) {
+        this.submittedDate = submittedDate;
+    }
+
+    @OneToMany(mappedBy = "assessmentFilling", cascade=CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @OrderBy("ordering ASC")
+    public List<QuestionFilling> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuestionFilling> questions) {
+        this.questions = questions;
     }
 
 }

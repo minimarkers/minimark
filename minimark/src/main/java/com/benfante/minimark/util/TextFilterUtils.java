@@ -37,6 +37,8 @@ public class TextFilterUtils {
                 parser.setBuilder(builder);
                 parser.parse(txt);
                 result = writer.toString();
+            } else if (HTML_FILTER_CODE.equals(fltr)) {
+                result = txt;
             } else {
                 result = escapeHtml(txt);
             }

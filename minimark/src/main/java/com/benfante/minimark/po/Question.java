@@ -23,7 +23,7 @@ import org.hibernate.annotations.SortType;
 import org.parancoe.persistence.po.hibernate.EntityBase;
 
 /**
- * A link of a tag to another entity. Links are managed by subclasses.
+ * A question.
  *
  * @author lucio
  */

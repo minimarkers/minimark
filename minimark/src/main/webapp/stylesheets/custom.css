@@ -5,6 +5,7 @@ body {
 
 #content {
     width: 100%;
+    line-height: 18px!important;
 }
 
 /* Link */
@@ -96,6 +97,7 @@ ul#nav {
 #content div.summary p {
     margin: 0;
     padding: 0;
+    line-height: 18px;
 }
 
 /* Actions */
@@ -362,3 +364,54 @@ div.error_flash p {
     float: left;
     padding: 5px;
 }
+
+/* assessment filling start */
+
+.fillingQuestion {
+    border: dotted 1px silver;
+    margin-bottom: 5px;
+    clear: both;
+}
+
+.questionTitle {
+}
+
+.questionTitle img {
+    float: left;
+}
+
+.questionTitle .questionTitleText {
+    padding: 8px;
+    font-weight: bold;
+}
+
+.questionText {
+    clear: both;
+    margin: 5px 0 20px 40px;
+}
+
+.fixedAnser {
+    clear: both;
+}
+
+.fixedAnswer input {
+    margin: 10px 0 5px 40px;
+}
+
+.fixedAnswerText {
+    line-height: 16px!important;
+    padding: 8px;
+    float: left;
+}
+
+.filteredContent p {
+    line-height: 14px!important;
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.openAnswer {
+    margin: 10px 0 5px 40px;
+}
+
+/* assessment filling end */

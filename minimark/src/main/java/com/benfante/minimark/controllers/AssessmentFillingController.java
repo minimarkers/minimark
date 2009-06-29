@@ -1,17 +1,15 @@
 package com.benfante.minimark.controllers;
 
-import com.benfante.minimark.blo.UserProfileBo;
+import com.benfante.minimark.blo.AssessmentFillingBo;
 import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.dao.AssessmentFillingDao;
-import com.benfante.minimark.dao.CourseDao;
 import com.benfante.minimark.po.Assessment;
 import com.benfante.minimark.po.AssessmentFilling;
-import com.benfante.minimark.po.AssessmentQuestion;
-import com.benfante.minimark.po.ClosedQuestion;
 import java.util.Date;
-import java.util.List;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.parancoe.web.util.FlashHelper;
 import org.parancoe.web.validation.Validation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,20 +38,25 @@ public class AssessmentFillingController {
     private AssessmentDao assessmentDao;
     @Resource
     private AssessmentFillingDao assessmentFillingDao;
+    @Resource
+    private AssessmentFillingBo assessmentFillingBo;
 
     @RequestMapping
-    public String logon(@RequestParam("id") Long id, Model model) {
+    public String logon(@RequestParam("id") Long id, HttpServletRequest req, HttpSession session, Model model) {
+        AssessmentFilling assessmentFilling = (AssessmentFilling) session.getAttribute(ASSESSMENT_ATTR_NAME);
+        if (assessmentFilling != null) {
+            if (assessmentFilling.getLoggedIn() != null && assessmentFilling.getLoggedIn()) {
+                FlashHelper.setRedirectError(req, "AssessmentAlreadyStarted");
+                return "redirect:fill.html";
+            } else {
+                assessmentFillingDao.delete(assessmentFilling);
+            }
+        }
         Assessment assessment = assessmentDao.get(id);
         if (assessment == null) {
             throw new RuntimeException("Assessment not found");
         }
-        AssessmentFilling assessmentFilling = new AssessmentFilling();
-        assessmentFilling.setAssessment(assessment);
-        for (AssessmentQuestion assessmentQuestion : assessment.getQuestions()) { // for lazy initialization (also needed for copy)
-            if (assessmentQuestion.getQuestion() instanceof ClosedQuestion) {
-                ((ClosedQuestion)assessmentQuestion.getQuestion()).getFixedAnswers().size();
-            }
-        }
+        assessmentFilling = assessmentFillingBo.generateAndStoreAssessmentFilling(assessment);
         model.addAttribute(ASSESSMENT_ATTR_NAME, assessmentFilling);
         return FORM_VIEW;
     }
@@ -63,21 +66,32 @@ public class AssessmentFillingController {
     public String start(@ModelAttribute(ASSESSMENT_ATTR_NAME) AssessmentFilling assessmentFilling,
             BindingResult result, SessionStatus status) {
         assessmentFilling.setLoggedIn(Boolean.TRUE);
+        assessmentFilling.setStartDate(new Date());
         assessmentFillingDao.store(assessmentFilling);
         return "redirect:fill.html";
     }
 
     @RequestMapping
     public String fill(HttpSession session, Model model) {
-        AssessmentFilling assessmentFilling = (AssessmentFilling)session.getAttribute(ASSESSMENT_ATTR_NAME);
+        AssessmentFilling assessmentFilling = (AssessmentFilling) session.getAttribute(ASSESSMENT_ATTR_NAME);
+        assessmentFilling = assessmentFillingDao.get(assessmentFilling.getId()); // refresh from DB
         model.addAttribute(ASSESSMENT_ATTR_NAME, assessmentFilling);
         return FILL_VIEW;
     }
 
     @RequestMapping
-    public String store(Model model) {
-        AssessmentFilling assessmentFilling = (AssessmentFilling)model.asMap().get(ASSESSMENT_ATTR_NAME);
-        return RESULT_VIEW;
+    public String store(HttpSession session, Model model, SessionStatus status) {
+        AssessmentFilling assessmentFilling = (AssessmentFilling) session.getAttribute(ASSESSMENT_ATTR_NAME);
+        assessmentFilling = assessmentFillingDao.get(assessmentFilling.getId()); // refresh from DB
+        assessmentFilling.setSubmittedDate(new Date());
+        status.setComplete();
+        return "redirect:showResult.html?id=" + assessmentFilling.getId();
     }
 
+    @RequestMapping
+    public String showResult(@RequestParam("id") Long id, HttpServletRequest req) {
+        AssessmentFilling assessmentFilling = assessmentFillingDao.get(id);
+        req.setAttribute(ASSESSMENT_ATTR_NAME, assessmentFilling);
+        return RESULT_VIEW;
+    }
 }
