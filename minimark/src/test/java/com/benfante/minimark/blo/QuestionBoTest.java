@@ -23,7 +23,7 @@ public class QuestionBoTest extends MinimarkBaseTest {
      */
     public void testSearchAll() {
         List result = questionBo.search(new QuestionBean());
-        assertSize(2, result);
+        assertSize(5, result);
     }
 
     public void testSearchByCourse() {

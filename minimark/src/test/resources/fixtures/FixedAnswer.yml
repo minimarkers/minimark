@@ -1,0 +1,36 @@
+- &FixedAnswer-00101
+  contentFilter: html
+  content: Answer 01 of 001
+  weight: 1.0
+  correct: false
+  question: *ClosedQuestion-001
+- &FixedAnswer-00102
+  contentFilter: html
+  content: Answer 02 of 001
+  weight: 1.0
+  correct: false
+  question: *ClosedQuestion-001
+- &FixedAnswer-00103
+  contentFilter: html
+  content: Answer 03 of 001
+  weight: 1.0
+  correct: true
+  question: *ClosedQuestion-001
+- &FixedAnswer-00201
+  contentFilter: html
+  content: Answer 01 of 002
+  weight: 1.0
+  correct: false
+  question: *ClosedQuestion-002
+- &FixedAnswer-00202
+  contentFilter: html
+  content: Answer 02 of 002
+  weight: 1.0
+  correct: true
+  question: *ClosedQuestion-002
+- &FixedAnswer-00203
+  contentFilter: html
+  content: Answer 03 of 002
+  weight: 1.0
+  correct: true
+  question: *ClosedQuestion-002

@@ -24,7 +24,7 @@
             <spring:message code='confirmDeleteAssessment' text='?confirmDeleteAssessment?' var="confirmDeleteAssessmentMessage"/>
             <a class="action-delete" href="${cp}/assessment/delete.html?id=${ca.id}" onclick="return confirm('${confirmDeleteAssessmentMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
             <a class="action-detail-go" href="${cp}/assessment/questions.html?id=${ca.id}"><spring:message code="Questions" text="?Questions?"/></a>
-            <a class="action-detail-go" href="${cp}/results/list.html?assessmentId=${ca.id}"><spring:message code="Results" text="?Results?"/></a>
+            <a class="action-detail-go" href="${cp}/results/list.html?id=${ca.id}"><spring:message code="Results" text="?Results?"/></a>
         </display:column>
     </display:table>
 </div>

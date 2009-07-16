@@ -1,0 +1,12 @@
+- &ClosedQuestionFilling-001
+  assessmentFilling: *AssessmentFilling-igLCM1
+  originalQuestion: *ClosedQuestion-001
+  title: ClosedQuestion 001
+  contentFilter: html
+  content: A test closed question (001)
+- &ClosedQuestionFilling-002
+  assessmentFilling: *AssessmentFilling-igLCM1
+  originalQuestion: *ClosedQuestion-002
+  title: ClosedQuestion 002
+  contentFilter: html
+  content: A test closed question (002)

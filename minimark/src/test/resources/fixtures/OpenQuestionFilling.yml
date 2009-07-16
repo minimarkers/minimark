@@ -1,0 +1,16 @@
+- &OpenQuestionFilling-00201
+  assessmentFilling: *AssessmentFilling-igLCM1
+  originalQuestion: *OpenQuestion-002
+  title: OpenQuestion 002
+  contentFilter: html
+  content: A test question (002)
+  visualization: long
+  answer: la mia risposta lunga
+- &OpenQuestionFilling-00301
+  assessmentFilling: *AssessmentFilling-igLCM1
+  originalQuestion: *OpenQuestion-003
+  title: OpenQuestion 003
+  contentFilter: html
+  content: A test question (003)
+  visualization: short
+  answer: la mia risposta corta

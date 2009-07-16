@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
@@ -20,6 +22,9 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank
  * @author lucio
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="AssessmentFilling.findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier", query="from AssessmentFilling af where af.assessment.id = ? order by af.lastName, af.firstName, af.identifier")
+})
 public class AssessmentFilling extends EntityBase {
     protected Assessment assessment;
     protected Date startDate;

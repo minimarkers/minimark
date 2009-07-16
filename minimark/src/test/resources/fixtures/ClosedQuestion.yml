@@ -1,0 +1,10 @@
+- &ClosedQuestion-001
+  title: ClosedQuestion 001
+  contentFilter: html
+  content: A test closed question (001)
+  course: *Course-igLCM
+- &ClosedQuestion-002
+  title: ClosedQuestion 002
+  contentFilter: html
+  content: A test closed question (002)
+  course: *Course-igLCM

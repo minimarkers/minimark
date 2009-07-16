@@ -2,9 +2,17 @@
   title: OpenQuestion 001
   contentFilter: html
   content: A test question (001)
+  visualization: long
   course: *Course-igMLC
 - &OpenQuestion-002
   title: OpenQuestion 002
   contentFilter: html
   content: A test question (002)
+  visualization: long
+  course: *Course-igLCM
+- &OpenQuestion-003
+  title: OpenQuestion 003
+  contentFilter: html
+  content: A test question (003)
+  visualization: short
   course: *Course-igLCM
