@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 /**
  *
  * @author Lucio Benfante (<A HREF="mailto:benfante@dei.unipd.it">benfante@dei.unipd.it</A>)
- * @version $Id: AssessmentXMLFOBuilder.java,v 3640fc57fc07 2009/07/16 14:37:52 lucio $
+ * @version $Id: AssessmentXMLFOBuilder.java,v ee2489a84ece 2009/07/16 14:48:08 lucio $
  */
 @Component
 public class AssessmentXMLFOBuilder {
@@ -145,24 +145,12 @@ public class AssessmentXMLFOBuilder {
         result.append("        <fo:table-row>").append('\n');
         result.append("          <fo:table-cell text-align=\"end\">").append('\n');
         result.append("            <fo:block>").append('\n');
-        result.append("              Matricola (solo numero):").append('\n');
+        result.append("              Matricola:").append('\n');
         result.append("            </fo:block>").append('\n');
         result.append("          </fo:table-cell>").append('\n');
         result.append("          <fo:table-cell font-weight=\"bold\">").append('\n');
         result.append("            <fo:block>").append('\n');
         result.append("              <![CDATA[").append(assessment.getIdentifier()).append("]]>").append('\n');
-        result.append("            </fo:block>").append('\n');
-        result.append("          </fo:table-cell>").append('\n');
-        result.append("        </fo:table-row>").append('\n');
-        result.append("        <fo:table-row>").append('\n');
-        result.append("          <fo:table-cell text-align=\"end\">").append('\n');
-        result.append("            <fo:block>").append('\n');
-        result.append("              Codice del corso di laurea:").append('\n');
-        result.append("            </fo:block>").append('\n');
-        result.append("          </fo:table-cell>").append('\n');
-        result.append("          <fo:table-cell font-weight=\"bold\">").append('\n');
-        result.append("            <fo:block>").append('\n');
-        result.append("              <![CDATA[").append("").append("]]>").append('\n');
         result.append("            </fo:block>").append('\n');
         result.append("          </fo:table-cell>").append('\n');
         result.append("        </fo:table-row>").append('\n');

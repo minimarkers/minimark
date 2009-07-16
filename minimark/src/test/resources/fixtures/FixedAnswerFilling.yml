@@ -1,5 +1,5 @@
 - &FixedAnswerFilling-00101
-  contentFilter: html
+  contentFilter: textile
   content: Answer 01 of 001
   weight: 1.0
   correct: false
@@ -7,7 +7,7 @@
   selected: false
   ordering: 1
 - &FixedAnswerFilling-00102
-  contentFilter: html
+  contentFilter: textile
   content: Answer 02 of 001
   weight: 1.0
   correct: false
@@ -23,7 +23,7 @@
   selected: false
   ordering: 3
 - &FixedAnswerFilling-00201
-  contentFilter: html
+  contentFilter: textile
   content: Answer 01 of 002
   weight: 1.0
   correct: false
@@ -31,7 +31,7 @@
   selected: false
   ordering: 1
 - &FixedAnswerFilling-00202
-  contentFilter: html
+  contentFilter: textile
   content: Answer 02 of 002
   weight: 1.0
   correct: true
