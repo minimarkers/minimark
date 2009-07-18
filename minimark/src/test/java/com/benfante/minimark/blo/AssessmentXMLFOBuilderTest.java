@@ -61,7 +61,7 @@ public class AssessmentXMLFOBuilderTest extends MinimarkBaseTest {
             pdfos = new ByteArrayOutputStream();
             FOUserAgent foua = fopFactory.newFOUserAgent();
             final String baseDir = new File("").getAbsolutePath();
-            logger.info("basedir="+baseDir);
+            logger.debug("basedir="+baseDir);
             foua.setBaseURL("file://"+baseDir+"/src/main/webapp/");
             Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, foua, pdfos);
             TransformerFactory factory = TransformerFactory.newInstance();

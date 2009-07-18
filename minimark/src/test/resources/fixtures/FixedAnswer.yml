@@ -34,3 +34,9 @@
   weight: 1.0
   correct: true
   question: *ClosedQuestion-002
+- &FixedAnswer-00204
+  contentFilter: html
+  content: Answer 04 of 002
+  weight: 1.0
+  correct: false
+  question: *ClosedQuestion-002
