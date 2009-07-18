@@ -1,9 +1,9 @@
 - &AssessmentFilling-igLCM1
   assessment: *Assessment-igLCM1
-  startDate: 2009-08-15
+  startDate: 08/15/2009 10:00
   firstName: Mario
   lastName: Rossi
   identifier: 12345
   password: password
   loggedIn: true
-  submittedDate: 2009-08-15
+  submittedDate: 08/15/2009 11:15

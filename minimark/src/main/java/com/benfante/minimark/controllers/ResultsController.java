@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,9 +64,9 @@ public class ResultsController {
     }
 
     @RequestMapping
-    public void pdf(@RequestParam("id") Long id, HttpServletRequest req, HttpServletResponse res) {
+    public void pdf(@RequestParam("id") Long id, HttpServletRequest req, HttpServletResponse res, Locale locale) {
         AssessmentFilling assessmentInfo = assessmentFillingDao.get(id);
-        String xmlfo = assessmentXMLFOBuilder.makeXMLFO(assessmentInfo);
+        String xmlfo = assessmentXMLFOBuilder.makeXMLFO(assessmentInfo, locale);
         ByteArrayOutputStream pdfos = null;
         Reader foreader = null;
         OutputStream out = null;

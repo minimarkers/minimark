@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.Resource;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -45,8 +46,9 @@ public class AssessmentXMLFOBuilderTest extends MinimarkBaseTest {
         List<AssessmentFilling> assessments = assessmentFillingDao.findAll();
         assertNotEmpty(assessments);
         final AssessmentFilling assessment = assessments.get(0);
+        assertNotNull(assessment.getStartDate());
         assertSize(4, assessment.getQuestions());
-        String xmlfo = assessmentXMLFOBuilder.makeXMLFO(assessment);
+        String xmlfo = assessmentXMLFOBuilder.makeXMLFO(assessment, Locale.ENGLISH);
         assertTrue("XMLFO is empty", StringUtils.isNotEmpty(xmlfo));
         writePdf(xmlfo);
     }

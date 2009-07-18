@@ -9,35 +9,44 @@ import com.benfante.minimark.po.QuestionFilling;
 import com.benfante.minimark.util.HTMLFOConverter;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.FastDateFormat;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Lucio Benfante (<A HREF="mailto:benfante@dei.unipd.it">benfante@dei.unipd.it</A>)
- * @version $Id: AssessmentXMLFOBuilder.java,v c3866067b52d 2009/07/18 05:20:16 lucio $
+ * @version $Id: AssessmentXMLFOBuilder.java,v f2980690000e 2009/07/18 08:16:13 lucio $
  */
 @Component
 public class AssessmentXMLFOBuilder {
+    @Resource
+    private MessageSource messageSource;
 
     /** Creates a new instance of AssessmentXMLFOBuilder */
     private AssessmentXMLFOBuilder() {
     }
 
-    public String makeXMLFO(AssessmentFilling assessment) {
+    public String makeXMLFO(AssessmentFilling assessment, Locale locale) {
         StringBuilder result = new StringBuilder();
-        makeHeader(result, assessment);
+        makeHeader(result, assessment, locale);
         makeLeader(result);
         startQuestionSection(result, assessment);
-        makePersonalData(result, assessment);
-        makeQuestions(result, assessment.getQuestions());
+        makePersonalData(result, assessment, locale);
+        makeQuestions(result, assessment.getQuestions(), locale);
         endQuestionSection(result, assessment);
         makeFooter(result, assessment);
         return result.toString();
     }
 
     private StringBuilder makeHeader(StringBuilder result,
-            AssessmentFilling assessment) {
+            AssessmentFilling assessment, Locale locale) {
+        FastDateFormat dateTimeFormat =
+                FastDateFormat.getDateTimeInstance(FastDateFormat.SHORT,
+                FastDateFormat.SHORT, locale);
         result.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>").append(
                 '\n');
         result.append("<!DOCTYPE root [").append('\n');
@@ -107,15 +116,14 @@ public class AssessmentXMLFOBuilder {
         result.append("              <fo:table-cell text-align=\"center\">").
                 append('\n');
         result.append("                <fo:block>").append('\n');
-        result.append("                  ").append(assessment.getStartDate()).
+        result.append("                  ").append(assessment.getSubmittedDate()!=null?dateTimeFormat.format(assessment.getSubmittedDate()):messageSource.getMessage("NotSubmitted", null, "?Not submitted?", locale)).
                 append('\n');
         result.append("                </fo:block>").append('\n');
         result.append("              </fo:table-cell>").append('\n');
         result.append("              <fo:table-cell text-align=\"end\">").append(
                 '\n');
         result.append("                <fo:block>").append('\n');
-        result.append(
-                "                  Pagina <fo:page-number/> di <fo:page-number-citation ref-id=\"last-page\"/>").
+        result.append(messageSource.getMessage("PageNOfM", new String[] {"<fo:page-number/>", "<fo:page-number-citation ref-id='last-page'/>"}, "?PageNOfM?", locale)).
                 append('\n');
         result.append("                </fo:block>").append('\n');
         result.append("              </fo:table-cell>").append('\n');
@@ -130,10 +138,11 @@ public class AssessmentXMLFOBuilder {
                 append('\n');
         result.append("        <fo:block space-after=\"11pt\">").append(assessment.
                 getAssessment().getTitle()).append("</fo:block>").append('\n');
-        result.append("        <fo:block>Docente: ").append(assessment.
+        result.append("        <fo:block>").
+                append(messageSource.getMessage("Incumbent", null, "?Incumbent?", locale)).append(": ").append(assessment.
                 getAssessment().getCourse().getIncumbent()).append("</fo:block>").
                 append('\n');
-        result.append("        <fo:block>").append(assessment.getStartDate()).
+        result.append("        <fo:block>").append(dateTimeFormat.format(assessment.getStartDate())).
                 append("</fo:block>").append('\n');
         result.append("      </fo:block>").append('\n');
         return result;
@@ -180,11 +189,11 @@ public class AssessmentXMLFOBuilder {
     }
 
     private StringBuilder makePersonalData(StringBuilder result,
-            AssessmentFilling assessment) {
+            AssessmentFilling assessment, Locale locale) {
         result.append("<fo:table-row>").append('\n');
         result.append("  <fo:table-cell>").append('\n');
-        result.append(
-                "    <fo:block font-weight=\"bold\">Dati Personali</fo:block>").
+        result.append("    <fo:block font-weight=\"bold\">").
+                append(messageSource.getMessage("PersonalData", null, "?PersonalData?", locale)).append("</fo:block>").
                 append('\n');
         result.append("  </fo:table-cell>").append('\n');
         result.append("  <fo:table-cell>").append('\n');
@@ -201,7 +210,7 @@ public class AssessmentXMLFOBuilder {
         result.append("          <fo:table-cell text-align=\"end\">").append(
                 '\n');
         result.append("            <fo:block>").append('\n');
-        result.append("              Matricola:").append('\n');
+        result.append(messageSource.getMessage("StudentIdentifier", null, "?StudentIdentifier?", locale)).append(": ").append('\n');
         result.append("            </fo:block>").append('\n');
         result.append("          </fo:table-cell>").append('\n');
         result.append("          <fo:table-cell font-weight=\"bold\">").append(
@@ -216,7 +225,7 @@ public class AssessmentXMLFOBuilder {
         result.append("          <fo:table-cell text-align=\"end\">").append(
                 '\n');
         result.append("            <fo:block>").append('\n');
-        result.append("              Nome:").append('\n');
+        result.append(messageSource.getMessage("FirstName", null, "?FirstName?", locale)).append(": ").append('\n');
         result.append("            </fo:block>").append('\n');
         result.append("          </fo:table-cell>").append('\n');
         result.append("          <fo:table-cell font-weight=\"bold\">").append(
@@ -231,7 +240,7 @@ public class AssessmentXMLFOBuilder {
         result.append("          <fo:table-cell text-align=\"end\">").append(
                 '\n');
         result.append("            <fo:block>").append('\n');
-        result.append("              Cognome:").append('\n');
+        result.append(messageSource.getMessage("LastName", null, "?LastName?", locale)).append(": ").append('\n');
         result.append("            </fo:block>").append('\n');
         result.append("          </fo:table-cell>").append('\n');
         result.append("          <fo:table-cell font-weight=\"bold\">").append(
@@ -256,16 +265,16 @@ public class AssessmentXMLFOBuilder {
     }
 
     private StringBuilder makeQuestions(StringBuilder result,
-            List<QuestionFilling> questions) {
+            List<QuestionFilling> questions, Locale locale) {
         Iterator<QuestionFilling> iquestions = questions.iterator();
         int i = 0;
         while (iquestions.hasNext()) {
             i++;
             QuestionFilling question = iquestions.next();
             if (question instanceof OpenQuestionFilling) {
-                makeQuestion(result, (OpenQuestionFilling) question, i);
+                makeQuestion(result, (OpenQuestionFilling) question, i, locale);
             } else if (question instanceof ClosedQuestionFilling) {
-                makeQuestion(result, (ClosedQuestionFilling) question, i);
+                makeQuestion(result, (ClosedQuestionFilling) question, i, locale);
             }
             result.append("<fo:table-row>").append('\n');
             result.append("  <fo:table-cell number-columns-spanned=\"2\">").
@@ -278,13 +287,13 @@ public class AssessmentXMLFOBuilder {
     }
 
     private StringBuilder makeQuestion(StringBuilder result,
-            OpenQuestionFilling question, int order) {
+            OpenQuestionFilling question, int order, Locale locale) {
         final String answer = StringUtils.defaultString(question.getAnswer(),
                 " ");
         if (OpenQuestion.VISUALIZATION_LONG.equals(question.getVisualization())) {
             result.append("<fo:table-row>").append('\n');
             result.append("  <fo:table-cell>").append('\n');
-            result.append("    <fo:block font-weight=\"bold\">Domanda ").append(
+            result.append("    <fo:block font-weight=\"bold\">").append(messageSource.getMessage("Question", null, "?Question?", locale)).append(' ').append(
                     order).append("</fo:block>").append('\n');
             result.append("  </fo:table-cell>").append('\n');
             result.append("  <fo:table-cell>").append('\n');
@@ -301,7 +310,7 @@ public class AssessmentXMLFOBuilder {
         } else {
             result.append("<fo:table-row>").append('\n');
             result.append("  <fo:table-cell>").append('\n');
-            result.append("    <fo:block font-weight=\"bold\">Domanda ").append(
+            result.append("    <fo:block font-weight=\"bold\">").append(messageSource.getMessage("Question", null, "?Question?", locale)).append(' ').append(
                     order).append("</fo:block>").append('\n');
             result.append("  </fo:table-cell>").append('\n');
             result.append("  <fo:table-cell>").append('\n');
@@ -319,12 +328,12 @@ public class AssessmentXMLFOBuilder {
     }
 
     private StringBuilder makeQuestion(StringBuilder result,
-            ClosedQuestionFilling question, int order) {
+            ClosedQuestionFilling question, int order, Locale locale) {
         boolean multipleAnswer = question.isMultipleAnswer();
         HTMLFOConverter converter = new HTMLFOConverter();
         result.append("<fo:table-row>").append('\n');
         result.append("  <fo:table-cell>").append('\n');
-        result.append("    <fo:block font-weight=\"bold\">Domanda ").append(
+        result.append("    <fo:block font-weight=\"bold\">").append(messageSource.getMessage("Question", null, "?Question?", locale)).append(' ').append(
                 order).append("</fo:block>").append('\n');
         result.append("  </fo:table-cell>").append('\n');
         result.append("  <fo:table-cell>").append('\n');
