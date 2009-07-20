@@ -8,6 +8,7 @@ import com.benfante.minimark.po.AssessmentFilling;
 import com.benfante.minimark.util.Utilities;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.Resource;
@@ -60,13 +61,47 @@ public class ResultsController {
             out = res.getOutputStream();
             res.setContentType("application/pdf");
             res.setContentLength(pdfBytes.length);
-            res.setHeader("Content-Disposition", "filename=" + assessmentInfo.getLastName() + "_" + assessmentInfo.getFirstName() + ".pdf");
+            res.setHeader("Content-Disposition", " attachment; filename=\"" + assessmentInfo.getLastName() + "_" + assessmentInfo.getFirstName() + ".pdf\"");
+            res.setHeader("Expires", "0");
+            res.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+            res.setHeader("Pragma", "public");
             out.write(pdfBytes);
             out.flush();
         } catch (Exception ex) {
             logger.error("Can't build PDF file for " +
                     assessmentInfo.getIdentifier() + " " +
                     assessmentInfo.getFirstName() + " " + assessmentInfo.getLastName(), ex);
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ioe) {
+                }
+            }
+        }
+    }
+
+    @RequestMapping
+    public void pdfs(@RequestParam("id") Long id, HttpServletRequest req, HttpServletResponse res, Locale locale) {
+        Assessment assessment = assessmentDao.get(id);
+        List<AssessmentFilling> assessments = assessmentFillingDao.findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier(id);
+        OutputStream out = null;
+        try {
+            byte[] pdfBytes =
+                    assessmentPdfBuilder.buildPdf(assessments,
+                    Utilities.getBaseUrl(req), locale);
+            out = res.getOutputStream();
+            res.setContentType("application/pdf");
+            res.setContentLength(pdfBytes.length);
+            res.setHeader("Content-Disposition", " attachment; filename=\""+assessment.getTitle()+".pdf\"");
+            res.setHeader("Expires", "0");
+            res.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+            res.setHeader("Pragma", "public");
+            out.write(pdfBytes);
+            out.flush();
+        } catch (Exception ex) {
+            logger.error("Can't build PDF file for " +
+                    assessment.getTitle(), ex);
         } finally {
             if (out != null) {
                 try {

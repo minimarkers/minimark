@@ -26,4 +26,8 @@
         </constructor-arg>
     </bean>
 
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="WEB-INF/messages"/>
+    </bean>
+
 </beans>

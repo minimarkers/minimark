@@ -6,6 +6,7 @@
     <p><spring:message code="Incumbent" text="?Incumbent?"/>: ${assessment.course.incumbent}</p>
 </div>
 <h3><spring:message code="Results" text="?Results?"/></h3>
+<a class="action-pdf-document" href="pdfs.html?id=${assessment.id}" title="PDF"><spring:message code="AllAssessments" text="?AllAssessments?"/></a>
 <spring:message code="LastName" text="?LastName?" var="LastNameTitle"/>
 <spring:message code="FirstName" text="?FirstName?" var="FirstNameTitle"/>
 <spring:message code="StudentIdentifier" text="?StudentIdentifier?" var="IdentifierTitle"/>
