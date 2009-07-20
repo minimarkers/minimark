@@ -17,17 +17,18 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 /**
+ * A FO builder for assessments.
  *
  * @author Lucio Benfante (<A HREF="mailto:benfante@dei.unipd.it">benfante@dei.unipd.it</A>)
- * @version $Id: AssessmentXMLFOBuilder.java,v f2980690000e 2009/07/18 08:16:13 lucio $
+ * @version $Id: AssessmentXMLFOBuilder.java,v 6b4efa11b524 2009/07/20 14:01:05 lucio $
  */
 @Component
 public class AssessmentXMLFOBuilder {
     @Resource
     private MessageSource messageSource;
 
-    /** Creates a new instance of AssessmentXMLFOBuilder */
-    private AssessmentXMLFOBuilder() {
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
     public String makeXMLFO(AssessmentFilling assessment, Locale locale) {

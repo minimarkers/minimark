@@ -1,4 +1,4 @@
-- &AssessmentFilling-igLCM1
+- &AssessmentFilling-igLCM0101
   assessment: *Assessment-igLCM1
   startDate: 08/15/2009 10:00
   firstName: Mario
@@ -7,3 +7,12 @@
   password: password
   loggedIn: true
   submittedDate: 08/15/2009 11:15
+- &AssessmentFilling-igLCM0102
+  assessment: *Assessment-igLCM1
+  startDate: 08/15/2009 10:01
+  firstName: Giuseppe
+  lastName: Verdi
+  identifier: 12346
+  password: password
+  loggedIn: true
+  submittedDate: 08/15/2009 11:16
