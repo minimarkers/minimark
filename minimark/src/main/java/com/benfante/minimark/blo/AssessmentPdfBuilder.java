@@ -5,6 +5,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.pdf.PRAcroForm;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfCopy;
+import com.lowagie.text.pdf.PdfDestination;
 import com.lowagie.text.pdf.PdfImportedPage;
 import com.lowagie.text.pdf.PdfOutline;
 import com.lowagie.text.pdf.PdfReader;
@@ -133,6 +134,9 @@ public class AssessmentPdfBuilder {
                     rootOutline = cb.getRootOutline();
                 }
                 // step 4: we add content
+                new PdfOutline(rootOutline,
+                        new PdfDestination(PdfDestination.FIT),
+                        assessment.getLastName() + " " + assessment.getFirstName());
                 PdfImportedPage page;
                 for (int i = 0; i < n;) {
                     ++i;
