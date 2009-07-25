@@ -1,6 +1,7 @@
 package com.benfante.minimark.controllers;
 
 import com.benfante.minimark.blo.AssessmentPdfBuilder;
+import com.benfante.minimark.blo.ExcelResultBuilder;
 import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.dao.AssessmentFillingDao;
 import com.benfante.minimark.po.Assessment;
@@ -8,15 +9,12 @@ import com.benfante.minimark.po.AssessmentFilling;
 import com.benfante.minimark.util.Utilities;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.avalon.framework.logger.ConsoleLogger;
-import org.apache.avalon.framework.logger.Logger;
-import org.apache.fop.apps.FopFactory;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/results/*.html")
 public class ResultsController {
-    private static final Logger log = new ConsoleLogger(ConsoleLogger.LEVEL_WARN);
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ResultsController.class);
-
-    private FopFactory fopFactory = FopFactory.newInstance();
+    private static final Logger logger = Logger.getLogger(ResultsController.class);
 
     @Resource
     private AssessmentDao assessmentDao;
@@ -41,6 +36,8 @@ public class ResultsController {
     private AssessmentFillingDao assessmentFillingDao;
     @Resource
     private AssessmentPdfBuilder assessmentPdfBuilder;
+    @Resource
+    private ExcelResultBuilder excelResultBuilder;
 
     @RequestMapping
     public void list(@RequestParam("id") Long id, Model model) {
@@ -111,4 +108,36 @@ public class ResultsController {
             }
         }
     }
+
+    @RequestMapping
+    public void xls(@RequestParam("id") Long id, HttpServletRequest req, HttpServletResponse res, Locale locale) {
+        Assessment assessment = assessmentDao.get(id);
+        List<AssessmentFilling> assessments = assessmentFillingDao.findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier(id);
+        OutputStream out = null;
+        try {
+            byte[] xlsBytes =
+                    excelResultBuilder.buildXls(assessments, locale);
+            out = res.getOutputStream();
+            res.setContentType("application/vnd.ms-excel");
+            res.setContentLength(xlsBytes.length);
+            res.setHeader("Content-Disposition", " attachment; filename=\""+assessment.getTitle()+".xls\"");
+            res.setHeader("Expires", "0");
+            res.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+            res.setHeader("Pragma", "public");
+            out.write(xlsBytes);
+            out.flush();
+        } catch (Exception ex) {
+            logger.error("Can't build XLS file for " +
+                    assessment.getTitle(), ex);
+            ex.printStackTrace();
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ioe) {
+                }
+            }
+        }
+    }
+
 }

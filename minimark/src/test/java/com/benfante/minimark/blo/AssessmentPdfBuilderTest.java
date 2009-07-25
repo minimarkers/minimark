@@ -73,4 +73,5 @@ public class AssessmentPdfBuilderTest extends MinimarkBaseTest {
             }
         }
     }
+
 }
