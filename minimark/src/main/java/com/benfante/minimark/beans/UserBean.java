@@ -13,6 +13,7 @@
 // limitations under the License.
 package com.benfante.minimark.beans;
 
+import com.benfante.minimark.po.UserProfile;
 import java.util.LinkedList;
 import java.util.List;
 import org.parancoe.plugins.security.User;
@@ -31,11 +32,14 @@ public class UserBean {
 
     @CascadeValidation
     private User user;
-    @Length(min=4, max=40, applyIf="newPassword != ''")
+    @Length(min = 4, max = 40, applyIf = "newPassword != ''")
     private String newPassword;
     @Expression("confirmPassword == newPassword")
     private String confirmPassword;
-    List<AuthorityCheckBox> authorityCheckBoxes = new LinkedList<AuthorityCheckBox>();
+    private List<AuthorityCheckBox> authorityCheckBoxes =
+            new LinkedList<AuthorityCheckBox>();
+    @CascadeValidation
+    private UserProfile userProfile;
 
     public User getUser() {
         return user;
@@ -65,8 +69,16 @@ public class UserBean {
         return authorityCheckBoxes;
     }
 
-    public void setAuthorityCheckBoxes(List<AuthorityCheckBox> authorityCheckBoxes) {
+    public void setAuthorityCheckBoxes(
+            List<AuthorityCheckBox> authorityCheckBoxes) {
         this.authorityCheckBoxes = authorityCheckBoxes;
     }
 
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 }

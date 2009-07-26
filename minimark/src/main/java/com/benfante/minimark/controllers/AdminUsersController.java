@@ -15,6 +15,8 @@ package com.benfante.minimark.controllers;
 
 import com.benfante.minimark.beans.AuthorityCheckBox;
 import com.benfante.minimark.beans.UserBean;
+import com.benfante.minimark.dao.UserProfileDao;
+import com.benfante.minimark.po.UserProfile;
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.parancoe.plugins.security.Authority;
@@ -51,6 +53,8 @@ public class AdminUsersController {
     private UserDao userDao;
     @Autowired
     private AuthorityDao authorityDao;
+    @Autowired
+    private UserProfileDao userProfileDao;
 
     @RequestMapping
     public String edit(@RequestParam("id") Long id,
@@ -60,7 +64,7 @@ public class AdminUsersController {
         if (user != null) {
             userBean = new UserBean();
             List<Authority> authorities = authorityDao.findAll();
-            for(Authority authority: authorities) {
+            for (Authority authority : authorities) {
                 AuthorityCheckBox authorityCheckBox = new AuthorityCheckBox();
                 authorityCheckBox.setAuthority(authority);
                 if (user.getAuthorities().contains(authority)) {
@@ -69,6 +73,8 @@ public class AdminUsersController {
                 userBean.getAuthorityCheckBoxes().add(authorityCheckBox);
             }
             userBean.setUser(user);
+            userBean.setUserProfile(
+                    userProfileDao.findByUsername(user.getUsername()));
         } else {
             throw new RuntimeException("User not found");
         }
@@ -77,7 +83,7 @@ public class AdminUsersController {
     }
 
     @RequestMapping
-    @Validation(view=EDIT_VIEW)
+    @Validation(view = EDIT_VIEW)
     public String save(@ModelAttribute(USER_ATTR_NAME) UserBean userBean,
             BindingResult result, SessionStatus status) {
         User user = userBean.getUser();
@@ -87,12 +93,14 @@ public class AdminUsersController {
                     userBean.getNewPassword(), user.getUsername()));
         }
         user.getAuthorities().clear();
-        for (AuthorityCheckBox authorityCheckBox: userBean.getAuthorityCheckBoxes()) {
+        for (AuthorityCheckBox authorityCheckBox : userBean.
+                getAuthorityCheckBoxes()) {
             if (authorityCheckBox.isChecked()) {
                 user.getAuthorities().add(authorityCheckBox.getAuthority());
             }
         }
         userDao.store(user);
+        userProfileDao.store(userBean.getUserProfile());
         status.setComplete();
         return "redirect:list.html";
     }
@@ -100,7 +108,7 @@ public class AdminUsersController {
     @RequestMapping
     public ModelAndView list() {
         ModelAndView mv = new ModelAndView(LIST_VIEW);
-        List<User> users = userDao.findAll();
+        List<UserProfile> users = userProfileDao.findAll();
         mv.addObject("users", users);
         return mv;
     }
@@ -111,12 +119,15 @@ public class AdminUsersController {
         // Authority authority = authorityDao.findByRole("ROLE_PARANCOE");
         User user = new User();
         List<Authority> authorities = authorityDao.findAll();
-        for(Authority authority: authorities) {
+        for (Authority authority : authorities) {
             AuthorityCheckBox authorityCheckBox = new AuthorityCheckBox();
             authorityCheckBox.setAuthority(authority);
             userBean.getAuthorityCheckBoxes().add(authorityCheckBox);
         }
         userBean.setUser(user);
+        UserProfile userProfile = new UserProfile();
+        userProfile.setUser(user);
+        userBean.setUserProfile(userProfile);
         model.addAttribute(USER_ATTR_NAME, userBean);
         return EDIT_VIEW;
     }
@@ -125,6 +136,9 @@ public class AdminUsersController {
     public String delete(@RequestParam("id") Long id, Model model) {
         User user = userDao.get(id);
         if (user != null) {
+            UserProfile userProfile =
+                    userProfileDao.findByUsername(user.getUsername());
+            userProfileDao.delete(userProfile);
             userDao.delete(user);
         } else {
             throw new RuntimeException("User not found");

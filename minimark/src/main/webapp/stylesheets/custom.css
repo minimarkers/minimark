@@ -36,6 +36,14 @@ param {
 
 /* Link end */
 
+/* Tables */
+
+td.left-aligned {
+    text-align: left;
+}
+
+/* Tables end */
+
 #languages {
     float: right;
     text-align: right;
