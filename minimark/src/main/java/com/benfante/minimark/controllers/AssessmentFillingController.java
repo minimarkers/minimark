@@ -1,6 +1,7 @@
 package com.benfante.minimark.controllers;
 
 import com.benfante.minimark.blo.AssessmentFillingBo;
+import com.benfante.minimark.blo.ResultCalculationBo;
 import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.dao.AssessmentFillingDao;
 import com.benfante.minimark.po.Assessment;
@@ -40,6 +41,8 @@ public class AssessmentFillingController {
     private AssessmentFillingDao assessmentFillingDao;
     @Resource
     private AssessmentFillingBo assessmentFillingBo;
+    @Resource
+    private ResultCalculationBo resultCalculationBo;
 
     @RequestMapping
     public String logon(@RequestParam("id") Long id, HttpServletRequest req, HttpSession session, Model model) {
@@ -84,6 +87,7 @@ public class AssessmentFillingController {
         AssessmentFilling assessmentFilling = (AssessmentFilling) session.getAttribute(ASSESSMENT_ATTR_NAME);
         assessmentFilling = assessmentFillingDao.get(assessmentFilling.getId()); // refresh from DB
         assessmentFilling.setSubmittedDate(new Date());
+        resultCalculationBo.calculate(assessmentFilling);
         status.setComplete();
         return "redirect:showResult.html?id=" + assessmentFilling.getId();
     }

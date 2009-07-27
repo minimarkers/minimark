@@ -1,24 +1,32 @@
 - &ClosedQuestionFilling-0101
+  id: 1
   assessmentFilling: *AssessmentFilling-igLCM0101
   originalQuestion: *ClosedQuestion-001
   title: ClosedQuestion 001
   contentFilter: html
   content: A test closed question (001)
+  weight: 1.0
 - &ClosedQuestionFilling-0102
+  id: 2
   assessmentFilling: *AssessmentFilling-igLCM0101
   originalQuestion: *ClosedQuestion-002
   title: ClosedQuestion 002
   contentFilter: html
   content: A test closed question (002)
+  weight: 1.0
 - &ClosedQuestionFilling-0201
+  id: 3
   assessmentFilling: *AssessmentFilling-igLCM0102
   originalQuestion: *ClosedQuestion-001
   title: ClosedQuestion 001
   contentFilter: html
   content: A test closed question (001)
+  weight: 1.0
 - &ClosedQuestionFilling-0202
+  id: 4
   assessmentFilling: *AssessmentFilling-igLCM0102
   originalQuestion: *ClosedQuestion-002
   title: ClosedQuestion 002
   contentFilter: html
   content: A test closed question (002)
+  weight: 1.0

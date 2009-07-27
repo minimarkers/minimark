@@ -1,5 +1,6 @@
 package com.benfante.minimark.po;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,6 +40,8 @@ public class AssessmentFilling extends EntityBase {
     protected Boolean loggedIn;
     protected Date submittedDate;
     protected List<QuestionFilling> questions = new LinkedList<QuestionFilling>();
+    protected Boolean evaluated;
+    protected BigDecimal evaluationResult;
 
     @ManyToOne
     public Assessment getAssessment() {
@@ -116,6 +119,22 @@ public class AssessmentFilling extends EntityBase {
 
     public void setQuestions(List<QuestionFilling> questions) {
         this.questions = questions;
+    }
+
+    public Boolean isEvaluated() {
+        return evaluated;
+    }
+
+    public void setEvaluated(Boolean evaluated) {
+        this.evaluated = evaluated;
+    }
+
+    public BigDecimal getEvaluationResult() {
+        return evaluationResult;
+    }
+
+    public void setEvaluationResult(BigDecimal evaluationResult) {
+        this.evaluationResult = evaluationResult;
     }
 
 }

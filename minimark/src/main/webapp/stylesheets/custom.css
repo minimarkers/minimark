@@ -200,6 +200,13 @@ ul#nav {
     border: 0px solid!important;
 }
 
+.action-run, .action-run:hover {
+    background: url(../images/silk/icons/cog.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+}
+
 /* Actions end */
 
 /* Forms */

@@ -1,5 +1,6 @@
 package com.benfante.minimark.po;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -34,12 +35,49 @@ public class ClosedQuestionFilling extends QuestionFilling {
 
     @Transient
     public boolean isMultipleAnswer() {
+        return (countCorrectAnswers() > 1);
+    }
+
+    public int countCorrectAnswers() {
         int count = 0;
         for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
-            if (fixedAnswer.getCorrect()) {
+            if (fixedAnswer.getCorrect() != null && fixedAnswer.getCorrect()) {
                 count++;
             }
         }
-        return (count > 1);
+        return count;
     }
+
+    public int countSelectedCorrectAnswers() {
+        int count = 0;
+        for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
+            if ((fixedAnswer.getCorrect() != null && fixedAnswer.getCorrect())
+                    && (fixedAnswer.getSelected() != null && fixedAnswer.getSelected())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public BigDecimal weightCorrectAnswers() {
+        BigDecimal result = BigDecimal.ZERO;
+        for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
+            if (fixedAnswer.getCorrect() != null && fixedAnswer.getCorrect()) {
+                result = result.add(fixedAnswer.getWeight());
+            }
+        }
+        return result;
+    }
+
+    public BigDecimal weightSelectedCorrectAnswers() {
+        BigDecimal result = BigDecimal.ZERO;
+        for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
+            if ((fixedAnswer.getCorrect() != null && fixedAnswer.getCorrect())
+                    && (fixedAnswer.getSelected() != null && fixedAnswer.getSelected())) {
+                result = result.add(fixedAnswer.getWeight());
+            }
+        }
+        return result;
+    }
+
 }

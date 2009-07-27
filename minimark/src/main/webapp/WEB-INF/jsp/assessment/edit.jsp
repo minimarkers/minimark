@@ -23,6 +23,18 @@
         <spring:message code="No" text="?No?" var="activeNoLabel"/>
         <form:option value="false" label="${activeNoLabel}"/>
     </form:select><br/>
+    <form:errors path="evaluationType" cssClass="errorBox"/>
+    <form:label path="evaluationType"><spring:message code="EvaluationType" text="?EvaluationType?"/>:</form:label>
+    <form:select path="evaluationType">
+        <spring:message code="ETSimpleSum" text="?ETSimpleSum?" var="ETSimpleSumLabel"/>
+        <form:option value="simple_sum" label="${ETSimpleSumLabel}"/>
+    </form:select><br/>
+    <form:errors path="evaluationClosedType" cssClass="errorBox"/>
+    <form:label path="evaluationClosedType"><spring:message code="EvaluationClosedType" text="?EvaluationClosedType?"/>:</form:label>
+    <form:select path="evaluationClosedType">
+        <spring:message code="ETCSumCorrectAnswers" text="?ETCSumCorrectAnswers?" var="ETCSumCorrectAnswersLabel"/>
+        <form:option value="sum_correct_answers" label="${ETCSumCorrectAnswersLabel}"/>
+    </form:select><br/>
     <form:errors path="newPassword" cssClass="errorBox"/>
     <form:label path="newPassword"><spring:message code="Password" text="?Password?"/>:</form:label><form:password path="newPassword" showPassword="true" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <form:errors path="confirmPassword" cssClass="errorBox"/>

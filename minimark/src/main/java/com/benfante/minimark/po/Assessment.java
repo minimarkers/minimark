@@ -22,9 +22,15 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Assessment.findByTeacherUsername", query="select a from Course c join c.assessments a join c.courseTeachers ct where ct.userProfile.user.username = ?")
+    @NamedQuery(name = "Assessment.findByTeacherUsername",
+    query =
+    "select a from Course c join c.assessments a join c.courseTeachers ct where ct.userProfile.user.username = ?")
 })
 public class Assessment extends EntityBase {
+
+    public static final String EVALUATION_SIMPLE_SUM = "simple_sum";
+    public static final String EVALUATION_CLOSED_SUM_CORRECT_ANSWERS =
+            "sum_correct_answers";
     private List<AssessmentFilling> assessmentFillings;
     protected List<AssessmentQuestion> questions;
     protected Course course;
@@ -36,6 +42,8 @@ public class Assessment extends EntityBase {
     @NotNull
     protected Date assessmentDate;
     protected String password;
+    protected String evaluationType;
+    protected String evaluationClosedType;
 
     @ManyToOne
     public Course getCourse() {
@@ -98,10 +106,9 @@ public class Assessment extends EntityBase {
     }
 
     /* Password verification */
-
     private String newPassword = "";
     @Expression("confirmPassword == newPassword")
-    private String confirmPassword ="";
+    private String confirmPassword = "";
 
     @Transient
     public String getConfirmPassword() {
@@ -130,5 +137,19 @@ public class Assessment extends EntityBase {
         this.assessmentFillings = assessmentFillings;
     }
 
+    public String getEvaluationType() {
+        return evaluationType;
+    }
 
+    public void setEvaluationType(String evaluationType) {
+        this.evaluationType = evaluationType;
+    }
+
+    public String getEvaluationClosedType() {
+        return evaluationClosedType;
+    }
+
+    public void setEvaluationClosedType(String evaluationClosedType) {
+        this.evaluationClosedType = evaluationClosedType;
+    }
 }
