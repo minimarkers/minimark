@@ -3,9 +3,9 @@
 
 <div class="displaytag">
     <display:table  id="ca"  name="assessments" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" requestURI="${cp}/assessment/list.html" >
-        <display:column property="title" titleKey="Title"/>
-        <display:column property="description"  titleKey="Description"/>
-        <display:column titleKey="Course">${ca.course.name}</display:column>
+        <display:column property="title" titleKey="Title" class="left-aligned"/>
+        <display:column property="description"  titleKey="Description" class="left-aligned"/>
+        <display:column titleKey="Course" class="left-aligned">${ca.course.name}</display:column>
         <display:column titleKey="Date">
             <fmt:formatDate value="${ca.assessmentDate}" dateStyle="short"/>
         </display:column>

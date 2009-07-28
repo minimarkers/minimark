@@ -15,9 +15,9 @@
 <spring:message code="Submitted" text="?Submitted?" var="SubmittedTitle"/>
 <spring:message code="Result" text="?Result?" var="ResultTitle"/>
 <display:table id="curr"  name="fillings">
-    <display:column property="lastName" title="${LastNameTitle}"/>
-    <display:column property="firstName" title="${FirstNameTitle}"/>
-    <display:column property="identifier"  title="${IdentifierTitle}"/>
+    <display:column property="lastName" title="${LastNameTitle}" class="left-aligned"/>
+    <display:column property="firstName" title="${FirstNameTitle}" class="left-aligned"/>
+    <display:column property="identifier"  title="${IdentifierTitle}" class="left-aligned"/>
     <display:column title="${SubmittedTitle}">
         <fmt:formatDate value="${curr.submittedDate}" type="both" dateStyle="short"/>
     </display:column>

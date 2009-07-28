@@ -28,7 +28,14 @@
     <form:select path="evaluationType">
         <spring:message code="ETSimpleSum" text="?ETSimpleSum?" var="ETSimpleSumLabel"/>
         <form:option value="simple_sum" label="${ETSimpleSumLabel}"/>
+        <spring:message code="ETNormalizedSum" text="?ETNormalizedSum?" var="ETNormalizedSumLabel"/>
+        <form:option value="normalized_sum" label="${ETNormalizedSumLabel}"/>
     </form:select><br/>
+    <div id="ETNormalizedSumFields">
+        <form:errors path="evaluationMaxValue" cssClass="errorBox"/>
+        <form:label path="evaluationMaxValue"><spring:message code="EvaluationMaxValue" text="?EvaluationMaxValue?"/>:</form:label><form:input path="evaluationMaxValue" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
+    </div>
+    <form:errors path="description" cssClass="errorBox"/>
     <form:errors path="evaluationClosedType" cssClass="errorBox"/>
     <form:label path="evaluationClosedType"><spring:message code="EvaluationClosedType" text="?EvaluationClosedType?"/>:</form:label>
     <form:select path="evaluationClosedType">
@@ -40,10 +47,23 @@
     <form:errors path="confirmPassword" cssClass="errorBox"/>
     <form:label path="confirmPassword"><spring:message code="ConfirmPassword" text="?ConfirmPassword?"/>:</form:label><form:password path="confirmPassword" showPassword="true" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <div class="formButtons">
-        <input type="submit" value="<spring:message code='Save' text='?Save?'/>" class="submit-button"/>&nbsp;&nbsp;<a href="list.html" class="action-back"><spring:message code="Back" text="?Back?"/></a>
+        <a href="list.html" class="action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Save' text='?Save?'/>" class="submit-button"/>
     </div>
 </form:form>
 
 <script type="text/javascript">
 attachCalendar('assessmentDateCalendar', 'assessmentDate', false);
+
+new Field.Observer('evaluationType', 0.5, showETFields);
+
+showETFields();
+
+function showETFields() {
+    $('ETNormalizedSumFields').hide();
+    $('evaluationMaxValue').disable();
+    if ($F('evaluationType') == 'normalized_sum') {
+        $('evaluationMaxValue').enable();
+        $('ETNormalizedSumFields').show();
+    }
+}
 </script>

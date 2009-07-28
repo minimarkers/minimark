@@ -1,5 +1,6 @@
 package com.benfante.minimark.po;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -29,6 +30,7 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 public class Assessment extends EntityBase {
 
     public static final String EVALUATION_SIMPLE_SUM = "simple_sum";
+    public static final String EVALUATION_NORMALIZED_SUM = "normalized_sum";
     public static final String EVALUATION_CLOSED_SUM_CORRECT_ANSWERS =
             "sum_correct_answers";
     private List<AssessmentFilling> assessmentFillings;
@@ -44,6 +46,8 @@ public class Assessment extends EntityBase {
     protected String password;
     protected String evaluationType;
     protected String evaluationClosedType;
+    @NotNull(applyIf = "evaluationType == 'normalized_sum'")
+    protected BigDecimal evaluationMaxValue;
 
     @ManyToOne
     public Course getCourse() {
@@ -151,5 +155,13 @@ public class Assessment extends EntityBase {
 
     public void setEvaluationClosedType(String evaluationClosedType) {
         this.evaluationClosedType = evaluationClosedType;
+    }
+
+    public BigDecimal getEvaluationMaxValue() {
+        return evaluationMaxValue;
+    }
+
+    public void setEvaluationMaxValue(BigDecimal evaluationMaxValue) {
+        this.evaluationMaxValue = evaluationMaxValue;
     }
 }

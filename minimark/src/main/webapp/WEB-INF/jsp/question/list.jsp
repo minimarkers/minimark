@@ -36,10 +36,10 @@
                 <c:otherwise><spring:message code="UnknownQuestionType" text="?UnknownQuestionType?"/></c:otherwise>
             </c:choose>
         </display:column>
-        <display:column property="title" titleKey="Title"/>
-        <display:column property="filteredContent"  titleKey="Content"/>
+        <display:column property="title" titleKey="Title" class="left-aligned"/>
+        <display:column property="filteredContent"  titleKey="Content" class="left-aligned"/>
         <display:column property="weight"  titleKey="Weight"/>
-        <display:column property="tagList"  titleKey="Tags"/>
+        <display:column property="tagList"  titleKey="Tags" class="left-aligned"/>
         <display:column>
             <a class="action-edit" href="${cp}/question/edit.html?id=${curr.id}"><spring:message code="Edit" text="?Edit?"/></a>
             <spring:message code='confirmDeleteQuestion' text='?confirmDeleteQuestion?' var="confirmDeleteQuestionMessage"/>

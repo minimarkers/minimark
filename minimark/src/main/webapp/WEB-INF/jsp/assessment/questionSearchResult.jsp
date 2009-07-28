@@ -32,10 +32,10 @@
             <c:otherwise><spring:message code="UnknownQuestionType" text="?UnknownQuestionType?"/></c:otherwise>
         </c:choose>
     </display:column>
-    <display:column property="title" title="${TitleTitle}"/>
-    <display:column property="filteredContent"  title="${ContentTitle}"/>
+    <display:column property="title" title="${TitleTitle}" class="left-aligned"/>
+    <display:column property="filteredContent"  title="${ContentTitle}" class="left-aligned"/>
     <display:column property="weight"  title="${WeightTitle}"/>
-    <display:column property="tagList"  title="${TagsTitle}"/>
+    <display:column property="tagList"  title="${TagsTitle}" class="left-aligned"/>
     <display:column>
         <a class="action-right" href="#" onclick="addQuestion(${curr.id}); return false;" title="<spring:message code="Add" text="?Add?"/>"></a>
     </display:column>

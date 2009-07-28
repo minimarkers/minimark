@@ -4,7 +4,7 @@
     <a class="action-add" href="#" onclick="return FAEditor.addFixedAnswer();"><spring:message code="AddAnswer" text="?AddAnswer?"/></a>
 </div>
 <display:table id="curr"  name="question.fixedAnswers" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" >
-    <display:column property="filteredContent"  titleKey="Content"/>
+    <display:column property="filteredContent"  titleKey="Content" class="left-aligned"/>
     <display:column property="weight"  titleKey="Weight"/>
     <display:column titleKey="Correct">
         <c:choose>

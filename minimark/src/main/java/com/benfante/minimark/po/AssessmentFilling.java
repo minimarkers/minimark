@@ -12,6 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 import org.parancoe.persistence.po.hibernate.EntityBase;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
@@ -137,4 +138,12 @@ public class AssessmentFilling extends EntityBase {
         this.evaluationResult = evaluationResult;
     }
 
+    @Transient
+    public BigDecimal getTotalWeight() {
+        BigDecimal result = BigDecimal.ZERO;
+        for (QuestionFilling question : getQuestions()) {
+            result = result.add(question.getWeight());
+        }
+        return result;
+    }
 }

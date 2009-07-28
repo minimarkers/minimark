@@ -6,6 +6,7 @@ import com.benfante.minimark.po.ClosedQuestionFilling;
 import com.benfante.minimark.po.OpenQuestionFilling;
 import com.benfante.minimark.po.QuestionFilling;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,6 +31,8 @@ public class ResultCalculationBo {
         if (evaluationType == null || Assessment.EVALUATION_SIMPLE_SUM.equals(
                 evaluationType)) {
             result = calculateSimpleSum(assessment);
+        } else if (Assessment.EVALUATION_NORMALIZED_SUM.equals(evaluationType)) {
+            result = calculateNormalizedSum(assessment, assessment.getAssessment().getEvaluationMaxValue());
         }
         assessment.setEvaluationResult(result);
         assessment.setEvaluated(Boolean.TRUE);
@@ -51,6 +54,26 @@ public class ResultCalculationBo {
                         getWeight()));
             }
         }
+        return result;
+    }
+
+    /**
+     * Evaluate an assessment normalizing the sum of the marks of each question
+     * to a maximum value.
+     *
+     * @param assessment The assessment to evaluate.
+     * @return The evaluation
+     */
+    public BigDecimal calculateNormalizedSum(AssessmentFilling assessment, BigDecimal maxValue) {
+        BigDecimal result = BigDecimal.ZERO;
+        for (QuestionFilling questionFilling : assessment.getQuestions()) {
+            if (questionFilling.getMark() != null) {
+                // result = result + (mark*weight)
+                result = result.add(questionFilling.getMark().multiply(questionFilling.
+                        getWeight()));
+            }
+        }
+        result = result.multiply(maxValue).divide(assessment.getTotalWeight(), RoundingMode.HALF_EVEN);
         return result;
     }
 
@@ -81,7 +104,9 @@ public class ResultCalculationBo {
     }
 
     public void evaluateOpenQuestion(OpenQuestionFilling openQuestionFilling) {
-        openQuestionFilling.setMark(BigDecimal.ZERO);
+        if (openQuestionFilling.getMark() == null) {
+            openQuestionFilling.setMark(BigDecimal.ZERO);
+        }
     }
 
     public void evaluateClosedQuestion(

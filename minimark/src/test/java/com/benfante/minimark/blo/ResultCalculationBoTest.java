@@ -28,12 +28,29 @@ public class ResultCalculationBoTest extends MinimarkBaseTest {
      * Test of calculate method, of class ResultCalculationBo.
      */
     public void testCalculate() {
-        List<AssessmentFilling> assessments = assessmentFillingDao.findAll();
+        List<AssessmentFilling> assessments = assessmentFillingDao.findByIdentifierOrderBySubmittedDate("12345");
+        assertSize(1, assessments);
         AssessmentFilling assessment = assessments.get(0);
         BigDecimal result = resultCalculationBo.calculate(assessment);
         assertNotNull(result);
+        assertEquals(31.5, result.doubleValue());
         assertEquals(result, assessment.getEvaluationResult());
         assertEquals(Boolean.TRUE, assessment.isEvaluated());
+    }
+
+    /**
+     * Test of calculateNormalizedSum method, of class ResultCalculationBo.
+     */
+    public void testCalculateNormalizedSum() {
+        List<AssessmentFilling> assessments = assessmentFillingDao.findByIdentifierOrderBySubmittedDate("12345");
+        assertSize(1, assessments);
+        AssessmentFilling assessment = assessments.get(0);
+        final BigDecimal maxValue = BigDecimal.valueOf(10);
+        resultCalculationBo.evaluateAllQuestions(assessment);
+        BigDecimal result = resultCalculationBo.calculateNormalizedSum(assessment,maxValue);
+        assertNotNull(result);
+        assertTrue("Result is over the maximum", result.compareTo(maxValue) <= 0);
+        assertEquals(5.0, result.doubleValue());
     }
 
     public void testEvaluateClosedQuestion1() {

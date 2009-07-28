@@ -6,7 +6,8 @@
   content: A test question (002)
   visualization: long
   answer: la mia risposta lunga
-  weight: 3.0
+  weight: 60.0
+  mark: 0.5
 - &OpenQuestionFilling-00301
   assessmentFilling: *AssessmentFilling-igLCM0101
   originalQuestion: *OpenQuestion-003
@@ -16,6 +17,7 @@
   visualization: short
   answer: la mia risposta corta
   weight: 1.0
+  mark: 1.0
 - &OpenQuestionFilling-00401
   assessmentFilling: *AssessmentFilling-igLCM0102
   originalQuestion: *OpenQuestion-002
