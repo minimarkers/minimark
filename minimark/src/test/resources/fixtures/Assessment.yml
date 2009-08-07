@@ -4,3 +4,4 @@
   description: igLCM1 test assessment
   assessmentDate: 2009-08-15
   active: true
+  evaluationClosedType: sum_correct_answers

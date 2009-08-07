@@ -33,6 +33,8 @@ public class Assessment extends EntityBase {
     public static final String EVALUATION_NORMALIZED_SUM = "normalized_sum";
     public static final String EVALUATION_CLOSED_SUM_CORRECT_ANSWERS =
             "sum_correct_answers";
+    public static final String EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS =
+            "sum_correct_minus_wrong_answers";
     private List<AssessmentFilling> assessmentFillings;
     protected List<AssessmentQuestion> questions;
     protected Course course;
@@ -48,6 +50,7 @@ public class Assessment extends EntityBase {
     protected String evaluationClosedType;
     @NotNull(applyIf = "evaluationType == 'normalized_sum'")
     protected BigDecimal evaluationMaxValue;
+    protected BigDecimal evaluationClosedMinimumEvaluation = BigDecimal.ZERO;
 
     @ManyToOne
     public Course getCourse() {
@@ -163,5 +166,14 @@ public class Assessment extends EntityBase {
 
     public void setEvaluationMaxValue(BigDecimal evaluationMaxValue) {
         this.evaluationMaxValue = evaluationMaxValue;
+    }
+
+    public BigDecimal getEvaluationClosedMinimumEvaluation() {
+        return evaluationClosedMinimumEvaluation;
+    }
+
+    public void setEvaluationClosedMinimumEvaluation(
+            BigDecimal evaluationClosedMinimumEvaluation) {
+        this.evaluationClosedMinimumEvaluation = evaluationClosedMinimumEvaluation;
     }
 }

@@ -80,4 +80,25 @@ public class ClosedQuestionFilling extends QuestionFilling {
         return result;
     }
 
+    public BigDecimal weightWrongAnswers() {
+        BigDecimal result = BigDecimal.ZERO;
+        for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
+            if (fixedAnswer.getCorrect() == null || !fixedAnswer.getCorrect()) {
+                result = result.add(fixedAnswer.getWeight());
+            }
+        }
+        return result;
+    }
+
+    public BigDecimal weightSelectedWrongAnswers() {
+        BigDecimal result = BigDecimal.ZERO;
+        for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
+            if ((fixedAnswer.getCorrect() == null || !fixedAnswer.getCorrect())
+                    && (fixedAnswer.getSelected() != null && fixedAnswer.getSelected())) {
+                result = result.add(fixedAnswer.getWeight());
+            }
+        }
+        return result;
+    }
+
 }
