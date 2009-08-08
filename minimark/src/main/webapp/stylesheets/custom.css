@@ -7,6 +7,21 @@ body {
     line-height: 18px!important;
 }
 
+#sidebar h3 {
+    font-weight: bold;
+    color: #888888;
+}
+
+#sidebar ul {
+    list-style: circle;
+    list-style-position: inside;
+}
+
+#sidebar li {
+    font-size: 12px;
+    text-align: justify;
+}
+
 /* Link */
 
 a, a:visited {
