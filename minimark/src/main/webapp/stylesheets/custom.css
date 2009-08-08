@@ -4,7 +4,6 @@ body {
 }
 
 #content {
-    width: 100%;
     line-height: 18px!important;
 }
 
@@ -387,6 +386,11 @@ div.error_flash p {
 }
 
 /* Assessment end */
+
+.fullWidth {
+    clear: both;
+    width: 100%!important;
+}
 
 .midWidth {
     width: 48%;

@@ -1,4 +1,5 @@
 <%@ include file="common.jspf" %>
+<h3><spring:message code="AvailableAssessments" text="?AvailableAssessments?"/></h3>
 <c:choose>
     <c:when test="${empty assessments}">
         <spring:message code="NoActiveAssessments" text="?NoActiveAssessments?"/>

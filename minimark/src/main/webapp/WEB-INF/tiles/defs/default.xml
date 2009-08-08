@@ -11,4 +11,12 @@
         <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp"/>
     </definition>
 
+    <definition name="welcome" template="/WEB-INF/tiles/templates/main.jsp">
+        <put-attribute name="header" value="/WEB-INF/jsp/header.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp"/>
+        <put-attribute name="sidebar" value="/WEB-INF/jsp/sidebar.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp"/>
+        <put-attribute name="main" value="/WEB-INF/jsp/welcome.jsp"/>
+    </definition>
+
 </tiles-definitions>

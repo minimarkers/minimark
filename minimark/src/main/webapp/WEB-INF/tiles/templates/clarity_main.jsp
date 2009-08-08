@@ -19,7 +19,7 @@
 
         <div id="container">
 
-            <div id="content">
+            <div id="content" class="fullWidth">
                 <p:flash type="notice"/>
                 <p:flash type="error"/>
                 <tiles:insertAttribute name="main"/>
