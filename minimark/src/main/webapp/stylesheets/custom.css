@@ -394,6 +394,10 @@ div.error_flash p {
     padding: 5px;
 }
 
+.smallText {
+    font-size: 10px;
+}
+
 /* assessment filling start */
 
 .fillingQuestion {

@@ -40,10 +40,10 @@
 </form:form>
 
 <div>
-    <div id="searchResult" class="midWidth">
+    <div id="searchResult" class="midWidth smallText">
         <%@include file="questionSearchResult.jsp" %>
     </div>
-    <div id="assessmentQuestions" class="midWidth">
+    <div id="assessmentQuestions" class="midWidth smallText">
         <%@include file="assessmentQuestions.jsp" %>
     </div>
 </div>

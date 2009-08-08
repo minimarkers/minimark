@@ -24,6 +24,6 @@
     <display:column property="evaluationResult"  title="${ResultTitle}"/>
     <display:column>
         <a class="action-pdf-document" href="pdf.html?id=${curr.id}" title="PDF"></a>
-        <a class="action-run" href="evaluate.html?id=${curr.id}" title="Evaluate"></a>
+        <a class="action-run" href="evaluate.html?id=${curr.id}" title="<spring:message code='Evaluate' text='?Evaluate?'/>""></a>
     </display:column>
 </display:table>
