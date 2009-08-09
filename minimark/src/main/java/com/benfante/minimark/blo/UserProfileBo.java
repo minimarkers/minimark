@@ -2,7 +2,11 @@ package com.benfante.minimark.blo;
 
 import com.benfante.minimark.dao.UserProfileDao;
 import com.benfante.minimark.po.UserProfile;
+import java.util.List;
 import javax.annotation.Resource;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -43,5 +47,17 @@ public class UserProfileBo {
             result = userProfileDao.findByUsername(username);
         }
         return result;
+    }
+
+    /**
+     * Search all users associated with at least one course.
+     *
+     * @return The list of all teachers
+     */
+    public List<UserProfile> searchAllTeachers() {
+        DetachedCriteria crit = DetachedCriteria.forClass(UserProfile.class);
+        crit.add(Restrictions.isNotEmpty("courseTeachers"));
+        crit.addOrder(Order.asc("name"));
+        return userProfileDao.searchByCriteria(crit);
     }
 }

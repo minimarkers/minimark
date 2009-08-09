@@ -8,6 +8,8 @@
 <div>
     <p><spring:message code="Course" text="?Course?"/>: ${assessment.course.name}</p>
 </div>
+<spring:message code="Yes" text="?Yes?" var="yesLabel"/>
+<spring:message code="No" text="?No?" var="noLabel"/>
 <form:form commandName="assessment" method="POST" action="${cp}/assessment/save.html">
     <form:errors path="title" cssClass="errorBox"/>
     <form:label path="title"><spring:message code="Title" text="?Title?"/>:</form:label><form:input path="title" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
@@ -18,10 +20,14 @@
     <form:errors path="active" cssClass="errorBox"/>
     <form:label path="active"><spring:message code="Active" text="?Active?"/>:</form:label>
     <form:select path="active">
-        <spring:message code="Yes" text="?Yes?" var="activeYesLabel"/>
-        <form:option value="true" label="${activeYesLabel}"/>
-        <spring:message code="No" text="?No?" var="activeNoLabel"/>
-        <form:option value="false" label="${activeNoLabel}"/>
+        <form:option value="true" label="${yesLabel}"/>
+        <form:option value="false" label="${noLabel}"/>
+    </form:select><br/>
+    <form:errors path="showInHomePage" cssClass="errorBox"/>
+    <form:label path="showInHomePage"><spring:message code="InHomePage" text="?InHomePage?"/>:</form:label>
+    <form:select path="showInHomePage">
+        <form:option value="true" label="${yesLabel}"/>
+        <form:option value="false" label="${noLabel}"/>
     </form:select><br/>
     <form:errors path="evaluationType" cssClass="errorBox"/>
     <form:label path="evaluationType"><spring:message code="EvaluationType" text="?EvaluationType?"/>:</form:label>

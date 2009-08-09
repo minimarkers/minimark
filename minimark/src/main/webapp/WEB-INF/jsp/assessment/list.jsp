@@ -19,6 +19,16 @@
                 </c:otherwise>
             </c:choose>
         </display:column>
+        <display:column titleKey="InHomePage">
+            <c:choose>
+                <c:when test="${ca.showInHomePage}">
+                    <spring:message code="Yes" text="?Yes?"/>
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="No" text="?No?"/>
+                </c:otherwise>
+            </c:choose>
+        </display:column>
         <display:column>
             <a class="action-edit" href="${cp}/assessment/edit.html?id=${ca.id}"><spring:message code="Edit" text="?Edit?"/></a>
             <spring:message code='confirmDeleteAssessment' text='?confirmDeleteAssessment?' var="confirmDeleteAssessmentMessage"/>

@@ -5,3 +5,10 @@
   assessmentDate: 2009-08-15
   active: true
   evaluationClosedType: sum_correct_answers
+- &Assessment-igPGT1
+  course: *Course-igPGT
+  title: igPGT1
+  description: igPGT1 test assessment
+  assessmentDate: 2009-08-28
+  active: true
+  evaluationClosedType: sum_correct_answers

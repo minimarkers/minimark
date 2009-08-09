@@ -38,7 +38,7 @@ public class Assessment extends EntityBase {
     private List<AssessmentFilling> assessmentFillings;
     protected List<AssessmentQuestion> questions;
     protected Course course;
-    protected Boolean active;
+    protected Boolean active = Boolean.FALSE;
     @NotBlank
     protected String title;
     @NotBlank
@@ -51,6 +51,7 @@ public class Assessment extends EntityBase {
     @NotNull(applyIf = "evaluationType == 'normalized_sum'")
     protected BigDecimal evaluationMaxValue;
     protected BigDecimal evaluationClosedMinimumEvaluation = BigDecimal.ZERO;
+    protected Boolean showInHomePage = Boolean.FALSE;
 
     @ManyToOne
     public Course getCourse() {
@@ -174,6 +175,15 @@ public class Assessment extends EntityBase {
 
     public void setEvaluationClosedMinimumEvaluation(
             BigDecimal evaluationClosedMinimumEvaluation) {
-        this.evaluationClosedMinimumEvaluation = evaluationClosedMinimumEvaluation;
+        this.evaluationClosedMinimumEvaluation =
+                evaluationClosedMinimumEvaluation;
+    }
+
+    public Boolean getShowInHomePage() {
+        return showInHomePage;
+    }
+
+    public void setShowInHomePage(Boolean showInHomePage) {
+        this.showInHomePage = showInHomePage;
     }
 }

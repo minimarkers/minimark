@@ -8,3 +8,8 @@
   email: orio@dei.unipd.it
   site: www.dei.unipd.it
   user: *User-nicolaOrio
+- &UserProfile-admin
+  name: Minimark administrator
+  email: admin@minimark.org
+  site: www.minimark.org
+  user: *User-admin

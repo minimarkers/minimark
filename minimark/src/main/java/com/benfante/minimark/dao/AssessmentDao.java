@@ -13,5 +13,6 @@ import org.parancoe.persistence.dao.generic.GenericDao;
 public interface AssessmentDao extends GenericDao<Assessment, Long> {
     List<Assessment> findByTitle(String title);
     List<Assessment> findByTeacherUsername(String username);
-    List<Assessment> findByActiveOrderByAssessmentDate(Boolean active);
+    List<Assessment> findByActiveOrderByAssessmentDateAndTitle(Boolean active);
+    List<Assessment> findByActiveAndShowInHomePageOrderByAssessmentDateAndTitle(Boolean active, Boolean showInHomePage);
 }

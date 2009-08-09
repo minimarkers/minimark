@@ -13,8 +13,12 @@
 // limitations under the License.
 package com.benfante.minimark.controllers;
 
+import com.benfante.minimark.blo.AssessmentBo;
+import com.benfante.minimark.blo.UserProfileBo;
 import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.po.Assessment;
+import com.benfante.minimark.po.Course;
+import com.benfante.minimark.po.UserProfile;
 import java.util.*;
 
 import javax.annotation.Resource;
@@ -33,12 +37,17 @@ public class HomeController {
     private static final Logger logger = Logger.getLogger(HomeController.class);
 
     @Resource
-    private AssessmentDao assessmentDao;
+    private AssessmentBo assessmentBo;
+    @Resource
+    private UserProfileBo userProfileBo;
 
     @RequestMapping
     public String welcome(Model model) {
-        List<Assessment> assessments = assessmentDao.findByActiveOrderByAssessmentDate(true);
+        Map<Course, List<Assessment>> assessments = assessmentBo.mapAssessmentsOnCourse(
+                Boolean.TRUE, Boolean.TRUE, null);
+        List<UserProfile> teachers = userProfileBo.searchAllTeachers();
         model.addAttribute("assessments", assessments);
+        model.addAttribute("teachers", teachers);
         return "welcome";
     }
 
