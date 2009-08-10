@@ -1,6 +1,5 @@
 package com.benfante.minimark.blo;
 
-import com.benfante.minimark.dao.CourseDao;
 import com.benfante.minimark.dao.QuestionDao;
 import com.benfante.minimark.po.ClosedQuestion;
 import com.benfante.minimark.po.Course;
@@ -149,11 +148,7 @@ public class ImporterBo {
                     fixedAnswer.setContent(answerText);
                     fixedAnswer.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
                     fixedAnswer.setCorrect(correct);
-                    if (correct) {
-                        fixedAnswer.setWeight(BigDecimal.ONE);
-                    } else {
-                        fixedAnswer.setWeight(BigDecimal.ZERO);
-                    }
+                    fixedAnswer.setWeight(BigDecimal.ONE);
                     answers.add(fixedAnswer);
                 }
             }
