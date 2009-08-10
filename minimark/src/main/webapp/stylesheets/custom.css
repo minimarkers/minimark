@@ -128,6 +128,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-edit, .action-edit:hover {
@@ -135,6 +136,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-delete, .action-delete:hover {
@@ -142,6 +144,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-detail-go, .action-detail-go:hover {
@@ -149,6 +152,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-back, .action-back:hover {
@@ -156,6 +160,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-cancel, .action-cancel:hover {
@@ -163,6 +168,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-confirm, .action-confirm:hover {
@@ -170,6 +176,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-start, .action-start:hover {
@@ -177,6 +184,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-right, .action-right:hover {
@@ -184,6 +192,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-up, .action-up:hover {
@@ -191,6 +200,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-down, .action-down:hover {
@@ -198,6 +208,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-pdf-document, .action-pdf-document:hover {
@@ -205,6 +216,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-xls-document, .action-xls-document:hover {
@@ -212,6 +224,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 .action-run, .action-run:hover {
@@ -219,6 +232,7 @@ ul#nav {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
+    white-space: nowrap;
 }
 
 /* Actions end */

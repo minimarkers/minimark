@@ -7,10 +7,10 @@
 
 <div class="displaytag">
     <display:table  id="cc"  name="courses" sort="list" pagesize="20" defaultsort="1" defaultorder="ascending" >
-        <display:column property="name" titleKey="Name"/>
-        <display:column property="description"  titleKey="Description"/>
-        <display:column property="mainGroup"  titleKey="MainGroup"/>
-        <display:column property="secondaryGroup"  titleKey="SecondaryGroup"/>
+        <display:column property="name" titleKey="Name" class="left-aligned"/>
+        <display:column property="description"  titleKey="Description" class="left-aligned"/>
+        <display:column property="mainGroup"  titleKey="MainGroup" class="left-aligned"/>
+        <display:column property="secondaryGroup"  titleKey="SecondaryGroup" class="left-aligned"/>
         <display:column>
             <a class="action-edit" href="${cp}/course/edit.html?id=${cc.id}"><spring:message code="Edit" text="?Edit?"/></a>
             <spring:message code='confirmDeleteCourse' text='?confirmDeleteCourse?' var="confirmDeleteCourseMessage"/>
