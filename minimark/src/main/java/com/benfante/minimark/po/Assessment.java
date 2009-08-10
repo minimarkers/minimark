@@ -3,6 +3,7 @@ package com.benfante.minimark.po;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -13,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import org.parancoe.persistence.po.hibernate.EntityBase;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.MaxLength;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
@@ -40,8 +42,10 @@ public class Assessment extends EntityBase {
     protected Course course;
     protected Boolean active = Boolean.FALSE;
     @NotBlank
+    @MaxLength(255)
     protected String title;
     @NotBlank
+    @MaxLength(1024)
     protected String description;
     @NotNull
     protected Date assessmentDate;
@@ -70,6 +74,7 @@ public class Assessment extends EntityBase {
         this.active = active;
     }
 
+    @Column(length=1024)
     public String getDescription() {
         return description;
     }

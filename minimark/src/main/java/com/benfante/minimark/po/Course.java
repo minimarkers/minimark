@@ -3,11 +3,13 @@ package com.benfante.minimark.po;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import org.parancoe.persistence.po.hibernate.EntityBase;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.MaxLength;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 
 /**
@@ -23,14 +25,17 @@ public class Course extends EntityBase {
     private List<Assessment> assessments;
     private List<Question> questions;
     @NotBlank
+    @MaxLength(255)
     private String name;
     @NotBlank
+    @MaxLength(1024)
     private String description;
     private String incumbent;
     private String mainGroup;
     private String secondaryGroup;
     private List<CourseTeacher> courseTeachers = new LinkedList<CourseTeacher>();
 
+    @Column(length=1024)
     public String getDescription() {
         return description;
     }

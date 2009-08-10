@@ -20,6 +20,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.support.WebBindingInitializer;
 import org.springframework.web.context.request.WebRequest;
+import org.springmodules.validation.bean.converter.ModelAwareMessageCodesResolver;
 
 public class AppBindingInitializer implements WebBindingInitializer {
 
@@ -28,5 +29,8 @@ public class AppBindingInitializer implements WebBindingInitializer {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat,
                 true));
+        if (binder.getTarget() != null) {
+            binder.setMessageCodesResolver(new ModelAwareMessageCodesResolver());
+        }
     }
 }

@@ -19,7 +19,7 @@
             <bean class="com.benfante.minimark.controllers.AppBindingInitializer"/>
         </property>
     </bean>
-    
+
     <!-- begin security section -->
     <bean name="pluginSecurityFilterDefinitions" class="java.lang.String">
         <constructor-arg>

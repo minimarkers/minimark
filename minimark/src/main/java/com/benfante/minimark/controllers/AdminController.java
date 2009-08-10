@@ -13,23 +13,34 @@
 // limitations under the License.
 package com.benfante.minimark.controllers;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.parancoe.util.MemoryAppender;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin/*.html")
-public class AdminController {
+public class AdminController implements ApplicationContextAware {
+
     private static final Logger logger = Logger.getLogger(AdminController.class);
+    @Resource
+    private ApplicationContext ctx;
 
     @RequestMapping
     public ModelAndView index(HttpServletRequest req, HttpServletResponse res) {
@@ -42,8 +53,12 @@ public class AdminController {
             MemoryAppender.clean();
         }
 
-        if ("error".equals(req.getParameter("test"))) logger.error("sample error message");
-        if ("warn".equals(req.getParameter("test"))) logger.warn("sample warn message");
+        if ("error".equals(req.getParameter("test"))) {
+            logger.error("sample error message");
+        }
+        if ("warn".equals(req.getParameter("test"))) {
+            logger.warn("sample warn message");
+        }
 
         String log = MemoryAppender.getFullLog();
         log = colourLog(log);
@@ -59,20 +74,53 @@ public class AdminController {
     }
 
     @RequestMapping
-    public ModelAndView spring(HttpServletRequest req, HttpServletResponse res) {
-        return new ModelAndView("admin/spring", null);
+    public String spring(HttpServletRequest req, HttpServletResponse res,
+            Model model) {
+        ApplicationContext ctx = this.ctx;
+        List<String> beans = new LinkedList<String>();
+        while (ctx != null) {
+            String[] beanNames = ctx.getBeanDefinitionNames();
+            for (String beanName : beanNames) {
+                Object bean = null;
+                try {
+                    bean = ctx.getBean(beanName);
+                    beans.add(beanName + " (" + bean.getClass() + ") [" + ctx.
+                            getDisplayName() + "]");
+                } catch (BeansException beansException) {
+                    beans.add(beanName + " (only definition) [" + ctx.
+                            getDisplayName() + "]");
+                }
+            }
+            ctx = ctx.getParent();
+        }
+        Collections.sort(beans);
+        model.addAttribute("beans", beans);
+        return "admin/spring";
     }
 
     private String colourLog(String log) {
         String lines[];
-        if (log == null) lines = new String[]{""};
-        else lines = log.split("[\\n\\r]");
+        if (log == null) {
+            lines = new String[]{""};
+        } else {
+            lines = log.split("[\\n\\r]");
+        }
         for (int i = 0; i < lines.length; i++) {
-            if (lines[i].indexOf("[ERROR]") != -1) lines[i] = "<span class=\"log_error\">" + lines[i] + "</span>";
-            if (lines[i].indexOf("[WARN]") != -1) lines[i] = "<span class=\"log_warn\">" + lines[i] + "</span>";
-            if (StringUtils.isNotBlank(lines[i])) lines[i] += "<br/>";
+            if (lines[i].indexOf("[ERROR]") != -1) {
+                lines[i] = "<span class=\"log_error\">" + lines[i] + "</span>";
+            }
+            if (lines[i].indexOf("[WARN]") != -1) {
+                lines[i] = "<span class=\"log_warn\">" + lines[i] + "</span>";
+            }
+            if (StringUtils.isNotBlank(lines[i])) {
+                lines[i] += "<br/>";
+            }
         }
         return StringUtils.join(lines);
     }
 
+    public void setApplicationContext(ApplicationContext applicationContext)
+            throws BeansException {
+        this.ctx = applicationContext;
+    }
 }
