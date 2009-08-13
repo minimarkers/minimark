@@ -235,6 +235,14 @@ ul#nav {
     white-space: nowrap;
 }
 
+.action-refresh, .action-refresh:hover {
+    background: url(../images/silk/icons/arrow_refresh.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+    white-space: nowrap;
+}
+
 /* Actions end */
 
 /* Forms */
@@ -426,8 +434,16 @@ div.error_flash p {
     border: solid 1px #bbbbbb;
 }
 
-.filling_course h4 {
-    font-size: 12px;
+.filling_header .fh_title {
+    font-size: 10px;
+    font-weight: bold;
+    width: 200px;
+    float: left;
+}
+
+.filling_header .fh_actions {
+    width: 20px;
+    float: right;
 }
 
 .filling {
