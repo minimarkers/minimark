@@ -6,9 +6,7 @@ import com.benfante.minimark.blo.UserProfileBo;
 import com.benfante.minimark.dao.CourseDao;
 import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.Question;
-import java.io.IOException;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
@@ -36,7 +34,8 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
  */
 @Controller
 @RequestMapping("/course/*.html")
-@SessionAttributes({CourseController.COURSE_ATTR_NAME, CourseController.IMPORT_QUESTIONS_ATTR_NAME})
+@SessionAttributes({CourseController.COURSE_ATTR_NAME,
+    CourseController.IMPORT_QUESTIONS_ATTR_NAME})
 public class CourseController {
 
     public static final String COURSE_ATTR_NAME = "course";
@@ -54,7 +53,8 @@ public class CourseController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) throws Exception {
-        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
+        binder.registerCustomEditor(byte[].class,
+                new ByteArrayMultipartFileEditor());
     }
 
     @RequestMapping
@@ -78,7 +78,8 @@ public class CourseController {
 
     @RequestMapping
     public String list(Model model) {
-        List<Course> courses = courseDao.findByTeacherUsername(userProfileBo.getAuthenticatedUsername());
+        List<Course> courses = courseDao.findByTeacherUsername(userProfileBo.
+                getAuthenticatedUsername());
         model.addAttribute("courses", courses);
         return LIST_VIEW;
     }
@@ -92,12 +93,19 @@ public class CourseController {
     }
 
     @RequestMapping
-    public String delete(@RequestParam("id") Long id, Model model) {
+    public String delete(@RequestParam("id") Long id, HttpServletRequest req,
+            Model model) {
         Course course = courseDao.get(id);
         if (course == null) {
             throw new RuntimeException("Course not found");
         }
-        courseDao.delete(course);
+        if (course.getAssessments() != null && !course.getAssessments().isEmpty()) {
+            FlashHelper.setRedirectError(req,
+                    "Flash.CantDeleteCourseBecauseAssessments");
+        } else {
+            courseDao.delete(course);
+            FlashHelper.setRedirectNotice(req, "Flash.CourseDeleted");
+        }
         return "redirect:list.html";
     }
 
@@ -108,21 +116,31 @@ public class CourseController {
             throw new RuntimeException("Course not found");
         }
         model.addAttribute(COURSE_ATTR_NAME, course);
-        model.addAttribute(IMPORT_QUESTIONS_ATTR_NAME,new ImportQuestionsBean());
+        model.addAttribute(IMPORT_QUESTIONS_ATTR_NAME, new ImportQuestionsBean());
     }
 
     @RequestMapping
-    public String doImportQuestions(@ModelAttribute(COURSE_ATTR_NAME) Course course, @ModelAttribute(IMPORT_QUESTIONS_ATTR_NAME) ImportQuestionsBean importQuestionsBean, BindingResult result, HttpServletRequest request, SessionStatus status, Locale locale) {
+    public String doImportQuestions(
+            @ModelAttribute(COURSE_ATTR_NAME) Course course, @ModelAttribute(
+            IMPORT_QUESTIONS_ATTR_NAME) ImportQuestionsBean importQuestionsBean,
+            BindingResult result, HttpServletRequest request,
+            SessionStatus status, Locale locale) {
         try {
-            List<Question> questions = importerBo.readQuestionSet(new StringReader(new String(importQuestionsBean.getImportFile(), "UTF-8")));
+            List<Question> questions = importerBo.readQuestionSet(
+                    new StringReader(new String(importQuestionsBean.
+                    getImportFile(), "UTF-8")));
             importerBo.addQuestionsToCourse(course, questions);
             status.setComplete();
-            FlashHelper.setRedirectNotice(request, "QuestionsImportedSuccessfully");
+            FlashHelper.setRedirectNotice(request,
+                    "QuestionsImportedSuccessfully");
         } catch (Exception ex) {
             StringBuilder message = new StringBuilder();
-            message.append(messageSource.getMessage("ErrorImportingQuestions", null, locale)).append(": ").append(ex.getLocalizedMessage());
+            message.append(messageSource.getMessage("ErrorImportingQuestions",
+                    null, locale)).append(": ").append(ex.getLocalizedMessage());
             if (ex instanceof ParseException) {
-                message.append(" (").append(messageSource.getMessage("atLine", new Object[] {((ParseException)ex).getErrorOffset()}, locale)).append(")");
+                message.append(" (").append(messageSource.getMessage("atLine",
+                        new Object[]{((ParseException) ex).getErrorOffset()},
+                        locale)).append(")");
             }
             FlashHelper.setError(request, message.toString());
             return "course/importQuestions";
