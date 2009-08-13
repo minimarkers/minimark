@@ -17,6 +17,7 @@ import com.benfante.minimark.po.TagQuestionLink;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
@@ -59,14 +60,26 @@ public class QuestionBo {
         } else {
             if ("open".equals(questionBean.getType())) {
                 crit = DetachedCriteria.forClass(OpenQuestion.class);
+                if (StringUtils.isNotBlank(questionBean.getVisualization())) {
+                    crit.add(Restrictions.eq("visualization", questionBean.
+                            getVisualization()));
+                }
             } else if ("closed".equals(questionBean.getType())) {
                 crit = DetachedCriteria.forClass(ClosedQuestion.class);
             } else {
-                throw new IllegalArgumentException("Unknown question type ("+questionBean.getType()+")");
+                throw new IllegalArgumentException("Unknown question type (" + questionBean.
+                        getType() + ")");
             }
         }
+        if (StringUtils.isNotBlank(questionBean.getTitle())) {
+            crit.add(Restrictions.ilike("title", questionBean.getTitle(), MatchMode.ANYWHERE));
+        }
+        if (questionBean.getWeight() != null) {
+            crit.add(Restrictions.eq("weight", questionBean.getWeight()));
+        }
         if (questionBean.getCourse() != null) {
-            crit.add(Restrictions.eq("course.id", questionBean.getCourse().getId()));
+            crit.add(Restrictions.eq("course.id",
+                    questionBean.getCourse().getId()));
         }
         return questionDao.searchByCriteria(crit);
     }
@@ -78,7 +91,8 @@ public class QuestionBo {
      * @return The list of questions
      */
     public List<Question> retrieveQuestionsByTag(String tag) {
-        List<TagQuestionLink> tagLinks = tagQuestionLinkDao.findByTagName(tag.toLowerCase());
+        List<TagQuestionLink> tagLinks = tagQuestionLinkDao.findByTagName(tag.
+                toLowerCase());
         List<Question> result = new ArrayList<Question>(tagLinks.size());
         for (TagQuestionLink tagLink : tagLinks) {
             result.add(tagLink.getQuestion());

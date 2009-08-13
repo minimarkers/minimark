@@ -15,7 +15,7 @@
     </form:select><br/>
     <form:errors path="title" cssClass="errorBox"/>
     <form:label path="title"><spring:message code="Title" text="?Title?"/>:</form:label>
-    <form:input path="title" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
+    <form:input path="title" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <div id="openFields">
         <form:errors path="visualization" cssClass="errorBox"/>
         <form:label path="visualization"><spring:message code="Visualization" text="?Visualization?"/>:</form:label>
@@ -29,10 +29,10 @@
     </div>
     <form:errors path="weight" cssClass="errorBox"/>
     <form:label path="weight"><spring:message code="Weight" text="?Weight?"/>:</form:label>
-    <form:input path="weight" maxlength="5" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
+    <form:input path="weight" maxlength="5" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <form:errors path="tags" cssClass="errorBox"/>
     <form:label path="tags"><spring:message code="Tags" text="?Tags?"/>:</form:label>
-    <form:input path="tags" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
+    <form:input path="tags" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <div class="form-aligned form-help-text"><span><spring:message code="help.tagListField" text="?tagListField?"/></span></div>
     <div class="formButtons">
         <a href="list.html?courseId=${assessment.course.id}" class="action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Search' text='?Search?'/>" class="submit-button"/>
@@ -52,6 +52,9 @@
     function searchQuestions() {
         questionABo.updateQuestionSearchResult({
             type: $F('type'),
+            visualization: $F('visualization'),
+            title: $F('title'),
+            weight: $F('weight'),
             course: {id: ${assessment.course.id}}
         });
     }
