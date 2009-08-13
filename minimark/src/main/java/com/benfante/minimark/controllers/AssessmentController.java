@@ -10,6 +10,8 @@ import com.benfante.minimark.po.Course;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import org.parancoe.web.util.FlashHelper;
 import org.parancoe.web.validation.Validation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,9 +33,11 @@ import org.springframework.web.bind.support.SessionStatus;
 public class AssessmentController {
 
     public static final String ASSESSMENT_ATTR_NAME = "assessment";
-    public static final String ASSESSMENT_QUESTIONS_ATTR_NAME = "assessmentQuestions";
+    public static final String ASSESSMENT_QUESTIONS_ATTR_NAME =
+            "assessmentQuestions";
     public static final String QUESTION_SEARCH_ATTR_NAME = "questionSearch";
-    public static final String QUESTION_SEARCH_RESULT_ATTR_NAME = "questionSearchResult";
+    public static final String QUESTION_SEARCH_RESULT_ATTR_NAME =
+            "questionSearchResult";
     public static final String EDIT_VIEW = "assessment/edit";
     public static final String LIST_VIEW = "assessment/list";
     @Resource
@@ -59,7 +63,8 @@ public class AssessmentController {
 
     @RequestMapping
     @Validation(view = EDIT_VIEW)
-    public String save(@ModelAttribute(ASSESSMENT_ATTR_NAME) Assessment assessment,
+    public String save(
+            @ModelAttribute(ASSESSMENT_ATTR_NAME) Assessment assessment,
             BindingResult result, SessionStatus status) {
         assessment.setPassword(assessment.getNewPassword());
         assessmentDao.store(assessment);
@@ -70,7 +75,8 @@ public class AssessmentController {
     @RequestMapping
     public String list(Model model, SessionStatus status) {
         status.setComplete(); // clean start
-        List<Assessment> assessments = assessmentDao.findByTeacherUsername(userProfileBo.getAuthenticatedUsername());
+        List<Assessment> assessments = assessmentDao.findByTeacherUsername(
+                userProfileBo.getAuthenticatedUsername());
         model.addAttribute("assessments", assessments);
         return LIST_VIEW;
     }
@@ -85,12 +91,20 @@ public class AssessmentController {
     }
 
     @RequestMapping
-    public String delete(@RequestParam("id") Long id, Model model) {
+    public String delete(@RequestParam("id") Long id, HttpServletRequest req,
+            Model model) {
         Assessment assessment = assessmentDao.get(id);
         if (assessment == null) {
             throw new RuntimeException("Assessment not found");
         }
-        assessmentDao.delete(assessment);
+        if (assessment.getAssessmentFillings() != null && !assessment.
+                getAssessmentFillings().isEmpty()) {
+            FlashHelper.setRedirectError(req,
+                    "Flash.CantDeleteAssessmentBecauseFillings");
+        } else {
+            assessmentDao.delete(assessment);
+            FlashHelper.setRedirectNotice(req, "Flash.AssessmentDeleted");
+        }
         return "redirect:list.html";
     }
 
@@ -105,8 +119,10 @@ public class AssessmentController {
         Course courseBean = new Course();
         courseBean.setId(assessment.getCourse().getId());
         questionBean.setCourse(courseBean);
-        model.addAttribute(QUESTION_SEARCH_ATTR_NAME,questionBean);
-        model.addAttribute(QUESTION_SEARCH_RESULT_ATTR_NAME, questionBo.search(questionBean));
-        model.addAttribute(ASSESSMENT_QUESTIONS_ATTR_NAME, assessment.getQuestions());
+        model.addAttribute(QUESTION_SEARCH_ATTR_NAME, questionBean);
+        model.addAttribute(QUESTION_SEARCH_RESULT_ATTR_NAME, questionBo.search(
+                questionBean));
+        model.addAttribute(ASSESSMENT_QUESTIONS_ATTR_NAME, assessment.
+                getQuestions());
     }
 }
