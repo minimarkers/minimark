@@ -3,6 +3,7 @@ package com.benfante.minimark.po;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -12,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import org.hibernate.annotations.Cascade;
 import org.parancoe.persistence.po.hibernate.EntityBase;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.MaxLength;
@@ -83,7 +85,8 @@ public class Assessment extends EntityBase {
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "assessment")
+    @OneToMany(mappedBy = "assessment", cascade=CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @OrderBy("ordering ASC")
     public List<AssessmentQuestion> getQuestions() {
         return questions;
