@@ -7,7 +7,7 @@
     <c:otherwise>
         <c:forEach var="course" items="${fillings}">
             <div class="filling_course">
-                <h4>${course.key.name}</h4>
+                <h4>${course.key.name}<br/><span class="smallText">${course.key.incumbent}</span></h4>
                 <div id="course_${course.key.id}_fillings">
                     <c:set var="blockFillings" value="${course.value}"/>
                     <%@include file="fillingBlock.jsp" %>
