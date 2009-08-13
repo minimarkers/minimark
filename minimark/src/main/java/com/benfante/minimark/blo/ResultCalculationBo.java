@@ -26,7 +26,8 @@ public class ResultCalculationBo {
      */
     public BigDecimal calculate(AssessmentFilling assessment) {
         BigDecimal result = BigDecimal.ZERO;
-        BigDecimal minimumEvaluation = assessment.getAssessment().getEvaluationClosedMinimumEvaluation();
+        BigDecimal minimumEvaluation = assessment.getAssessment().
+                getEvaluationClosedMinimumEvaluation();
         evaluateAllQuestions(assessment, minimumEvaluation);
         String evaluationType = assessment.getAssessment().getEvaluationType();
         if (evaluationType == null || Assessment.EVALUATION_SIMPLE_SUM.equals(
@@ -81,8 +82,11 @@ public class ResultCalculationBo {
                         questionFilling.getWeight()));
             }
         }
-        result = result.multiply(maxValue).divide(assessment.getTotalWeight(),
-                RoundingMode.HALF_EVEN);
+        final BigDecimal totalWeight = assessment.getTotalWeight();
+        if (!BigDecimal.ZERO.equals(totalWeight)) {
+            result = result.multiply(maxValue).divide(totalWeight,
+                    RoundingMode.HALF_EVEN);
+        }
         return result;
     }
 
@@ -92,7 +96,8 @@ public class ResultCalculationBo {
      * @param assessment The assessment to evaluate.
      * @param minimumEvaluation The minimum value of the evaluation. If null, there will be no minimum.
      */
-    public void evaluateAllQuestions(AssessmentFilling assessment, BigDecimal minimumEvaluation) {
+    public void evaluateAllQuestions(AssessmentFilling assessment,
+            BigDecimal minimumEvaluation) {
         for (QuestionFilling questionFilling : assessment.getQuestions()) {
             evaluateQuestion(questionFilling, minimumEvaluation);
         }
@@ -104,7 +109,8 @@ public class ResultCalculationBo {
      * @param questionFilling The question to evaluate.
      * @param minimumEvaluation The minimum value of the evaluation. If null, there will be no minimum.
      */
-    public void evaluateQuestion(QuestionFilling questionFilling, BigDecimal minimumEvaluation) {
+    public void evaluateQuestion(QuestionFilling questionFilling,
+            BigDecimal minimumEvaluation) {
         if (questionFilling instanceof OpenQuestionFilling) {
             evaluateOpenQuestion((OpenQuestionFilling) questionFilling);
         } else if (questionFilling instanceof ClosedQuestionFilling) {
@@ -121,7 +127,8 @@ public class ResultCalculationBo {
     }
 
     public void evaluateClosedQuestion(
-            ClosedQuestionFilling closedQuestionFilling, String evaluationType, BigDecimal minimumEvaluation) {
+            ClosedQuestionFilling closedQuestionFilling, String evaluationType,
+            BigDecimal minimumEvaluation) {
         BigDecimal result = BigDecimal.ZERO;
         if (evaluationType == null || Assessment.EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS.
                 equals(evaluationType)) {
@@ -129,8 +136,10 @@ public class ResultCalculationBo {
                     closedQuestionFilling.weightCorrectAnswers();
             final BigDecimal weightSelectedCorrect =
                     closedQuestionFilling.weightSelectedCorrectAnswers();
-            final BigDecimal weightWrong = closedQuestionFilling.weightWrongAnswers();
-            final BigDecimal weightSelectedWrong = closedQuestionFilling.weightSelectedWrongAnswers();
+            final BigDecimal weightWrong = closedQuestionFilling.
+                    weightWrongAnswers();
+            final BigDecimal weightSelectedWrong = closedQuestionFilling.
+                    weightSelectedWrongAnswers();
             BigDecimal normalizedCorrect = BigDecimal.ONE;
             if (!BigDecimal.ZERO.equals(weightCorrect)) {
                 // nc = #selectedCorrect/#correct

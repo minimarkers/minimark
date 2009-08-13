@@ -1,7 +1,6 @@
 package com.benfante.minimark.controllers;
 
 import com.benfante.minimark.blo.AssessmentBo;
-import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.dao.UserProfileDao;
 import com.benfante.minimark.po.Assessment;
 import com.benfante.minimark.po.Course;

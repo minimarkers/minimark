@@ -416,6 +416,53 @@ div.error_flash p {
 
 /* Assessment end */
 
+/* Assessment filling start */
+
+.filling_course {
+    float: left;
+    width: 220px;
+    padding: 5px;
+    margin: 5px;
+    border: solid 1px #bbbbbb;
+}
+
+.filling_course h4 {
+    font-size: 12px;
+}
+
+.filling {
+    border-bottom: solid thin #bbbbbb;
+    clear: both;
+}
+
+.filling .af_data {
+    width: 200px;
+    float: left;
+}
+
+.filling .af_actions {
+    width: 20px;
+    float: right;
+}
+
+.filling .af_assessment {
+    color: #bbbbbb;
+}
+
+.filling_not_started .af_message {
+    color: red;
+}
+
+.filling_started .af_student {
+    color: orange;
+}
+
+.filling_completed .af_student {
+    color: green;
+}
+
+/* Assessment filling end */
+
 .fullWidth {
     clear: both;
     width: 100%!important;

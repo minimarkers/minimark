@@ -24,6 +24,8 @@
     <display:column property="evaluationResult"  title="${ResultTitle}"/>
     <display:column>
         <a class="action-pdf-document" href="pdf.html?id=${curr.id}" title="PDF"></a>
-        <a class="action-run" href="evaluate.html?id=${curr.id}" title="<spring:message code='Evaluate' text='?Evaluate?'/>""></a>
+        <a class="action-run" href="evaluate.html?id=${curr.id}" title="<spring:message code='Evaluate' text='?Evaluate?'/>"></a>
+        <spring:message code='confirmDeleteAssessment' text='?confirmDeleteAssessment?' var="confirmDeleteAssessmentMessage"/>
+        <a class="action-delete" href="delete.html?id=${curr.id}" title="<spring:message code='Delete' text='?Delete?'/>" onclick="return confirm('${confirmDeleteAssessmentMessage}')"></a>
     </display:column>
 </display:table>

@@ -1,18 +1,27 @@
 package com.benfante.minimark.blo;
 
+import com.benfante.minimark.beans.AssessmentFillingStatusComparator;
 import com.benfante.minimark.dao.AssessmentFillingDao;
 import com.benfante.minimark.po.Assessment;
 import com.benfante.minimark.po.AssessmentFilling;
 import com.benfante.minimark.po.AssessmentQuestion;
 import com.benfante.minimark.po.ClosedQuestion;
 import com.benfante.minimark.po.ClosedQuestionFilling;
+import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.FixedAnswer;
 import com.benfante.minimark.po.FixedAnswerFilling;
 import com.benfante.minimark.po.OpenQuestion;
 import com.benfante.minimark.po.OpenQuestionFilling;
 import com.benfante.minimark.po.Question;
 import com.benfante.minimark.po.QuestionFilling;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,4 +94,59 @@ public class AssessmentFillingBo {
         }
         return result;
     }
+
+    /**
+     * Retrieve all fillings of active assessments.
+     *
+     * @return The list of fillings of active assesments.
+     */
+    public List<AssessmentFilling> searchActiveFillings() {
+        DetachedCriteria crit = DetachedCriteria.forClass(AssessmentFilling.class);
+        crit.createAlias("assessment", "assessment");
+        crit.add(Restrictions.eq("assessment.active", Boolean.TRUE));
+        List<AssessmentFilling> result =
+                assessmentFillingDao.searchByCriteria(crit);
+        Collections.sort(result, new AssessmentFillingStatusComparator());
+        return result;
+    }
+
+    /**
+     * Retrieve all fillings of active assessments.
+     *
+     * @return The list of fillings of active assesments.
+     */
+    public List<AssessmentFilling> searchActiveFillingsByCourse(Long courseId) {
+        DetachedCriteria crit = DetachedCriteria.forClass(AssessmentFilling.class);
+        crit.createAlias("assessment", "assessment");
+        crit.add(Restrictions.eq("assessment.active", Boolean.TRUE));
+        crit.createAlias("assessment.course", "course");
+        crit.add(Restrictions.eq("course.id", courseId));
+        List<AssessmentFilling> result =
+                assessmentFillingDao.searchByCriteria(crit);
+        Collections.sort(result, new AssessmentFillingStatusComparator());
+        return result;
+    }
+
+    /**
+     * Build a map of courses and their assessment fillings.
+     *
+     * @return The map of courses on assessment fillings
+     */
+    public Map<Course, List<AssessmentFilling>> mapFillingsOnCourse() {
+        List<AssessmentFilling> fillings = searchActiveFillings();
+        Map<Course, List<AssessmentFilling>> fillingsByCourse =
+                new HashMap<Course, List<AssessmentFilling>>();
+        for (AssessmentFilling filling : fillings) {
+            Course course = filling.getAssessment().getCourse();
+            List<AssessmentFilling> courseAssessments = fillingsByCourse.get(course);
+            if (courseAssessments == null) {
+                courseAssessments =
+                        new LinkedList<AssessmentFilling>();
+                fillingsByCourse.put(course, courseAssessments);
+            }
+            courseAssessments.add(filling);
+        }
+        return fillingsByCourse;
+    }
+
 }

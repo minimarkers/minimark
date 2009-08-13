@@ -31,6 +31,7 @@
                 /question/**=ROLE_ADMIN,ROLE_PARANCOE
                 /assessment/**=ROLE_ADMIN,ROLE_PARANCOE
                 /results/**=ROLE_ADMIN,ROLE_PARANCOE
+                /monitoring/**=ROLE_ADMIN,ROLE_PARANCOE
                 /**=IS_AUTHENTICATED_ANONYMOUSLY
             </value>
         </constructor-arg>

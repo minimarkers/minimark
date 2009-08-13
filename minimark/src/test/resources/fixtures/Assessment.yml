@@ -5,6 +5,13 @@
   assessmentDate: 2009-08-15
   active: true
   evaluationClosedType: sum_correct_answers
+- &Assessment-igLCM2
+  course: *Course-igLCM
+  title: igLCM2
+  description: igLCM2 test assessment
+  assessmentDate: 2009-08-16
+  active: false
+  evaluationClosedType: sum_correct_answers
 - &Assessment-igPGT1
   course: *Course-igPGT
   title: igPGT1

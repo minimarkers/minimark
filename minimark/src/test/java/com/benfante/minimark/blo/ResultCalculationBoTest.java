@@ -32,7 +32,7 @@ public class ResultCalculationBoTest extends MinimarkBaseTest {
     public void testCalculate() {
         List<AssessmentFilling> assessments = assessmentFillingDao.
                 findByIdentifierOrderBySubmittedDate("12345");
-        assertSize(1, assessments);
+        assertSize(2, assessments);
         AssessmentFilling assessment = assessments.get(0);
         BigDecimal result = resultCalculationBo.calculate(assessment);
         assertNotNull(result);
@@ -47,7 +47,7 @@ public class ResultCalculationBoTest extends MinimarkBaseTest {
     public void testCalculateNormalizedSum() {
         List<AssessmentFilling> assessments = assessmentFillingDao.
                 findByIdentifierOrderBySubmittedDate("12345");
-        assertSize(1, assessments);
+        assertSize(2, assessments);
         AssessmentFilling assessment = assessments.get(0);
         final BigDecimal maxValue = BigDecimal.valueOf(10);
         resultCalculationBo.evaluateAllQuestions(assessment, null);

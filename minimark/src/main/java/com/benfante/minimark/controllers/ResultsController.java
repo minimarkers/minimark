@@ -78,6 +78,16 @@ public class ResultsController {
     }
 
     @RequestMapping
+    public String delete(@RequestParam("id") Long id, HttpServletRequest req,
+            Model model) {
+        AssessmentFilling assessmentFilling = assessmentFillingDao.get(id);
+        final Long assessmentId = assessmentFilling.getAssessment().getId();
+        assessmentFillingDao.delete(assessmentFilling);
+        FlashHelper.setRedirectNotice(req, "Flash.AssessmentDeleted");
+        return "redirect:list.html?id=" + assessmentId;
+    }
+
+    @RequestMapping
     public void pdf(@RequestParam("id") Long id, HttpServletRequest req,
             HttpServletResponse res, Locale locale) {
         AssessmentFilling assessmentInfo = assessmentFillingDao.get(id);

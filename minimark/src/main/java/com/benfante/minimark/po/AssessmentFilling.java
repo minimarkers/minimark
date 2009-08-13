@@ -28,6 +28,11 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank
     @NamedQuery(name="AssessmentFilling.findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier", query="from AssessmentFilling af where af.assessment.id = ? order by af.lastName, af.firstName, af.identifier")
 })
 public class AssessmentFilling extends EntityBase {
+    public static final String CURRENT_STATE_NOT_STARTED = "not_started";
+    public static final String CURRENT_STATE_STARTED = "started";
+    public static final String CURRENT_STATE_COMPLETED = "completed";
+    public static final String CURRENT_STATE_CONFIRMED = "confirmed";
+
     protected Assessment assessment;
     protected Date startDate;
     @NotBlank
@@ -43,6 +48,7 @@ public class AssessmentFilling extends EntityBase {
     protected List<QuestionFilling> questions = new LinkedList<QuestionFilling>();
     protected Boolean evaluated;
     protected BigDecimal evaluationResult;
+    protected Date confirmedDate;
 
     @ManyToOne
     public Assessment getAssessment() {
@@ -138,6 +144,16 @@ public class AssessmentFilling extends EntityBase {
         this.evaluationResult = evaluationResult;
     }
 
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    public Date getConfirmedDate() {
+        return confirmedDate;
+    }
+
+    public void setConfirmedDate(Date confirmedDate) {
+        this.confirmedDate = confirmedDate;
+    }
+
+
     @Transient
     public BigDecimal getTotalWeight() {
         BigDecimal result = BigDecimal.ZERO;
@@ -145,5 +161,37 @@ public class AssessmentFilling extends EntityBase {
             result = result.add(question.getWeight());
         }
         return result;
+    }
+
+    @Transient
+    public String getCurrentState() {
+        if (this.getStartDate() == null) {
+            return CURRENT_STATE_NOT_STARTED;
+        }
+        if (this.getConfirmedDate() != null) {
+            return CURRENT_STATE_CONFIRMED;
+        }
+        if (this.getSubmittedDate() == null) {
+            return CURRENT_STATE_STARTED;
+        } else {
+            return CURRENT_STATE_COMPLETED;
+        }
+    }
+
+    @Transient
+    public int getCurrentStateOrdered() {
+        if(CURRENT_STATE_COMPLETED.equals(getCurrentState())) {
+            return 10;
+        }
+        if(CURRENT_STATE_STARTED.equals(getCurrentState())) {
+            return 20;
+        }
+        if(CURRENT_STATE_NOT_STARTED.equals(getCurrentState())) {
+            return 30;
+        }
+        if(CURRENT_STATE_CONFIRMED.equals(getCurrentState())) {
+            return 40;
+        }
+        return 0;
     }
 }

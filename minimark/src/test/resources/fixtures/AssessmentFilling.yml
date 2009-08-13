@@ -16,3 +16,21 @@
   password: password
   loggedIn: true
   submittedDate: 08/15/2009 11:16
+- &AssessmentFilling-igLCM0201
+  assessment: *Assessment-igLCM2
+  startDate: 08/16/2009 10:00
+  firstName: Mario
+  lastName: Rossi
+  identifier: 12345
+  password: password
+  loggedIn: true
+  submittedDate: 08/16/2009 11:15
+- &AssessmentFilling-igLCM0202
+  assessment: *Assessment-igLCM2
+  startDate: 08/16/2009 10:01
+  firstName: Giuseppe
+  lastName: Verdi
+  identifier: 12346
+  password: password
+  loggedIn: true
+  submittedDate: 08/16/2009 11:16
