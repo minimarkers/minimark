@@ -469,11 +469,11 @@ div.error_flash p {
     color: red;
 }
 
-.filling_started .af_student {
+.filling_started .af_student, .legend_started {
     color: orange;
 }
 
-.filling_completed .af_student {
+.filling_completed .af_student, .legend_completed {
     color: green;
 }
 

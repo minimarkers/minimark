@@ -1,6 +1,8 @@
 <%@ include file="/WEB-INF/jsp/common.jspf" %>
 <h3><spring:message code="AssessmentFillings" text="?AssessmentFillings?"/></h3>
-<a href="#" class="action-refresh" onclick="monitoringABo.refreshAllFillingsBlocks(); return false;"><spring:message code='RefreshAll' text='?RefreshAll?'/></a>
+<a href="#" class="action-refresh" onclick="monitoringABo.refreshAllFillingsBlocks(); return false;"><spring:message code='RefreshAll' text='?RefreshAll?'/></a><br/>
+<span class="legend_started">&diams;</span> <spring:message code="Started" text="?Started?"/>
+<span class="legend_completed">&diams;</span> <spring:message code="Completed" text="?Completed?"/>
 <c:choose>
     <c:when test="${empty fillings}">
         <spring:message code="NoAssessmentFillings" text="?NoAssessmentFillings?"/>
