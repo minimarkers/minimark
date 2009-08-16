@@ -53,7 +53,7 @@
         <%@include file="/WEB-INF/jsp/question/fixedAnswers.jsp" %>
     </div>
     <div class="formButtons">
-        <a href="list.html?courseId=${question.course.id}" class="action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Save' text='?Save?'/>" class="submit-button"/>
+        <a href="list.html?course.id=${question.course.id}" class="action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Save' text='?Save?'/>" class="submit-button"/>
     </div>
 </form:form>
 

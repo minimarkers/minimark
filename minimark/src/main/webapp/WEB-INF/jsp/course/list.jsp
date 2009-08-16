@@ -15,7 +15,7 @@
             <a class="action-edit" href="${cp}/course/edit.html?id=${cc.id}"><spring:message code="Edit" text="?Edit?"/></a>
             <spring:message code='confirmDeleteCourse' text='?confirmDeleteCourse?' var="confirmDeleteCourseMessage"/>
             <a class="action-delete" href="${cp}/course/delete.html?id=${cc.id}" onclick="return confirm('${confirmDeleteCourseMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
-            <a class="action-detail-go" href="${cp}/question/list.html?courseId=${cc.id}"><spring:message code="Questions" text="?Questions?"/></a>
+            <a class="action-detail-go" href="${cp}/question/list.html?course.id=${cc.id}"><spring:message code="Questions" text="?Questions?"/></a>
             <a class="action-detail-go" href="${cp}/course/importQuestions.html?courseId=${cc.id}"><spring:message code="ImportQuestions" text="?ImportQuestions?"/></a>
             <a class="action-add" href="${cp}/assessment/create.html?courseId=${cc.id}"><spring:message code="addAssessment" text="?addAssessment?"/></a>
         </display:column>

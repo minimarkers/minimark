@@ -2,7 +2,6 @@ package com.benfante.minimark.controllers;
 
 import com.benfante.minimark.beans.QuestionBean;
 import com.benfante.minimark.blo.QuestionBo;
-import com.benfante.minimark.blo.UserProfileBo;
 import com.benfante.minimark.dao.CourseDao;
 import com.benfante.minimark.dao.QuestionDao;
 import com.benfante.minimark.po.ClosedQuestion;
@@ -10,10 +9,7 @@ import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.FixedAnswer;
 import com.benfante.minimark.po.OpenQuestion;
 import com.benfante.minimark.po.Question;
-import java.math.BigDecimal;
-import java.util.List;
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 import org.parancoe.web.validation.Validation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -111,11 +107,11 @@ public class QuestionController {
         }
         questionBo.save(question);
         status.setComplete();
-        return "redirect:list.html?courseId=" + questionBean.getCourse().getId();
+        return "redirect:list.html?course.id=" + questionBean.getCourse().getId();
     }
 
     @RequestMapping
-    public String list(@RequestParam("courseId") Long courseId, Model model) {
+    public String list(@RequestParam("course.id") Long courseId, Model model) {
         Course course = courseDao.get(courseId);
         final QuestionBean questionBean = new QuestionBean();
         Course courseBean = new Course();
@@ -157,7 +153,7 @@ public class QuestionController {
         }
         Long courseId = question.getCourse().getId();
         questionDao.delete(question);
-        return "redirect:list.html?courseId=" + courseId;
+        return "redirect:list.html?course.id=" + courseId;
     }
 
 }
