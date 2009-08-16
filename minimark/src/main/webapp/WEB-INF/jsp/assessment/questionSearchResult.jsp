@@ -5,7 +5,7 @@
 <spring:message code="Content" text="?Content?" var="ContentTitle"/>
 <spring:message code="Weight" text="?Weight?" var="WeightTitle"/>
 <spring:message code="Tags" text="?Tags?" var="TagsTitle"/>
-<display:table id="curr"  name="questionSearchResult" sort="list" defaultsort="1" defaultorder="ascending" >
+<display:table id="curr"  name="questionSearchResult">
     <display:column title="${TypeTitle}">
         <c:choose>
             <c:when test="${curr.class.name == 'com.benfante.minimark.po.OpenQuestion'}">

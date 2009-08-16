@@ -11,6 +11,8 @@ import com.benfante.minimark.po.FixedAnswer;
 import com.benfante.minimark.po.FixedAnswerFilling;
 import com.benfante.minimark.po.OpenQuestion;
 import com.benfante.minimark.po.OpenQuestionFilling;
+import com.benfante.minimark.po.Tag;
+import com.benfante.minimark.po.TagQuestionLink;
 import com.benfante.minimark.po.UserProfile;
 import org.parancoe.plugins.security.Authority;
 import org.parancoe.plugins.security.User;
@@ -30,6 +32,6 @@ public abstract class MinimarkBaseTest extends BaseTest {
                     ClosedQuestion.class, FixedAnswer.class, Assessment.class,
                     AssessmentQuestion.class, AssessmentFilling.class,
                     OpenQuestionFilling.class, ClosedQuestionFilling.class,
-                    FixedAnswerFilling.class};
+                    FixedAnswerFilling.class, Tag.class, TagQuestionLink.class};
     }
 }

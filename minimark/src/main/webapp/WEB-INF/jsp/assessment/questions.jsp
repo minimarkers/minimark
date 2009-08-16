@@ -55,6 +55,7 @@
             visualization: $F('visualization'),
             title: $F('title'),
             weight: $F('weight'),
+            tags: $F('tags'),
             course: {id: ${assessment.course.id}}
         });
     }

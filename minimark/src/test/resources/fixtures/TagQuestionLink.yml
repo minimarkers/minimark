@@ -1,0 +1,12 @@
+- &TagQuestionLink-test1001
+  tag: *Tag-test1
+  question: *OpenQuestion-001
+- &TagQuestionLink-test2001
+  tag: *Tag-test2
+  question: *OpenQuestion-001
+- &TagQuestionLink-test3001
+  tag: *Tag-test3
+  question: *OpenQuestion-001
+- &TagQuestionLink-test3002
+  tag: *Tag-test3
+  question: *OpenQuestion-002

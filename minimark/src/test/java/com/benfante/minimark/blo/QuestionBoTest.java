@@ -36,4 +36,28 @@ public class QuestionBoTest extends MinimarkBaseTest {
         assertSize(1, result);
     }
 
+    public void testSearchByTag() {
+        final QuestionBean questionBean = new QuestionBean();
+        questionBean.setTags("test1");
+        List result = questionBo.search(questionBean);
+        assertNotEmpty(result);
+        assertSize(1, result);
+    }
+
+    public void testSearchByTagList() {
+        final QuestionBean questionBean = new QuestionBean();
+        questionBean.setTags("test1, TEST3");
+        List result = questionBo.search(questionBean);
+        assertNotEmpty(result);
+        assertSize(2, result);
+    }
+
+    public void testSearchByAllTags() {
+        final QuestionBean questionBean = new QuestionBean();
+        questionBean.setTags("test1, TEST2,test3");
+        List result = questionBo.search(questionBean);
+        assertNotEmpty(result);
+        assertSize(2, result);
+    }
+
 }

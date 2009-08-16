@@ -104,6 +104,15 @@ public class QuestionBean {
         return tags;
     }
 
+    public List<String> getTagList() {
+        List<String> result = new LinkedList<String>();
+        String[] tagArray = getTags().split(",");
+        for (String tag : tagArray) {
+            result.add(tag.trim().toLowerCase());
+        }
+        return result;
+    }
+
     public void setTags(String tags) {
         this.tags = tags;
     }

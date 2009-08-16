@@ -16,9 +16,12 @@ import com.benfante.minimark.po.Tag;
 import com.benfante.minimark.po.TagQuestionLink;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.ResultTransformer;
 import org.springframework.stereotype.Component;
 
 /**
@@ -81,6 +84,13 @@ public class QuestionBo {
             crit.add(Restrictions.eq("course.id",
                     questionBean.getCourse().getId()));
         }
+        crit.addOrder(Order.asc("title"));
+        if (StringUtils.isNotBlank(questionBean.getTags())) {
+            crit.createAlias("tags", "tags");
+            crit.createAlias("tags.tag", "tag");
+            crit.add(Restrictions.in("tag.name", questionBean.getTagList()));
+        }
+        crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return questionDao.searchByCriteria(crit);
     }
 
