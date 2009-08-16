@@ -15,7 +15,7 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank
  */
 public class QuestionBean {
 
-    private Course course;
+    private Course course = new Course();
     private Long id;
     private String type;
     private String title;

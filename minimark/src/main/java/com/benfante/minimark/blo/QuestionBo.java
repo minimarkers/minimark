@@ -80,7 +80,7 @@ public class QuestionBo {
         if (questionBean.getWeight() != null) {
             crit.add(Restrictions.eq("weight", questionBean.getWeight()));
         }
-        if (questionBean.getCourse() != null) {
+        if (questionBean.getCourse() != null && questionBean.getCourse().getId() != null) {
             crit.add(Restrictions.eq("course.id",
                     questionBean.getCourse().getId()));
         }

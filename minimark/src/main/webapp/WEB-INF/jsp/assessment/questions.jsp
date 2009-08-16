@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/common.jspf" %>
 <h3><spring:message code="AssessmentQuestions" text="?AssessmentQuestions?"/></h3>
-<div>
+<div class="summary">
     <p><spring:message code="Assessment" text="?Assessment?"/>: ${assessment.title}</p>
 </div>
 <form:form commandName="questionSearch" method="post" action="#" onsubmit="searchQuestions(); return false;">

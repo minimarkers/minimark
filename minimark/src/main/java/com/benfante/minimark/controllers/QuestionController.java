@@ -13,6 +13,7 @@ import com.benfante.minimark.po.Question;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import org.parancoe.web.validation.Validation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,14 +35,15 @@ import org.springframework.web.bind.support.SessionStatus;
 public class QuestionController {
 
     public static final String QUESTION_ATTR_NAME = "question";
+    public static final String QUESTION_SEARCH_ATTR_NAME = "questionSearch";
+    public static final String QUESTION_SEARCH_RESULT_ATTR_NAME =
+            "questionSearchResult";
     public static final String EDIT_VIEW = "question/edit";
     public static final String LIST_VIEW = "question/list";
     @Resource
     private CourseDao courseDao;
     @Resource
     private QuestionDao questionDao;
-    @Resource
-    private UserProfileBo userProfileBo;
     @Resource
     private QuestionBo questionBo;
 
@@ -61,11 +63,11 @@ public class QuestionController {
         questionBean.setTags(question.getTagList());
         questionBean.setCourse(question.getCourse());
         if (question instanceof OpenQuestion) {
-            OpenQuestion openQuestion = (OpenQuestion)question;
+            OpenQuestion openQuestion = (OpenQuestion) question;
             questionBean.setType("open");
             questionBean.setAnswerMaxLength(openQuestion.getAnswerMaxLength());
         } else if (question instanceof ClosedQuestion) {
-            ClosedQuestion closedQuestion = (ClosedQuestion)question;
+            ClosedQuestion closedQuestion = (ClosedQuestion) question;
             questionBean.setType("closed");
             questionBean.setFixedAnswers(closedQuestion.getFixedAnswers());
         }
@@ -75,7 +77,8 @@ public class QuestionController {
 
     @RequestMapping
     @Validation(view = EDIT_VIEW)
-    public String save(@ModelAttribute(QUESTION_ATTR_NAME) QuestionBean questionBean,
+    public String save(
+            @ModelAttribute(QUESTION_ATTR_NAME) QuestionBean questionBean,
             BindingResult result, SessionStatus status) {
         Question question = null;
         if (questionBean.getId() == null) {
@@ -114,9 +117,26 @@ public class QuestionController {
     @RequestMapping
     public String list(@RequestParam("courseId") Long courseId, Model model) {
         Course course = courseDao.get(courseId);
-        List<Question> questions = questionDao.findByCourseId(courseId);
+        final QuestionBean questionBean = new QuestionBean();
+        Course courseBean = new Course();
+        courseBean.setId(courseId);
+        questionBean.setCourse(courseBean);
+        model.addAttribute(QUESTION_SEARCH_ATTR_NAME, questionBean);
+        model.addAttribute(QUESTION_SEARCH_RESULT_ATTR_NAME, questionBo.search(
+                questionBean));
         model.addAttribute("course", course);
-        model.addAttribute("questions", questions);
+        return LIST_VIEW;
+    }
+
+    @RequestMapping
+    public String search(
+            @ModelAttribute(QUESTION_SEARCH_ATTR_NAME) QuestionBean questionBean,
+            Model model) {
+        Course course = courseDao.get(questionBean.getCourse().getId());
+        model.addAttribute(QUESTION_SEARCH_ATTR_NAME, questionBean);
+        model.addAttribute(QUESTION_SEARCH_RESULT_ATTR_NAME, questionBo.search(
+                questionBean));
+        model.addAttribute("course", course);
         return LIST_VIEW;
     }
 
@@ -139,4 +159,5 @@ public class QuestionController {
         questionDao.delete(question);
         return "redirect:list.html?courseId=" + courseId;
     }
+
 }
