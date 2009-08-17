@@ -243,6 +243,14 @@ ul#nav {
     white-space: nowrap;
 }
 
+.action-clear, .action-clear:hover {
+    background: url(../images/silk/icons/cross.png) no-repeat center left;
+    padding: 5px 5px 5px 18px;
+    text-decoration: none;
+    border: 0px solid!important;
+    white-space: nowrap;
+}
+
 /* Actions end */
 
 /* Forms */
@@ -475,6 +483,11 @@ div.error_flash p {
 
 .filling_completed .af_student, .legend_completed {
     color: green;
+}
+
+.fillingQuestionActions {
+    width: 100%;
+    text-align: right;
 }
 
 /* Assessment filling end */

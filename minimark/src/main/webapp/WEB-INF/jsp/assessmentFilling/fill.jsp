@@ -61,7 +61,7 @@
                     </div>
                 </c:when>
                 <c:when test="${question.class.name == 'com.benfante.minimark.po.ClosedQuestionFilling'}">
-                    <div class="fixedAnswers">
+                    <div id="fa_div_${question.id}" class="fixedAnswers">
                         <c:choose>
                             <c:when test="${question.multipleAnswer}">
                                 <c:forEach var="fixedAnswer" items="${question.fixedAnswers}">
@@ -82,7 +82,7 @@
                             <c:otherwise>
                                 <c:forEach var="fixedAnswer" items="${question.fixedAnswers}">
                                     <div class="fixedAnswer">
-                                        <input type="radio" id="fa_${fixedAnswer.id}" name="q_${question.id}" value="${fixedAnswer.id}" <c:if test="${fixedAnswer.selected}">checked="checked"</c:if> />
+                                        <input type="radio" id="fa_${fixedAnswer.id}" name="q_${question.id}" value="${fixedAnswer.id}" <c:if test="${fixedAnswer.selected}">checked="checked"</c:if> onclick="deselectRadioButton(this); return true;"/>
                                         <div class="fixedAnswerText filteredContent">${fixedAnswer.filteredContent}</div>
                                         <br/>
                                     </div>
@@ -98,6 +98,23 @@
                 </c:when>
                 <c:otherwise><spring:message code="UnknownQuestionType" text="?UnknownQuestionType?"/></c:otherwise>
             </c:choose>
+            <div class="fillingQuestionActions">
+                <c:choose>
+                    <c:when test="${question.class.name == 'com.benfante.minimark.po.OpenQuestionFilling'}">
+                        <a class="action-clear" href="#" onclick="clearTextAnswer(${question.id}); return false;"><spring:message code='Clear' text='?Clear?'/></a>
+                    </c:when>
+                    <c:when test="${question.class.name == 'com.benfante.minimark.po.ClosedQuestionFilling'}">
+                        <c:choose>
+                            <c:when test="${question.multipleAnswer}">
+                                <a class="action-clear" href="#" onclick="clearCheckBoxes(${question.id}); return false;"><spring:message code='Clear' text='?Clear?'/></a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="action-clear" href="#" onclick="clearRadioButtons(${question.id}); return false;"><spring:message code='Clear' text='?Clear?'/></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:when>
+                </c:choose>
+            </div>
             <br/>
         </div>
     </c:forEach>
@@ -107,5 +124,19 @@
 </form>
 
 <script type="text/javascript">
+    function clearRadioButtons(questionId) {
+        $$('#fa_div_'+questionId+" input[type=radio]").each(function(rb) {
+            rb.checked = false;
+        })
+    }
 
+    function clearCheckBoxes(questionId) {
+        $$('#fa_div_'+questionId+" input[type=checkbox]").each(function(cb) {
+            cb.checked = false;
+        })
+    }
+
+    function clearTextAnswer(questionId) {
+        $('q_'+questionId).value = "";
+    }
 </script>
