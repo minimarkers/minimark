@@ -25,7 +25,8 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="AssessmentFilling.findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier", query="from AssessmentFilling af where af.assessment.id = ? order by af.lastName, af.firstName, af.identifier")
+    @NamedQuery(name="AssessmentFilling.findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier", query="from AssessmentFilling af where af.assessment.id = ? order by af.lastName, af.firstName, af.identifier"),
+    @NamedQuery(name="AssessmentFilling.findByAssessmentIdAndIdentifier", query="from AssessmentFilling af where af.assessment.id = ? and lower(af.identifier) = lower(?)")
 })
 public class AssessmentFilling extends EntityBase {
     public static final String CURRENT_STATE_NOT_STARTED = "not_started";

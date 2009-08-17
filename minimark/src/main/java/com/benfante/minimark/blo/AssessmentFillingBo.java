@@ -37,7 +37,7 @@ public class AssessmentFillingBo {
     private AssessmentFillingDao assessmentFillingDao;
 
     @Transactional
-    public AssessmentFilling generateAndStoreAssessmentFilling(Assessment assessment) {
+    public AssessmentFilling generateAssessmentFilling(Assessment assessment) {
         AssessmentFilling assessmentFilling = new AssessmentFilling();
         assessmentFilling.setAssessment(assessment);
         int i = 0;
@@ -47,7 +47,6 @@ public class AssessmentFillingBo {
             questionFilling.setAssessmentFilling(assessmentFilling);
             assessmentFilling.getQuestions().add(questionFilling);
         }
-        assessmentFillingDao.store(assessmentFilling);
         return assessmentFilling;
     }
 

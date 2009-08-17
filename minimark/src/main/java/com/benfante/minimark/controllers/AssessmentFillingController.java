@@ -45,38 +45,57 @@ public class AssessmentFillingController {
     private ResultCalculationBo resultCalculationBo;
 
     @RequestMapping
-    public String logon(@RequestParam("id") Long id, HttpServletRequest req, HttpSession session, Model model) {
-        AssessmentFilling assessmentFilling = (AssessmentFilling) session.getAttribute(ASSESSMENT_ATTR_NAME);
+    public String logon(@RequestParam("id") Long id, HttpServletRequest req,
+            HttpSession session, Model model) {
+        AssessmentFilling assessmentFilling = (AssessmentFilling) session.
+                getAttribute(ASSESSMENT_ATTR_NAME);
         if (assessmentFilling != null) {
-            if (assessmentFilling.getLoggedIn() != null && assessmentFilling.getLoggedIn()) {
+            if (assessmentFilling.getLoggedIn() != null && assessmentFilling.
+                    getLoggedIn()) {
                 FlashHelper.setRedirectError(req, "AssessmentAlreadyStarted");
                 return "redirect:fill.html";
-            } else {
-                assessmentFillingDao.delete(assessmentFilling);
             }
         }
         Assessment assessment = assessmentDao.get(id);
         if (assessment == null) {
             throw new RuntimeException("Assessment not found");
         }
-        assessmentFilling = assessmentFillingBo.generateAndStoreAssessmentFilling(assessment);
+        assessmentFilling = assessmentFillingBo.generateAssessmentFilling(
+                assessment);
         model.addAttribute(ASSESSMENT_ATTR_NAME, assessmentFilling);
         return FORM_VIEW;
     }
 
     @RequestMapping
     @Validation(view = FORM_VIEW)
-    public String start(@ModelAttribute(ASSESSMENT_ATTR_NAME) AssessmentFilling assessmentFilling,
-            BindingResult result, SessionStatus status) {
-        assessmentFilling.setLoggedIn(Boolean.TRUE);
-        assessmentFilling.setStartDate(new Date());
-        assessmentFillingDao.store(assessmentFilling);
-        return "redirect:fill.html";
+    public String start(
+            @ModelAttribute(ASSESSMENT_ATTR_NAME) AssessmentFilling assessmentFilling,
+            BindingResult result, SessionStatus status, HttpServletRequest req,
+            Model model) {
+        AssessmentFilling prevFilling =
+                assessmentFillingDao.findByAssessmentIdAndIdentifier(assessmentFilling.getAssessment().
+                getId(), assessmentFilling.getIdentifier());
+        if (prevFilling != null) { // this student already started this assessment
+            model.addAttribute(ASSESSMENT_ATTR_NAME, prevFilling);
+            FlashHelper.setRedirectError(req, "AssessmentAlreadyStarted");
+            if (prevFilling.getSubmittedDate() != null) { // already submitted, return to the resul
+                status.setComplete();
+                return "redirect:showResult.html?id=" + prevFilling.getId();
+            } else { // return to the filling page
+                return "redirect:fill.html";
+            }
+        } else {
+            assessmentFilling.setLoggedIn(Boolean.TRUE);
+            assessmentFilling.setStartDate(new Date());
+            assessmentFillingDao.store(assessmentFilling);
+            return "redirect:fill.html";
+        }
     }
 
     @RequestMapping
     public String fill(HttpSession session, Model model) {
-        AssessmentFilling assessmentFilling = (AssessmentFilling) session.getAttribute(ASSESSMENT_ATTR_NAME);
+        AssessmentFilling assessmentFilling = (AssessmentFilling) session.
+                getAttribute(ASSESSMENT_ATTR_NAME);
         assessmentFilling = assessmentFillingDao.get(assessmentFilling.getId()); // refresh from DB
         model.addAttribute(ASSESSMENT_ATTR_NAME, assessmentFilling);
         return FILL_VIEW;
@@ -84,7 +103,8 @@ public class AssessmentFillingController {
 
     @RequestMapping
     public String store(HttpSession session, Model model, SessionStatus status) {
-        AssessmentFilling assessmentFilling = (AssessmentFilling) session.getAttribute(ASSESSMENT_ATTR_NAME);
+        AssessmentFilling assessmentFilling = (AssessmentFilling) session.
+                getAttribute(ASSESSMENT_ATTR_NAME);
         assessmentFilling = assessmentFillingDao.get(assessmentFilling.getId()); // refresh from DB
         assessmentFilling.setSubmittedDate(new Date());
         resultCalculationBo.calculate(assessmentFilling);
