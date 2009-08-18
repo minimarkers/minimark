@@ -45,13 +45,16 @@
                     <div class="openAnswer">
                         <c:choose>
                             <c:when test="${question.visualization == 'short'}">
-                                <input id="q_${question.id}" type="text" size="80" value="<c:if test="${!empty question.answer}"><c:out value="${question.answer}" escapeXml="true"/></c:if>"/>
+                                <input id="q_${question.id}" type="text" size="80" <c:if test="${!empty question.originalQuestion.answerMaxLength}">maxlength="${question.originalQuestion.answerMaxLength}"</c:if> value="<c:if test="${!empty question.answer}"><c:out value="${question.answer}" escapeXml="true"/></c:if>"/>
                             </c:when>
                             <c:when test="${question.visualization == 'long'}">
-                                <textarea id="q_${question.id}" cols="80" rows="5"><c:if test="${!empty question.answer}"><c:out value="${question.answer}" escapeXml="true"/></c:if></textarea>
+                                <textarea id="q_${question.id}" cols="80" rows="5" <c:if test="${!empty question.originalQuestion.answerMaxLength}">maxlength="${question.originalQuestion.answerMaxLength}"</c:if>><c:if test="${!empty question.answer}"><c:out value="${question.answer}" escapeXml="true"/></c:if></textarea>
                             </c:when>
                             <c:otherwise><spring:message code="UnknownVisualization" text="?UnknownVisualization?"/></c:otherwise>
                         </c:choose>
+                        <c:if test="${!empty question.charsLeft}">
+                            <span class="smallText"><span id="q_${question.id}_charsLeft">${question.charsLeft}</span> <spring:message code="charsLeft" text="?charsLeft?"/></span>
+                        </c:if>
                         <br/>
                         <script type="text/javascript">
                             new Form.Element.Observer('q_${question.id}', 5, function(el, value) {
@@ -154,8 +157,30 @@
         $('q_'+questionId).value = "";
     }
 
+    function initTextareasForMaxlength() {
+        $$('textarea').each(function(ta) {
+            if (ta.getAttribute('maxlength')) {
+                ta.observe('keyup', checkChars);
+                ta.observe('keydown', checkChars);
+            }
+        });
+    }
+
+    function checkChars(event) {
+        var maxLength = parseInt(this.getAttribute('maxlength'));
+        if (this.value.length >= maxLength) {
+            if (![Event.KEY_BACKSPACE, Event.KEY_DELETE, Event.KEY_DOWN, Event.KEY_END, Event.KEY_ESC, Event.KEY_HOME, Event.KEY_INSERT, Event.KEY_LEFT, Event.KEY_PAGEDOWN, Event.KEY_PAGEUP, Event.KEY_RIGHT, Event.KEY_TAB, Event.KEY_UP].include(event.keyCode)) {
+                event.stop();
+                return false;
+            }
+        }
+        return true;
+    }
+
     document.observe('dom:loaded' , function() {
         questionFillingABo.updateTimeLeft(${assessmentFilling.id});
+
+        initTextareasForMaxlength();
 
         new PeriodicalExecuter(function(pe) {
             questionFillingABo.updateTimeLeft(${assessmentFilling.id});

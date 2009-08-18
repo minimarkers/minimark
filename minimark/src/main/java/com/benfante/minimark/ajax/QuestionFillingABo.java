@@ -39,8 +39,18 @@ public class QuestionFillingABo {
 
     @RemoteMethod
     public void updateOpenQuestionAnswer(Long id, String value) {
-        OpenQuestionFilling oqf = openQuestionFillingDao.get(id);
+        final OpenQuestionFilling oqf = openQuestionFillingDao.get(id);
         oqf.setAnswer(value);
+        if (oqf.getCharsLeft() != null) {
+            final WebContext wctx = WebContextFactory.get();
+            ScriptSession session = wctx.getScriptSession();
+            Browser.withSession(session.getId(), new Runnable() {
+
+                public void run() {
+                    Util.setValue("q_"+oqf.getId()+"_charsLeft", oqf.getCharsLeft().toString());
+                }
+            });
+        }
     }
 
     @RemoteMethod
@@ -71,7 +81,7 @@ public class QuestionFillingABo {
                 Browser.withSession(session.getId(), new Runnable() {
 
                     public void run() {
-                        Util.setValue("timeLeft", exposedTimeLeft+"m");
+                        Util.setValue("timeLeft", exposedTimeLeft + "m");
                     }
                 });
 
