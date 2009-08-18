@@ -17,6 +17,9 @@
     <form:label path="description"><spring:message code="Description" text="?Description?"/>:</form:label><form:textarea path="description" cols="25" rows="5" cssErrorClass="fieldInError"/>&nbsp;*<br/>
     <form:errors path="assessmentDate" cssClass="errorBox"/>
     <form:label path="assessmentDate"><spring:message code="Date" text="?Date?"/>:</form:label><form:input path="assessmentDate" maxlength="10" size="10" cssErrorClass="fieldInError full-size"/><img id="assessmentDateCalendar" src="${cp}/images/silk/icons/calendar.png" alt="Calendar icon" class="calendar-icon"/>&nbsp;<span class="form-help-text">(dd/MM/yyyy)</span>&nbsp;*<br/>
+    <form:errors path="duration" cssClass="errorBox"/>
+    <form:label path="duration"><spring:message code="Duration" text="?Duration?"/>:</form:label><form:input path="duration" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
+    <div class="form-aligned form-help-text"><span><spring:message code="help.durationField" text="?help.durationField?"/></span></div>
     <form:errors path="active" cssClass="errorBox"/>
     <form:label path="active"><spring:message code="Active" text="?Active?"/>:</form:label>
     <form:select path="active">
@@ -41,7 +44,6 @@
         <form:errors path="evaluationMaxValue" cssClass="errorBox"/>
         <form:label path="evaluationMaxValue"><spring:message code="EvaluationMaxValue" text="?EvaluationMaxValue?"/>:</form:label><form:input path="evaluationMaxValue" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
     </div>
-    <form:errors path="description" cssClass="errorBox"/>
     <form:errors path="evaluationClosedType" cssClass="errorBox"/>
     <form:label path="evaluationClosedType"><spring:message code="EvaluationClosedType" text="?EvaluationClosedType?"/>:</form:label>
     <form:select path="evaluationClosedType">

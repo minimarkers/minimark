@@ -492,6 +492,67 @@ div.error_flash p {
 
 /* Assessment filling end */
 
+/* Status bar start */
+
+#statusBar {
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+    height: 25px;
+    padding: 0;
+}
+
+#statusBar_content {
+    font-size: 11px;
+    height: 25px;
+    margin: 0 15px 0 15px;
+    padding: 1px 3px 1px 3px;
+    overflow:visible !important;
+    position:relative;
+    display: block;
+    background-color: #e4e4e4;
+    border-top: solid thin silver;
+    border-left: solid thin silver;
+    border-right: solid thin silver;
+}
+
+#statusBar_left {
+    height: 25px;
+    float:left;
+}
+
+#statusBar_right {
+    height: 25px;
+    float: right;
+}
+
+#statusBar_student {
+    float: left;
+    border-right: solid thin silver;
+    padding-right: 2px;
+    margin-right: 2px;
+    height: 25px;
+}
+
+#statusBar_assessment {
+    float: left;
+    border-right: solid thin silver;
+    padding-right: 2px;
+    margin-right: 2px;
+    height: 25px;
+}
+
+#statusBar_time {
+    border-left: solid thin silver;
+    padding-left: 2px;
+    margin-left: 2px;
+    height: 25px;
+}
+
+/* Status bar end */
+
 .fullWidth {
     clear: both;
     width: 100%!important;

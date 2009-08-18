@@ -17,6 +17,7 @@ import org.hibernate.annotations.Cascade;
 import org.parancoe.persistence.po.hibernate.EntityBase;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.MaxLength;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
@@ -58,6 +59,8 @@ public class Assessment extends EntityBase {
     protected BigDecimal evaluationMaxValue;
     protected BigDecimal evaluationClosedMinimumEvaluation = BigDecimal.ZERO;
     protected Boolean showInHomePage = Boolean.FALSE;
+    @Min(value=0.0)
+    protected Long duration = Long.valueOf(0);
 
     @ManyToOne
     public Course getCourse() {
@@ -76,7 +79,7 @@ public class Assessment extends EntityBase {
         this.active = active;
     }
 
-    @Column(length=1024)
+    @Column(length = 1024)
     public String getDescription() {
         return description;
     }
@@ -85,7 +88,7 @@ public class Assessment extends EntityBase {
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "assessment", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "assessment", cascade = CascadeType.ALL)
     @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @OrderBy("ordering ASC")
     public List<AssessmentQuestion> getQuestions() {
@@ -193,5 +196,13 @@ public class Assessment extends EntityBase {
 
     public void setShowInHomePage(Boolean showInHomePage) {
         this.showInHomePage = showInHomePage;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 }

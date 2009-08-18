@@ -123,6 +123,20 @@
     </div>
 </form>
 
+<div id="statusBar">
+    <div id="statusBar_content">
+        <div id="statusBar_left">
+            <div id="statusBar_student">${assessmentFilling.firstName} ${assessmentFilling.lastName} (${assessmentFilling.identifier})</div>
+            <div id="statusBar_assessment">${assessmentFilling.assessment.course.name} - ${assessmentFilling.assessment.title}</div>
+        </div>
+        <div id="statusBar_right">
+            <c:if test="${(!empty assessmentFilling.assessment.duration) && (assessmentFilling.assessment.duration != 0)}">
+                <div id="statusBar_time"><spring:message code="TimeLeft" text="?TimeLeft?"/>: <span id="timeLeft"></span></div>
+            </c:if>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     function clearRadioButtons(questionId) {
         $$('#fa_div_'+questionId+" input[type=radio]").each(function(rb) {
@@ -139,4 +153,14 @@
     function clearTextAnswer(questionId) {
         $('q_'+questionId).value = "";
     }
+
+    document.observe('dom:loaded' , function() {
+        questionFillingABo.updateTimeLeft(${assessmentFilling.id});
+
+        new PeriodicalExecuter(function(pe) {
+            questionFillingABo.updateTimeLeft(${assessmentFilling.id});
+        }, 30);
+
+    });
+    
 </script>
