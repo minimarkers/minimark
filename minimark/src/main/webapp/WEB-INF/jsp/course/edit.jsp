@@ -17,6 +17,6 @@
     <form:errors path="secondaryGroup" cssClass="errorBox"/>
     <form:label path="secondaryGroup"><spring:message code="SecondaryGroup" text="?SecondaryGroup?"/>:</form:label><form:input path="secondaryGroup" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
     <div class="formButtons">
-        <a href="${cp}" class="action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Save' text='?Save?'/>" class="submit-button"/>
+        <a href="${cp}" class="action action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Save' text='?Save?'/>" class="submit-button"/>
     </div>
 </form:form>

@@ -6,9 +6,9 @@
     <p><spring:message code="Incumbent" text="?Incumbent?"/>: ${assessment.course.incumbent}</p>
 </div>
 <h3><spring:message code="Results" text="?Results?"/></h3>
-<a class="action-pdf-document" href="pdfs.html?id=${assessment.id}" title="PDF"><spring:message code="AllAssessments" text="?AllAssessments?"/></a>
-<a class="action-xls-document" href="xls.html?id=${assessment.id}" title="Excel"><spring:message code="ExcelResults" text="?ExcelResults?"/></a>
-<a class="action-run" href="evaluateAll.html?id=${assessment.id}" title="Evaluation"><spring:message code="EvaluateAll" text="?EvaluateAll?"/></a>
+<a class="action action-pdf-document" href="pdfs.html?id=${assessment.id}" title="PDF"><spring:message code="AllAssessments" text="?AllAssessments?"/></a>
+<a class="action action-xls-document" href="xls.html?id=${assessment.id}" title="Excel"><spring:message code="ExcelResults" text="?ExcelResults?"/></a>
+<a class="action action-run" href="evaluateAll.html?id=${assessment.id}" title="Evaluation"><spring:message code="EvaluateAll" text="?EvaluateAll?"/></a>
 <spring:message code="LastName" text="?LastName?" var="LastNameTitle"/>
 <spring:message code="FirstName" text="?FirstName?" var="FirstNameTitle"/>
 <spring:message code="StudentIdentifier" text="?StudentIdentifier?" var="IdentifierTitle"/>
@@ -22,10 +22,10 @@
         <fmt:formatDate value="${curr.submittedDate}" type="both" dateStyle="short"/>
     </display:column>
     <display:column property="evaluationResult"  title="${ResultTitle}"/>
-    <display:column>
-        <a class="action-pdf-document" href="pdf.html?id=${curr.id}" title="PDF"></a>
-        <a class="action-run" href="evaluate.html?id=${curr.id}" title="<spring:message code='Evaluate' text='?Evaluate?'/>"></a>
+    <display:column style="white-space: nowrap;">
+        <a class="action action-no-text action-pdf-document" href="pdf.html?id=${curr.id}" title="PDF"></a>
+        <a class="action action-no-text action-run" href="evaluate.html?id=${curr.id}" title="<spring:message code='Evaluate' text='?Evaluate?'/>"></a>
         <spring:message code='confirmDeleteAssessment' text='?confirmDeleteAssessment?' var="confirmDeleteAssessmentMessage"/>
-        <a class="action-delete" href="delete.html?id=${curr.id}" title="<spring:message code='Delete' text='?Delete?'/>" onclick="return confirm('${confirmDeleteAssessmentMessage}')"></a>
+        <a class="action action-no-text action-delete" href="delete.html?id=${curr.id}" title="<spring:message code='Delete' text='?Delete?'/>" onclick="return confirm('${confirmDeleteAssessmentMessage}')"></a>
     </display:column>
 </display:table>

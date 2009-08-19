@@ -35,7 +35,7 @@
     <form:input path="tags" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <div class="form-aligned form-help-text"><span><spring:message code="help.tagListField" text="?tagListField?"/></span></div>
     <div class="formButtons">
-        <a href="list.html?courseId=${assessment.course.id}" class="action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Search' text='?Search?'/>" class="submit-button"/>
+        <a href="list.html?courseId=${assessment.course.id}" class="action action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Search' text='?Search?'/>" class="submit-button"/>
     </div>
 </form:form>
 

@@ -37,8 +37,8 @@
     <display:column property="question.weight"  title="${WeightTitle}"/>
     <display:column property="question.tagList"  title="${TagsTitle}" class="left-aligned"/>
     <display:column>
-        <a class="action-up" href="#" onclick="moveUpQuestion(${curr.id}); return false;" title="<spring:message code="Up" text="?Up?"/>"></a>
-        <a class="action-down" href="#" onclick="moveDownQuestion(${curr.id}); return false;" title="<spring:message code="Down" text="?Down?"/>"></a>
-        <a class="action-cancel" href="#" onclick="removeQuestion(${curr.id}); return false;" title="<spring:message code="Remove" text="?Remove?"/>"></a>
+        <a class="action action-no-text action-up" href="#" onclick="moveUpQuestion(${curr.id}); return false;" title="<spring:message code="Up" text="?Up?"/>"></a>
+        <a class="action action-no-text action-down" href="#" onclick="moveDownQuestion(${curr.id}); return false;" title="<spring:message code="Down" text="?Down?"/>"></a>
+        <a class="action action-no-text action-cancel" href="#" onclick="removeQuestion(${curr.id}); return false;" title="<spring:message code="Remove" text="?Remove?"/>"></a>
     </display:column>
 </display:table>

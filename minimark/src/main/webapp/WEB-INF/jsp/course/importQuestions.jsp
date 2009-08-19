@@ -6,6 +6,6 @@
     <form:label path="importFile"><spring:message code="File" text="?File?"/>:</form:label><input type="file" name="importFile" id="importFile" class="full-size"/>&nbsp;*<br/>
     <div class="form-aligned form-help-text"><span><spring:message code="help.importQuestionsExample" text="?help.importQuestionsExample?" arguments="${cp}/files/questionFileExample.txt"/></span></div>
     <div class="formButtons">
-        <a href="list.html" class="action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Import' text='?Import?'/>" class="submit-button"/>
+        <a href="list.html" class="action action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Import' text='?Import?'/>" class="submit-button"/>
     </div>
 </form:form>

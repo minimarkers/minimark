@@ -19,7 +19,7 @@
                         <div class="incumbent">${assessment.course.incumbent}</div>
                     </c:if>
                     <div class="actions">
-                        <a href="${cp}/assessmentFilling/logon.html?id=${assessment.id}" class="action-start"><spring:message code="start" text="?start?"/></a>
+                        <a href="${cp}/assessmentFilling/logon.html?id=${assessment.id}" class="action action-start"><spring:message code="start" text="?start?"/></a>
                     </div>
                 </div>
             </c:forEach>

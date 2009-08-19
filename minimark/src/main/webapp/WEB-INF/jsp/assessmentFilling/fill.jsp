@@ -104,15 +104,15 @@
             <div class="fillingQuestionActions">
                 <c:choose>
                     <c:when test="${question.class.name == 'com.benfante.minimark.po.OpenQuestionFilling'}">
-                        <a class="action-clear" href="#" onclick="clearTextAnswer(${question.id}); return false;"><spring:message code='Clear' text='?Clear?'/></a>
+                        <a class="action action-clear" href="#" onclick="clearTextAnswer(${question.id}); return false;"><spring:message code='Clear' text='?Clear?'/></a>
                     </c:when>
                     <c:when test="${question.class.name == 'com.benfante.minimark.po.ClosedQuestionFilling'}">
                         <c:choose>
                             <c:when test="${question.multipleAnswer}">
-                                <a class="action-clear" href="#" onclick="clearCheckBoxes(${question.id}); return false;"><spring:message code='Clear' text='?Clear?'/></a>
+                                <a class="action action-clear" href="#" onclick="clearCheckBoxes(${question.id}); return false;"><spring:message code='Clear' text='?Clear?'/></a>
                             </c:when>
                             <c:otherwise>
-                                <a class="action-clear" href="#" onclick="clearRadioButtons(${question.id}); return false;"><spring:message code='Clear' text='?Clear?'/></a>
+                                <a class="action action-clear" href="#" onclick="clearRadioButtons(${question.id}); return false;"><spring:message code='Clear' text='?Clear?'/></a>
                             </c:otherwise>
                         </c:choose>
                     </c:when>

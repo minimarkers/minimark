@@ -38,12 +38,12 @@
     <form:input path="tags" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <div class="form-aligned form-help-text"><span><spring:message code="help.tagListField" text="?tagListField?"/></span></div>
     <div class="formButtons">
-        <a href="${cp}/course/list.html" class="action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Search' text='?Search?'/>" class="submit-button"/>
+        <a href="${cp}/course/list.html" class="action action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Search' text='?Search?'/>" class="submit-button"/>
     </div>
 </form:form>
 
 <div>
-    <a class="action-add" href="${cp}/question/create.html?courseId=${course.id}"><spring:message code="addQuestion" text="?addQuestion?"/></a>
+    <a class="action action-add" href="${cp}/question/create.html?courseId=${course.id}"><spring:message code="addQuestion" text="?addQuestion?"/></a>
 </div>
 
 <div class="displaytag">
@@ -79,9 +79,9 @@
         <display:column property="weight"  titleKey="Weight"/>
         <display:column property="tagList"  titleKey="Tags" class="left-aligned"/>
         <display:column>
-            <a class="action-edit" href="${cp}/question/edit.html?id=${curr.id}"><spring:message code="Edit" text="?Edit?"/></a>
+            <a class="action action-edit" href="${cp}/question/edit.html?id=${curr.id}"><spring:message code="Edit" text="?Edit?"/></a>
             <spring:message code='confirmDeleteQuestion' text='?confirmDeleteQuestion?' var="confirmDeleteQuestionMessage"/>
-            <a class="action-delete" href="${cp}/question/delete.html?id=${curr.id}" onclick="return confirm('${confirmDeleteQuestionMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
+            <a class="action action-delete" href="${cp}/question/delete.html?id=${curr.id}" onclick="return confirm('${confirmDeleteQuestionMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
         </display:column>
     </display:table>
 </div>

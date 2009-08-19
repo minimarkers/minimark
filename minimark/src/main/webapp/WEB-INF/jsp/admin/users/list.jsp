@@ -2,7 +2,7 @@
 <h3>Users</h3>
 
 <div>
-    <a class="action-add" href="create.html"><spring:message code="AddUser" text="?AddUser?"/></a>
+    <a class="action action-add" href="create.html"><spring:message code="AddUser" text="?AddUser?"/></a>
 </div>
 
 <div class="displaytag">
@@ -12,9 +12,9 @@
         <display:column property="email" titleKey="Email" class="left-aligned" autolink="true"/>
         <display:column property="site" titleKey="Site" class="left-aligned" autolink="true"/>
         <display:column>
-            <a class="action-edit" href="edit.form?id=${user.user.id}"><spring:message code="Edit" text="?Edit?"/></a>
+            <a class="action action-edit" href="edit.form?id=${user.user.id}"><spring:message code="Edit" text="?Edit?"/></a>
             <spring:message code='confirmDeleteUser' text='?confirmDeleteUser?' var="confirmDeleteUserMessage" arguments="${user.user.username}" javaScriptEscape="true"/>
-            <a class="action-delete" href="delete.html?id=${user.user.id}" onclick="return confirm('${confirmDeleteUserMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
+            <a class="action action-delete" href="delete.html?id=${user.user.id}" onclick="return confirm('${confirmDeleteUserMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
         </display:column>
     </display:table>
 </div>

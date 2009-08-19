@@ -123,132 +123,82 @@ ul#nav {
 }
 
 /* Actions */
-.action-add, .action-add:hover {
-    background: url(../images/silk/icons/add.png) no-repeat center left;
+.action {
     padding: 5px 5px 5px 18px;
     text-decoration: none;
     border: 0px solid!important;
     white-space: nowrap;
+    min-width: 16px;
+    min-height: 16px;
+    display: inline-block;
+}
+
+.action-no-text {
+    padding-left: 1px;
+}
+
+.action-add, .action-add:hover {
+    background: url(../images/silk/icons/add.png) no-repeat center left;
 }
 
 .action-edit, .action-edit:hover {
     background: url(../images/silk/icons/pencil.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-delete, .action-delete:hover {
     background: url(../images/silk/icons/delete.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-detail-go, .action-detail-go:hover {
     background: url(../images/silk/icons/table_go.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-back, .action-back:hover {
     background: url(../images/silk/icons/arrow_left.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-cancel, .action-cancel:hover {
     background: url(../images/silk/icons/cancel.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-confirm, .action-confirm:hover {
     background: url(../images/silk/icons/accept.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-start, .action-start:hover {
     background: url(../images/silk/icons/cog_go.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-right, .action-right:hover {
     background: url(../images/silk/icons/arrow_right.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-up, .action-up:hover {
     background: url(../images/silk/icons/arrow_up.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-down, .action-down:hover {
     background: url(../images/silk/icons/arrow_down.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-pdf-document, .action-pdf-document:hover {
     background: url(../images/silk/icons/page_white_acrobat.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-xls-document, .action-xls-document:hover {
     background: url(../images/silk/icons/page_white_excel.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-run, .action-run:hover {
     background: url(../images/silk/icons/cog.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-refresh, .action-refresh:hover {
     background: url(../images/silk/icons/arrow_refresh.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 .action-clear, .action-clear:hover {
     background: url(../images/silk/icons/cross.png) no-repeat center left;
-    padding: 5px 5px 5px 18px;
-    text-decoration: none;
-    border: 0px solid!important;
-    white-space: nowrap;
 }
 
 /* Actions end */
