@@ -513,9 +513,9 @@ div.error_flash p {
     position:relative;
     display: block;
     background-color: #e4e4e4;
-    border-top: solid thin silver;
-    border-left: solid thin silver;
-    border-right: solid thin silver;
+    border-top: solid 1px silver;
+    border-left: solid 1px silver;
+    border-right: solid 1px silver;
 }
 
 #statusBar_left {
@@ -530,7 +530,7 @@ div.error_flash p {
 
 #statusBar_student {
     float: left;
-    border-right: solid thin silver;
+    border-right: solid 1px silver;
     padding-right: 2px;
     margin-right: 2px;
     height: 25px;
@@ -538,14 +538,14 @@ div.error_flash p {
 
 #statusBar_assessment {
     float: left;
-    border-right: solid thin silver;
+    border-right: solid 1px silver;
     padding-right: 2px;
     margin-right: 2px;
     height: 25px;
 }
 
 #statusBar_time {
-    border-left: solid thin silver;
+    border-left: solid 1px silver;
     padding-left: 2px;
     margin-left: 2px;
     height: 25px;

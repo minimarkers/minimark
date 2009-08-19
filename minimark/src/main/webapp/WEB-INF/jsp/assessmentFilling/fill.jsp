@@ -85,7 +85,7 @@
                             <c:otherwise>
                                 <c:forEach var="fixedAnswer" items="${question.fixedAnswers}">
                                     <div class="fixedAnswer">
-                                        <input type="radio" id="fa_${fixedAnswer.id}" name="q_${question.id}" value="${fixedAnswer.id}" <c:if test="${fixedAnswer.selected}">checked="checked"</c:if> onclick="deselectRadioButton(this); return true;"/>
+                                        <input type="radio" id="fa_${fixedAnswer.id}" name="q_${question.id}" value="${fixedAnswer.id}" <c:if test="${fixedAnswer.selected}">checked="checked"</c:if>/>
                                         <div class="fixedAnswerText filteredContent">${fixedAnswer.filteredContent}</div>
                                         <br/>
                                     </div>
