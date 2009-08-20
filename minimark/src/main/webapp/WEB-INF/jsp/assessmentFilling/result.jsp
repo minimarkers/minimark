@@ -9,4 +9,7 @@
 <h3><spring:message code="Result" text="?Result?"/></h3>
 <div class="result">
     <p><spring:message code="AssessmentSentMessage" text="?AssessmentSentMessage?"/></p>
+    <c:if test="${assessmentFilling.assessment.allowStudentPrint}">
+        <p><a href="pdf.html?id=${assessmentFilling.id}" class="action action-pdf-document"><spring:message code="PrintYourAssessment" text="?PrintYourAssessment?"/></a></p>
+    </c:if>
 </div>

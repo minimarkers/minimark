@@ -53,13 +53,19 @@
         <form:option value="sum_correct_answers" label="${ETCSumCorrectAnswersLabel}"/>
     </form:select><br/>
     <form:errors path="evaluationClosedMinimumEvaluation" cssClass="errorBox"/>
-    <form:label path="evaluationClosedMinimumEvaluation"><spring:message code="EvaluationClosedMinimumEvaluation" text="?EvaluationClosedMinimumEvaluation?"/>:</form:label><form:input path="evaluationClosedMinimumEvaluation" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
+    <form:label path="evaluationClosedMinimumEvaluation"><spring:message code="EvaluationClosedMinimumEvaluation" text="?EvaluationClosedMinimumEvaluation?"/>:</form:label><form:input path="evaluationClosedMinimumEvaluation" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
+    <form:errors path="allowStudentPrint" cssClass="errorBox"/>
+    <form:label path="allowStudentPrint"><spring:message code="StudentPrint" text="?StudentPrint?"/>:</form:label>
+    <form:select path="allowStudentPrint">
+        <form:option value="false" label="${noLabel}"/>
+        <form:option value="true" label="${yesLabel}"/>
+    </form:select><br/>
     <form:errors path="newPassword" cssClass="errorBox"/>
     <form:label path="newPassword"><spring:message code="Password" text="?Password?"/>:</form:label><form:password path="newPassword" showPassword="true" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <form:errors path="confirmPassword" cssClass="errorBox"/>
     <form:label path="confirmPassword"><spring:message code="ConfirmPassword" text="?ConfirmPassword?"/>:</form:label><form:password path="confirmPassword" showPassword="true" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <div class="formButtons">
-        <a href="list.html" class="action action-no-text action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Save' text='?Save?'/>" class="submit-button"/>
+        <a href="list.html" class="action action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Save' text='?Save?'/>" class="submit-button"/>
     </div>
 </form:form>
 

@@ -61,6 +61,7 @@ public class Assessment extends EntityBase {
     protected Boolean showInHomePage = Boolean.FALSE;
     @Min(value=0.0)
     protected Long duration = Long.valueOf(0);
+    protected Boolean allowStudentPrint = Boolean.FALSE;
 
     @ManyToOne
     public Course getCourse() {
@@ -205,4 +206,13 @@ public class Assessment extends EntityBase {
     public void setDuration(Long duration) {
         this.duration = duration;
     }
+
+    public Boolean getAllowStudentPrint() {
+        return allowStudentPrint;
+    }
+
+    public void setAllowStudentPrint(Boolean allowStudentPrint) {
+        this.allowStudentPrint = allowStudentPrint;
+    }
+    
 }
