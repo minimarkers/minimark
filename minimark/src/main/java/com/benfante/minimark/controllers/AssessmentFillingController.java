@@ -83,9 +83,11 @@ public class AssessmentFillingController {
     @Validation(view = FORM_VIEW)
     public String start(
             @ModelAttribute(ASSESSMENT_ATTR_NAME) AssessmentFilling assessmentFilling,
-            BindingResult result, SessionStatus status, HttpServletRequest req, HttpSession session,
+            BindingResult result, SessionStatus status, HttpServletRequest req,
+            HttpSession session,
             Model model) {
-        session.setAttribute(STUDENT_ID_ATTR_NAME, assessmentFilling.getIdentifier());
+        session.setAttribute(STUDENT_ID_ATTR_NAME, assessmentFilling.
+                getIdentifier());
         AssessmentFilling prevFilling =
                 assessmentFillingDao.findByAssessmentIdAndIdentifier(assessmentFilling.getAssessment().
                 getId(), assessmentFilling.getIdentifier());
@@ -127,7 +129,8 @@ public class AssessmentFillingController {
     }
 
     @RequestMapping
-    public String showResult(@RequestParam("id") Long id, HttpServletRequest req, HttpSession session) {
+    public String showResult(@RequestParam("id") Long id, HttpServletRequest req,
+            HttpSession session) {
         AssessmentFilling assessmentFilling = assessmentFillingDao.get(id);
         boolean validStudent = checkStudent(session, assessmentFilling);
         if (!validStudent) {
@@ -144,6 +147,11 @@ public class AssessmentFillingController {
         AssessmentFilling assessmentInfo = assessmentFillingDao.get(id);
         boolean validStudent = checkStudent(session, assessmentInfo);
         if (!validStudent) {
+            FlashHelper.setRedirectError(req, "Flash.NotAllowedToSeeAssessment");
+            return EXIT_WITH_ERROR_PAGE;
+        }
+        if (assessmentInfo.getAssessment().getAllowStudentPrint() == null || assessmentInfo.
+                getAssessment().getAllowStudentPrint().booleanValue() == false) {
             FlashHelper.setRedirectError(req, "Flash.NotAllowedToSeeAssessment");
             return EXIT_WITH_ERROR_PAGE;
         }
@@ -184,10 +192,10 @@ public class AssessmentFillingController {
             AssessmentFilling assessmentFilling) {
         boolean result = false;
         String studentId = (String) session.getAttribute(STUDENT_ID_ATTR_NAME);
-        if (studentId != null && studentId.equals(assessmentFilling.getIdentifier())) {
+        if (studentId != null && studentId.equals(assessmentFilling.
+                getIdentifier())) {
             result = true;
         }
         return result;
     }
-
 }
