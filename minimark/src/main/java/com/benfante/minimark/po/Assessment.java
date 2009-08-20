@@ -62,6 +62,10 @@ public class Assessment extends EntityBase {
     @Min(value=0.0)
     protected Long duration = Long.valueOf(0);
     protected Boolean allowStudentPrint = Boolean.FALSE;
+    protected String exposedResult = "none";
+    @NotNull(applyIf = "exposedResult == 'passed'")
+    @Min(value=0.0, applyIf = "exposedResult == 'passed'")
+    protected BigDecimal minPassedValue;
 
     @ManyToOne
     public Course getCourse() {
@@ -213,6 +217,22 @@ public class Assessment extends EntityBase {
 
     public void setAllowStudentPrint(Boolean allowStudentPrint) {
         this.allowStudentPrint = allowStudentPrint;
+    }
+
+    public String getExposedResult() {
+        return exposedResult;
+    }
+
+    public void setExposedResult(String exposedResult) {
+        this.exposedResult = exposedResult;
+    }
+
+    public BigDecimal getMinPassedValue() {
+        return minPassedValue;
+    }
+
+    public void setMinPassedValue(BigDecimal minPassedValue) {
+        this.minPassedValue = minPassedValue;
     }
     
 }

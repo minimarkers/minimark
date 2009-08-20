@@ -60,6 +60,20 @@
         <form:option value="false" label="${noLabel}"/>
         <form:option value="true" label="${yesLabel}"/>
     </form:select><br/>
+    <form:errors path="exposedResult" cssClass="errorBox"/>
+    <form:label path="exposedResult"><spring:message code="ExposedResult" text="?ExposedResult?"/>:</form:label>
+    <form:select path="exposedResult">
+        <spring:message code="ERNone" text="?ERNone?" var="ERNoneLabel"/>
+        <form:option value="none" label="${ERNoneLabel}"/>
+        <spring:message code="ERValue" text="?ERValue?" var="ERValueLabel"/>
+        <form:option value="value" label="${ERValueLabel}"/>
+        <spring:message code="ERPassed" text="?ERPassed?" var="ERPassedLabel"/>
+        <form:option value="passed" label="${ERPassedLabel}"/>
+    </form:select><br/>
+    <div id="ERPassedFields">
+        <form:errors path="minPassedValue" cssClass="errorBox"/>
+        <form:label path="minPassedValue"><spring:message code="MinPassedValue" text="?MinPassedValue?"/>:</form:label><form:input path="minPassedValue" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
+    </div>
     <form:errors path="newPassword" cssClass="errorBox"/>
     <form:label path="newPassword"><spring:message code="Password" text="?Password?"/>:</form:label><form:password path="newPassword" showPassword="true" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <form:errors path="confirmPassword" cssClass="errorBox"/>
@@ -73,8 +87,10 @@
 attachCalendar('assessmentDateCalendar', 'assessmentDate', false);
 
 new Field.Observer('evaluationType', 0.5, showETFields);
+new Field.Observer('exposedResult', 0.5, showERFields);
 
 showETFields();
+showERFields();
 
 function showETFields() {
     $('ETNormalizedSumFields').hide();
@@ -84,4 +100,14 @@ function showETFields() {
         $('ETNormalizedSumFields').show();
     }
 }
+
+function showERFields() {
+    $('ERPassedFields').hide();
+    $('minPassedValue').disable();
+    if ($F('exposedResult') == 'passed') {
+        $('minPassedValue').enable();
+        $('ERPassedFields').show();
+    }
+}
+
 </script>

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.parancoe.web.util.FlashHelper;
 import org.parancoe.web.validation.Validation;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,7 @@ public class AssessmentFillingController {
             AssessmentFillingController.class);
     public static final String ASSESSMENT_ATTR_NAME = "assessmentFilling";
     public static final String STUDENT_ID_ATTR_NAME = "studentId";
+    public static final String EXPOSED_RESULT_ATTR_NAME = "exposedResult";
     public static final String FORM_VIEW = "assessmentFilling/logon";
     public static final String FILL_VIEW = "assessmentFilling/fill";
     public static final String RESULT_VIEW = "assessmentFilling/result";
@@ -56,6 +58,8 @@ public class AssessmentFillingController {
     private ResultCalculationBo resultCalculationBo;
     @Resource
     private AssessmentPdfBuilder assessmentPdfBuilder;
+    @Resource
+    private MessageSource messageSource;
 
     @RequestMapping
     public String logon(@RequestParam("id") Long id, HttpServletRequest req,
@@ -130,12 +134,32 @@ public class AssessmentFillingController {
 
     @RequestMapping
     public String showResult(@RequestParam("id") Long id, HttpServletRequest req,
-            HttpSession session) {
+            HttpSession session, Locale locale) {
         AssessmentFilling assessmentFilling = assessmentFillingDao.get(id);
-        boolean validStudent = checkStudent(session, assessmentFilling);
-        if (!validStudent) {
+        if (!checkStudent(session, assessmentFilling) || !resultIsExposable(
+                assessmentFilling)) {
             FlashHelper.setRedirectError(req, "Flash.NotAllowedToSeeAssessment");
             return EXIT_WITH_ERROR_PAGE;
+        }
+        final String exposedResult =
+                assessmentFilling.getAssessment().getExposedResult();
+        if (exposedResult != null && !"none".equals(exposedResult)) {
+            if ("value".equals(exposedResult)) {
+                req.setAttribute(EXPOSED_RESULT_ATTR_NAME, assessmentFilling.
+                        getEvaluationResult());
+            }
+            if ("passed".equals(exposedResult) && assessmentFilling.
+                    getAssessment().getMinPassedValue() != null) {
+                if (assessmentFilling.getEvaluationResult().compareTo(
+                        assessmentFilling.getAssessment().getMinPassedValue()) >=
+                        0) {
+                    req.setAttribute(EXPOSED_RESULT_ATTR_NAME, messageSource.
+                            getMessage("Passed", null, "?Passed?", locale));
+                } else {
+                    req.setAttribute(EXPOSED_RESULT_ATTR_NAME, messageSource.
+                            getMessage("NotPassed", null, "?NotPassed?", locale));
+                }
+            }
         }
         req.setAttribute(ASSESSMENT_ATTR_NAME, assessmentFilling);
         return RESULT_VIEW;
@@ -145,13 +169,8 @@ public class AssessmentFillingController {
     public String pdf(@RequestParam("id") Long id, HttpServletRequest req,
             HttpServletResponse res, HttpSession session, Locale locale) {
         AssessmentFilling assessmentInfo = assessmentFillingDao.get(id);
-        boolean validStudent = checkStudent(session, assessmentInfo);
-        if (!validStudent) {
-            FlashHelper.setRedirectError(req, "Flash.NotAllowedToSeeAssessment");
-            return EXIT_WITH_ERROR_PAGE;
-        }
-        if (assessmentInfo.getAssessment().getAllowStudentPrint() == null || assessmentInfo.
-                getAssessment().getAllowStudentPrint().booleanValue() == false) {
+        if (!checkStudent(session, assessmentInfo) || !resultIsExposable(
+                assessmentInfo) || !resultIsPrintable(assessmentInfo)) {
             FlashHelper.setRedirectError(req, "Flash.NotAllowedToSeeAssessment");
             return EXIT_WITH_ERROR_PAGE;
         }
@@ -164,8 +183,8 @@ public class AssessmentFillingController {
             res.setContentType("application/pdf");
             res.setContentLength(pdfBytes.length);
             res.setHeader("Content-Disposition",
-                    " attachment; filename=\"" + assessmentInfo.getLastName() + "_" + assessmentInfo.
-                    getFirstName() + ".pdf\"");
+                    " attachment; filename=\"" + assessmentInfo.getLastName() +
+                    "_" + assessmentInfo.getFirstName() + ".pdf\"");
             res.setHeader("Expires", "0");
             res.setHeader("Cache-Control",
                     "must-revalidate, post-check=0, pre-check=0");
@@ -192,8 +211,27 @@ public class AssessmentFillingController {
             AssessmentFilling assessmentFilling) {
         boolean result = false;
         String studentId = (String) session.getAttribute(STUDENT_ID_ATTR_NAME);
-        if (studentId != null && studentId.equals(assessmentFilling.
-                getIdentifier())) {
+        if (studentId != null &&
+                studentId.equals(assessmentFilling.getIdentifier())) {
+            result = true;
+        }
+        return result;
+    }
+
+    private boolean resultIsExposable(AssessmentFilling assessmentFilling) {
+        boolean result = false;
+        if (assessmentFilling.getSubmittedDate() != null) {
+            result = true;
+        }
+        return result;
+    }
+
+    private boolean resultIsPrintable(AssessmentFilling assessmentFilling) {
+        boolean result = false;
+        final Boolean allowStudentPrint =
+                assessmentFilling.getAssessment().getAllowStudentPrint();
+        if (allowStudentPrint != null &&
+                allowStudentPrint.booleanValue() == true) {
             result = true;
         }
         return result;
