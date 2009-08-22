@@ -178,12 +178,12 @@
     }
 
     document.observe('dom:loaded' , function() {
-        questionFillingABo.updateTimeLeft(${assessmentFilling.id});
+        questionFillingABo.updateTimeLeft();
 
         initTextareasForMaxlength();
 
         new PeriodicalExecuter(function(pe) {
-            questionFillingABo.updateTimeLeft(${assessmentFilling.id});
+            questionFillingABo.updateTimeLeft();
         }, 30);
 
     });
