@@ -1,17 +1,23 @@
 package com.benfante.minimark.blo;
 
+import com.benfante.minimark.beans.QuestionBean;
+import com.benfante.minimark.beans.QuestionRequest;
 import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.dao.AssessmentQuestionDao;
 import com.benfante.minimark.dao.QuestionDao;
 import com.benfante.minimark.po.Assessment;
 import com.benfante.minimark.po.AssessmentQuestion;
+import com.benfante.minimark.po.AssessmentTemplate;
 import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.Question;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import javax.annotation.Resource;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
@@ -31,6 +37,8 @@ public class AssessmentBo {
     private AssessmentDao assessmentDao;
     @Resource
     private AssessmentQuestionDao assessmentQuestionDao;
+    @Resource
+    private QuestionBo questionBo;
 
     /**
      * Add a question to an assessment.
@@ -60,8 +68,10 @@ public class AssessmentBo {
     }
 
     @Transactional
-    public void moveUpQuestionInAssessment(Long assessmentQuestionId, Long assessmentId) {
-        List<AssessmentQuestion> questions = assessmentQuestionDao.findByAssessmentId(assessmentId);
+    public void moveUpQuestionInAssessment(Long assessmentQuestionId,
+            Long assessmentId) {
+        List<AssessmentQuestion> questions = assessmentQuestionDao.
+                findByAssessmentId(assessmentId);
         int i = 0;
         AssessmentQuestion prev = null;
         for (AssessmentQuestion question : questions) {
@@ -75,8 +85,10 @@ public class AssessmentBo {
         }
     }
 
-    public void moveDownQuestionInAssessment(Long assessmentQuestionId, Long assessmentId) {
-        List<AssessmentQuestion> questions = assessmentQuestionDao.findByAssessmentId(assessmentId);
+    public void moveDownQuestionInAssessment(Long assessmentQuestionId,
+            Long assessmentId) {
+        List<AssessmentQuestion> questions = assessmentQuestionDao.
+                findByAssessmentId(assessmentId);
         int i = 0;
         AssessmentQuestion prev = null;
         boolean changeNext = false;
@@ -104,7 +116,8 @@ public class AssessmentBo {
      *
      * @return The map of courses on assessments
      */
-    public Map<Course, List<Assessment>> mapAssessmentsOnCourse(Boolean active, Boolean showInHomePage, String username) {
+    public Map<Course, List<Assessment>> mapAssessmentsOnCourse(Boolean active,
+            Boolean showInHomePage, String username) {
         List<Assessment> assessments = searchAssessments(active, showInHomePage,
                 username);
         Map<Course, List<Assessment>> assessmentsByCourse =
@@ -131,7 +144,8 @@ public class AssessmentBo {
      *
      * @return The map of courses on assessments
      */
-    public List<Assessment> searchAssessments(Boolean active, Boolean showInHomePage, String username) {
+    public List<Assessment> searchAssessments(Boolean active,
+            Boolean showInHomePage, String username) {
         DetachedCriteria crit = DetachedCriteria.forClass(Assessment.class);
         if (active != null) {
             crit.add(Restrictions.eq("active", active));
@@ -149,4 +163,80 @@ public class AssessmentBo {
         return assessments;
     }
 
+    /**
+     * Create a new assessment from a template.
+     *
+     * @param assessmentTemplate The template
+     * @return The new assessment.
+     */
+    public Assessment createFromTemplate(AssessmentTemplate template) {
+        Assessment result = new Assessment();
+        result.setCourse(template.getCourse());
+        result.setAssessmentDate(new Date());
+        result.setDescription(template.getDescription());
+        result.setDuration(template.getDuration());
+        result.setEvaluationClosedMinimumEvaluation(template.
+                getEvaluationClosedMinimumEvaluation());
+        result.setEvaluationClosedType(template.getEvaluationClosedType());
+        result.setEvaluationMaxValue(template.getEvaluationMaxValue());
+        result.setEvaluationType(template.getEvaluationType());
+        result.setExposedResult(template.getExposedResult());
+        result.setMinPassedValue(template.getMinPassedValue());
+        result.setTitle(template.getTitle());
+        extractQuestions(result, template);
+        return result;
+    }
+
+    private void extractQuestions(Assessment assessment,
+            AssessmentTemplate template) {
+        Random random = new Random();
+        template.buildQuestionRequests();
+        List<AssessmentQuestion> assessmentQuestions = null;
+        if (assessment.getQuestions() != null) {
+            assessmentQuestions = assessment.getQuestions();
+        } else {
+            assessmentQuestions = new LinkedList<AssessmentQuestion>();
+        }
+        long order = 0;
+        for (QuestionRequest questionRequest : template.getQuestionRequests()) {
+            if (StringUtils.isNotBlank(questionRequest.getTag())) {
+                QuestionBean questionBean =
+                        new QuestionBean();
+                questionBean.setCourse(template.getCourse());
+                questionBean.setTags(questionRequest.getTag());
+                List<Question> questions = questionBo.search(questionBean);
+                int count = questionRequest.getHowMany();
+                while (count > 0) {
+                    boolean added = false;
+                    while (!added && !questions.isEmpty()) {
+                        int index = random.nextInt(questions.size());
+                        Question question = questions.remove(index);
+                        if (!alreadyIncluded(assessmentQuestions, question)) {
+                            AssessmentQuestion assessmentQuestion =
+                                    new AssessmentQuestion();
+                            assessmentQuestion.setAssessment(assessment);
+                            assessmentQuestion.setQuestion(question);
+                            assessmentQuestion.setOrdering(Long.valueOf(order));
+                            assessmentQuestions.add(assessmentQuestion);
+                            order++;
+                            added = true;
+                        }
+                    }
+                    count--;
+                }
+            }
+        }
+        assessment.setQuestions(assessmentQuestions);
+    }
+
+    private boolean alreadyIncluded(List<AssessmentQuestion> assessmentQuestions, Question question) {
+        boolean result = false;
+        for (AssessmentQuestion assessmentQuestion : assessmentQuestions) {
+            if (assessmentQuestion.getQuestion().equals(question)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
 }

@@ -18,6 +18,7 @@
             <a class="action action-detail-go" href="${cp}/question/list.html?course.id=${cc.id}"><spring:message code="Questions" text="?Questions?"/></a>
             <a class="action action-detail-go" href="${cp}/course/importQuestions.html?courseId=${cc.id}"><spring:message code="ImportQuestions" text="?ImportQuestions?"/></a>
             <a class="action action-add" href="${cp}/assessment/create.html?courseId=${cc.id}"><spring:message code="addAssessment" text="?addAssessment?"/></a>
+            <a class="action action-add" href="${cp}/assessment/template/create.html?course.id=${cc.id}"><spring:message code="addAssessmentFromTemplate" text="?addAssessmentFromTemplate?"/></a>
         </display:column>
     </display:table>
 </div>

@@ -19,7 +19,8 @@ import javax.persistence.NamedQuery;
     "from TagQuestionLink tql where tql.tag.name = ? order by tql.question.title asc"),
     @NamedQuery(name = "TagQuestionLink.findByTagNameAndQuestionId", query =
     "from TagQuestionLink tql where tql.tag.name = ? and tql.question.id = ? order by tql.question.title asc"),
-    @NamedQuery(name = "TagQuestionLink.retrieveTagCloud", query="select new com.benfante.minimark.beans.TagCloudItem(tql.tag.name, count(tql)) from TagQuestionLink tql group by tql.tag.name order by tql.tag.name")
+    @NamedQuery(name = "TagQuestionLink.retrieveTagCloud", query="select new com.benfante.minimark.beans.TagCloudItem(tql.tag.name, count(tql)) from TagQuestionLink tql group by tql.tag.name order by tql.tag.name"),
+    @NamedQuery(name = "TagQuestionLink.findByCourseId", query="from TagQuestionLink tql where tql.question.course.id = ? order by tql.tag.name")
 })
 public class TagQuestionLink extends TagLink {
 

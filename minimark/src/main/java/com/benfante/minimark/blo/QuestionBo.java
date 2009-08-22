@@ -21,7 +21,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.ResultTransformer;
 import org.springframework.stereotype.Component;
 
 /**
@@ -130,9 +129,9 @@ public class QuestionBo {
     }
 
     /**
-     * Update the set of tags of a post.
+     * Update the set of tags of a question.
      *
-     * @param post The post to update
+     * @param question The question to update
      */
     private void updateTagSet(Question question) {
         String[] tags = question.getTagList().split(",");

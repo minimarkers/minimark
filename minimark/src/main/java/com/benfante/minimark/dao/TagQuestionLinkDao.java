@@ -15,4 +15,5 @@ public interface TagQuestionLinkDao extends GenericDao<TagQuestionLink, Long> {
     List<TagQuestionLink> findByTagName(String tag);
     TagQuestionLink findByTagNameAndQuestionId(String tag, Long questionId);
     List<TagCloudItem> retrieveTagCloud();
+    List<TagQuestionLink> findByCourseId(Long courseId);
 }
