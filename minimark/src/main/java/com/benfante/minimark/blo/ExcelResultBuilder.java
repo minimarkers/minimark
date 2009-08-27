@@ -225,7 +225,7 @@ public class ExcelResultBuilder {
             }
         }
         sheet.addCell(new Formula(columnNumber, rowNumber,
-                "SUM(" + CellReferenceHelper.getCellReference(4,
+                "SUM(" + CellReferenceHelper.getCellReference(3,
                 rowNumber) + ":" + CellReferenceHelper.getCellReference(
                 columnNumber - 1, rowNumber) + ")",
                 doublevalCellFormat));
