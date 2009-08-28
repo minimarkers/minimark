@@ -77,7 +77,7 @@ public class ResultCalculationBoTest extends MinimarkBaseTest {
         resultCalculationBo.evaluateClosedQuestion(question,
                 Assessment.EVALUATION_CLOSED_SUM_CORRECT_ANSWERS, null);
         assertNotNull(question.getMark());
-        assertEquals(BigDecimal.ONE, question.getMark());
+        assertEquals(new BigDecimal("1.00"), question.getMark());
     }
 
     public void testEvaluateClosedQuestion2() {
@@ -99,7 +99,7 @@ public class ResultCalculationBoTest extends MinimarkBaseTest {
         resultCalculationBo.evaluateClosedQuestion(question,
                 Assessment.EVALUATION_CLOSED_SUM_CORRECT_ANSWERS, null);
         assertNotNull(question.getMark());
-        assertEquals(BigDecimal.ONE, question.getMark());
+        assertEquals(new BigDecimal("1.00"), question.getMark());
     }
 
     public void testEvaluateClosedQuestion3() {
@@ -126,7 +126,7 @@ public class ResultCalculationBoTest extends MinimarkBaseTest {
         resultCalculationBo.evaluateClosedQuestion(question,
                 Assessment.EVALUATION_CLOSED_SUM_CORRECT_ANSWERS, null);
         assertNotNull(question.getMark());
-        assertEquals(BigDecimal.valueOf(0.5), question.getMark());
+        assertEquals(new BigDecimal("0.50"), question.getMark());
     }
 
     public void testEvaluateClosedQuestion4() {
