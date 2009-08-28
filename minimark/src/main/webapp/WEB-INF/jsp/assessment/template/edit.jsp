@@ -14,6 +14,12 @@
     <form:errors path="duration" cssClass="errorBox"/>
     <form:label path="duration"><spring:message code="Duration" text="?Duration?"/>:</form:label><form:input path="duration" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <div class="form-aligned form-help-text"><span><spring:message code="help.durationField" text="?help.durationField?"/></span></div>
+    <form:errors path="shuffleQuestions" cssClass="errorBox"/>
+    <form:label path="shuffleQuestions"><spring:message code="ShuffleQuestions" text="?ShuffleQuestions?"/>:</form:label>
+    <form:select path="shuffleQuestions">
+        <form:option value="false" label="${noLabel}"/>
+        <form:option value="true" label="${yesLabel}"/>
+    </form:select><br/>
     <form:errors path="evaluationType" cssClass="errorBox"/>
     <form:label path="evaluationType"><spring:message code="EvaluationType" text="?EvaluationType?"/>:</form:label>
     <form:select path="evaluationType">

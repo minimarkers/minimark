@@ -161,7 +161,7 @@ public class ResultCalculationBo {
             result = BigDecimal.ONE;
             if (!BigDecimal.ZERO.equals(weightCorrect)) {
                 // r = #selectedCorrect/#correct
-                result = weightSelectedCorrect.divide(weightCorrect);
+                result = weightSelectedCorrect.divide(weightCorrect, RoundingMode.HALF_EVEN);
             }
         }
         // r = max(r, minimumEvaluation)

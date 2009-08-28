@@ -32,6 +32,12 @@
         <form:option value="true" label="${yesLabel}"/>
         <form:option value="false" label="${noLabel}"/>
     </form:select><br/>
+    <form:errors path="shuffleQuestions" cssClass="errorBox"/>
+    <form:label path="shuffleQuestions"><spring:message code="ShuffleQuestions" text="?ShuffleQuestions?"/>:</form:label>
+    <form:select path="shuffleQuestions">
+        <form:option value="false" label="${noLabel}"/>
+        <form:option value="true" label="${yesLabel}"/>
+    </form:select><br/>
     <form:errors path="evaluationType" cssClass="errorBox"/>
     <form:label path="evaluationType"><spring:message code="EvaluationType" text="?EvaluationType?"/>:</form:label>
     <form:select path="evaluationType">

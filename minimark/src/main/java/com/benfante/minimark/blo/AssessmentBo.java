@@ -182,6 +182,7 @@ public class AssessmentBo {
         result.setEvaluationType(template.getEvaluationType());
         result.setExposedResult(template.getExposedResult());
         result.setMinPassedValue(template.getMinPassedValue());
+        result.setShuffleQuestions(template.getShuffleQuestions());
         result.setTitle(template.getTitle());
         extractQuestions(result, template);
         return result;

@@ -50,6 +50,7 @@ public class AssessmentTemplate extends EntityBase {
     @Min(value = 0.0, applyIf = "exposedResult == 'passed'")
     protected BigDecimal minPassedValue;
     protected String tagSelectors;
+    protected Boolean shuffleQuestions = Boolean.FALSE;
 
     @ManyToOne
     public Course getCourse() {
@@ -150,6 +151,14 @@ public class AssessmentTemplate extends EntityBase {
 
     public void setTagSelectors(String tagSelectors) {
         this.tagSelectors = tagSelectors;
+    }
+
+    public Boolean getShuffleQuestions() {
+        return shuffleQuestions;
+    }
+
+    public void setShuffleQuestions(Boolean shuffleQuestions) {
+        this.shuffleQuestions = shuffleQuestions;
     }
 
     protected List<QuestionRequest> questionRequests = new ArrayList<QuestionRequest>(10);

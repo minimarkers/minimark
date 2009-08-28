@@ -47,6 +47,13 @@ public class AssessmentFillingBo {
             questionFilling.setAssessmentFilling(assessmentFilling);
             assessmentFilling.getQuestions().add(questionFilling);
         }
+        if (assessment.getShuffleQuestions() != null && assessment.getShuffleQuestions().booleanValue()) {
+            Collections.shuffle(assessmentFilling.getQuestions());
+            i=0;
+            for (QuestionFilling questionFilling : assessmentFilling.getQuestions()) {
+                questionFilling.setOrdering(Long.valueOf(i++));
+            }
+        }
         return assessmentFilling;
     }
 

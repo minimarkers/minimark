@@ -59,13 +59,14 @@ public class Assessment extends EntityBase {
     protected BigDecimal evaluationMaxValue;
     protected BigDecimal evaluationClosedMinimumEvaluation = BigDecimal.ZERO;
     protected Boolean showInHomePage = Boolean.FALSE;
-    @Min(value=0.0)
+    @Min(value = 0.0)
     protected Long duration = Long.valueOf(0);
     protected Boolean allowStudentPrint = Boolean.FALSE;
     protected String exposedResult = "none";
     @NotNull(applyIf = "exposedResult == 'passed'")
-    @Min(value=0.0, applyIf = "exposedResult == 'passed'")
+    @Min(value = 0.0, applyIf = "exposedResult == 'passed'")
     protected BigDecimal minPassedValue;
+    protected Boolean shuffleQuestions = Boolean.FALSE;
 
     @ManyToOne
     public Course getCourse() {
@@ -234,5 +235,12 @@ public class Assessment extends EntityBase {
     public void setMinPassedValue(BigDecimal minPassedValue) {
         this.minPassedValue = minPassedValue;
     }
-    
+
+    public Boolean getShuffleQuestions() {
+        return shuffleQuestions;
+    }
+
+    public void setShuffleQuestions(Boolean shuffleQuestions) {
+        this.shuffleQuestions = shuffleQuestions;
+    }
 }
