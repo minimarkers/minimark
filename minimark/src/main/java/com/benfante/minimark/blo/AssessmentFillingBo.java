@@ -91,6 +91,11 @@ public class AssessmentFillingBo {
             result.getFixedAnswers().add(fixedAnswerFilling);
             fixedAnswerFilling.setWeight(fixedAnswer.getWeight());
         }
+        Collections.shuffle(result.getFixedAnswers());
+        i = 0;
+        for (FixedAnswerFilling fixedAnswerFilling : result.getFixedAnswers()) {
+            fixedAnswerFilling.setOrdering(Long.valueOf(i++));
+        }
         return result;
     }
 
