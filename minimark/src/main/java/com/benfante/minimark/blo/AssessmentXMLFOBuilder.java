@@ -1,5 +1,6 @@
 package com.benfante.minimark.blo;
 
+import com.benfante.minimark.beans.QuestionFillingOriginalComparator;
 import com.benfante.minimark.po.AssessmentFilling;
 import com.benfante.minimark.po.ClosedQuestionFilling;
 import com.benfante.minimark.po.FixedAnswerFilling;
@@ -7,7 +8,9 @@ import com.benfante.minimark.po.OpenQuestion;
 import com.benfante.minimark.po.OpenQuestionFilling;
 import com.benfante.minimark.po.QuestionFilling;
 import com.benfante.minimark.util.HTMLFOConverter;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
@@ -20,7 +23,7 @@ import org.springframework.stereotype.Component;
  * A FO builder for assessments.
  *
  * @author Lucio Benfante (<A HREF="mailto:benfante@dei.unipd.it">benfante@dei.unipd.it</A>)
- * @version $Id: AssessmentXMLFOBuilder.java,v d9fa3789ca28 2009/07/20 17:25:10 lucio $
+ * @version $Id: AssessmentXMLFOBuilder.java,v f1d4dae61d61 2009/08/31 16:09:54 lucio $
  */
 @Component
 public class AssessmentXMLFOBuilder {
@@ -263,7 +266,9 @@ public class AssessmentXMLFOBuilder {
 
     private StringBuilder makeQuestions(StringBuilder result,
             List<QuestionFilling> questions, Locale locale) {
-        Iterator<QuestionFilling> iquestions = questions.iterator();
+        List<QuestionFilling> orderedQuestions = new LinkedList<QuestionFilling>(questions);
+        Collections.sort(orderedQuestions, new QuestionFillingOriginalComparator());
+        Iterator<QuestionFilling> iquestions = orderedQuestions.iterator();
         int i = 0;
         while (iquestions.hasNext()) {
             i++;
@@ -292,6 +297,7 @@ public class AssessmentXMLFOBuilder {
             result.append("  <fo:table-cell>").append('\n');
             result.append("    <fo:block font-weight=\"bold\">").append(messageSource.getMessage("Question", null, "?Question?", locale)).append(' ').append(
                     order).append("</fo:block>").append('\n');
+            result.append("    <fo:block font-weight=\"bold\">").append(question.getTitle()).append("</fo:block>").append('\n');
             result.append("  </fo:table-cell>").append('\n');
             result.append("  <fo:table-cell>").append('\n');
             result.append("    <fo:block>").append('\n');
@@ -309,6 +315,7 @@ public class AssessmentXMLFOBuilder {
             result.append("  <fo:table-cell>").append('\n');
             result.append("    <fo:block font-weight=\"bold\">").append(messageSource.getMessage("Question", null, "?Question?", locale)).append(' ').append(
                     order).append("</fo:block>").append('\n');
+            result.append("    <fo:block font-weight=\"bold\">").append(question.getTitle()).append("</fo:block>").append('\n');
             result.append("  </fo:table-cell>").append('\n');
             result.append("  <fo:table-cell>").append('\n');
             result.append("    <fo:block>").append('\n');
@@ -332,6 +339,7 @@ public class AssessmentXMLFOBuilder {
         result.append("  <fo:table-cell>").append('\n');
         result.append("    <fo:block font-weight=\"bold\">").append(messageSource.getMessage("Question", null, "?Question?", locale)).append(' ').append(
                 order).append("</fo:block>").append('\n');
+        result.append("    <fo:block font-weight=\"bold\">").append(question.getTitle()).append("</fo:block>").append('\n');
         result.append("  </fo:table-cell>").append('\n');
         result.append("  <fo:table-cell>").append('\n');
         result.append("    <fo:block>").append('\n');

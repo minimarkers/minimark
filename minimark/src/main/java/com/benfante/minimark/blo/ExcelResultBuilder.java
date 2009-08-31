@@ -1,11 +1,14 @@
 package com.benfante.minimark.blo;
 
+import com.benfante.minimark.beans.QuestionFillingOriginalComparator;
 import com.benfante.minimark.po.AssessmentFilling;
 import com.benfante.minimark.po.ClosedQuestionFilling;
 import com.benfante.minimark.po.OpenQuestionFilling;
 import com.benfante.minimark.po.QuestionFilling;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.Resource;
@@ -14,6 +17,8 @@ import jxl.write.WriteException;
 import org.springframework.stereotype.Service;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
+import jxl.biff.DisplayFormat;
+import jxl.biff.FormatRecord;
 import jxl.format.Alignment;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
@@ -141,6 +146,7 @@ public class ExcelResultBuilder {
             AssessmentFilling assessment,
             Locale locale) throws IOException,
             WriteException {
+        sheet.setRowView(rowNumber, 500, false);
         WritableCellFormat headerCellFormat = buildHeaderCellFormat();
         Label labelCell = null;
         int columnNumber = 0;
@@ -158,17 +164,19 @@ public class ExcelResultBuilder {
                 headerCellFormat));
         columnNumber++;
         int questionNumber = 0;
-        for (QuestionFilling question : assessment.getQuestions()) {
+        List<QuestionFilling> orderedQuestions = new LinkedList<QuestionFilling>(assessment.getQuestions());
+        Collections.sort(orderedQuestions, new QuestionFillingOriginalComparator());
+        for (QuestionFilling question : orderedQuestions) {
             if (question instanceof ClosedQuestionFilling) {
                 labelCell = new Label(columnNumber, rowNumber,
                         messageSource.getMessage("Question", null, "?Question?",
-                        locale) + (questionNumber + 1), headerCellFormat);
+                        locale) + (questionNumber + 1) + "\n"+question.getTitle(), headerCellFormat);
                 sheet.addCell(labelCell);
                 columnNumber++;
             } else if (question instanceof OpenQuestionFilling) {
                 labelCell = new Label(columnNumber, rowNumber,
                         messageSource.getMessage("Question", null, "?Question?",
-                        locale) + (questionNumber + 1), headerCellFormat);
+                        locale) + (questionNumber + 1) + "\n"+question.getTitle(), headerCellFormat);
                 sheet.addCell(labelCell);
                 sheet.setColumnView(columnNumber, 60);
                 sheet.mergeCells(columnNumber, rowNumber,
@@ -204,7 +212,9 @@ public class ExcelResultBuilder {
         sheet.addCell(new Label(columnNumber, rowNumber,
                 assessment.getLastName(), dataCellFormat));
         columnNumber++;
-        for (QuestionFilling question : assessment.getQuestions()) {
+        List<QuestionFilling> orderedQuestions = new LinkedList<QuestionFilling>(assessment.getQuestions());
+        Collections.sort(orderedQuestions, new QuestionFillingOriginalComparator());
+        for (QuestionFilling question : orderedQuestions) {
             double mark = question.getMark() != null ? question.getMark().
                     doubleValue() : 0.0;
             if (question instanceof ClosedQuestionFilling) {
