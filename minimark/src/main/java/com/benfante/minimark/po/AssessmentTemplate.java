@@ -160,8 +160,8 @@ public class AssessmentTemplate extends EntityBase {
     public void setShuffleQuestions(Boolean shuffleQuestions) {
         this.shuffleQuestions = shuffleQuestions;
     }
-
-    protected List<QuestionRequest> questionRequests = new ArrayList<QuestionRequest>(10);
+    protected List<QuestionRequest> questionRequests =
+            new ArrayList<QuestionRequest>(10);
 
     @Transient
     public List<QuestionRequest> getQuestionRequests() {
@@ -175,18 +175,21 @@ public class AssessmentTemplate extends EntityBase {
     public void buildQuestionRequests() {
         int dim = Math.max(10, questionRequests.size());
         questionRequests.clear();
-        for (int i=0; i<dim; i++) {
+        for (int i = 0; i < dim; i++) {
             questionRequests.add(new QuestionRequest());
         }
-        String[] tsa = tagSelectors.split(",");
-        int i = 0;
-        for (String ts : tsa) {
-            QuestionRequest qr = questionRequests.get(i);
-            int howManyStart = ts.indexOf('[');
-            int howManyEnd = ts.indexOf(']');
-            qr.setTag(ts.substring(0, howManyStart));
-            qr.setHowMany(Integer.parseInt(ts.substring(howManyStart+1, howManyEnd)));
-            i++;
+        if (StringUtils.isNotBlank(tagSelectors)) {
+            String[] tsa = tagSelectors.split(",");
+            int i = 0;
+            for (String ts : tsa) {
+                QuestionRequest qr = questionRequests.get(i);
+                int howManyStart = ts.indexOf('[');
+                int howManyEnd = ts.indexOf(']');
+                qr.setTag(ts.substring(0, howManyStart));
+                qr.setHowMany(Integer.parseInt(ts.substring(howManyStart + 1,
+                        howManyEnd)));
+                i++;
+            }
         }
     }
 
@@ -205,5 +208,4 @@ public class AssessmentTemplate extends EntityBase {
         }
         tagSelectors = sb.toString();
     }
-
 }
