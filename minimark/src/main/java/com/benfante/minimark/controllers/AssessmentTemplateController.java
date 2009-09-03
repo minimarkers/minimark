@@ -1,12 +1,14 @@
 package com.benfante.minimark.controllers;
 
 import com.benfante.minimark.blo.AssessmentBo;
+import com.benfante.minimark.blo.UserProfileBo;
 import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.dao.AssessmentTemplateDao;
 import com.benfante.minimark.dao.CourseDao;
 import com.benfante.minimark.dao.TagQuestionLinkDao;
 import com.benfante.minimark.po.Assessment;
 import com.benfante.minimark.po.AssessmentTemplate;
+import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.TagQuestionLink;
 import java.util.List;
 import java.util.SortedSet;
@@ -45,6 +47,8 @@ public class AssessmentTemplateController {
     private AssessmentBo assessmentBo;
     @Resource
     private TagQuestionLinkDao tagQuestionLinkDao;
+    @Resource
+    private UserProfileBo userProfileBo;
 
     @RequestMapping
     @Validation(view = EDIT_VIEW)
@@ -53,6 +57,7 @@ public class AssessmentTemplateController {
             BindingResult result, SessionStatus status) {
         template.buildTagSelectors();
         Assessment assessment = assessmentBo.createFromTemplate(template);
+        userProfileBo.checkEditAuthorization(assessment);
         assessmentDao.store(assessment);
         assessmentTemplateDao.store(template);
         status.setComplete();
@@ -61,12 +66,14 @@ public class AssessmentTemplateController {
 
     @RequestMapping
     public String create(@RequestParam("course.id") Long courseId, Model model) {
+        final Course course = courseDao.get(courseId);
+        userProfileBo.checkEditAuthorization(course);
         AssessmentTemplate template = null;
         List<AssessmentTemplate> templates =
                 assessmentTemplateDao.findByCourseId(courseId);
         if (templates.isEmpty()) {
             template = new AssessmentTemplate();
-            template.setCourse(courseDao.get(courseId));
+            template.setCourse(course);
         } else {
             template = templates.get(0);
         }

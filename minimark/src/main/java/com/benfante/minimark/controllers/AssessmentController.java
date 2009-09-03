@@ -55,6 +55,7 @@ public class AssessmentController {
         if (assessment == null) {
             throw new RuntimeException("Assessment not found");
         }
+        userProfileBo.checkEditAuthorization(assessment);
         assessment.setNewPassword(assessment.getPassword());
         assessment.setConfirmPassword(assessment.getPassword());
         model.addAttribute(ASSESSMENT_ATTR_NAME, assessment);
@@ -66,6 +67,7 @@ public class AssessmentController {
     public String save(
             @ModelAttribute(ASSESSMENT_ATTR_NAME) Assessment assessment,
             BindingResult result, SessionStatus status) {
+        userProfileBo.checkEditAuthorization(assessment);
         assessment.setPassword(assessment.getNewPassword());
         assessmentDao.store(assessment);
         status.setComplete();
@@ -83,8 +85,10 @@ public class AssessmentController {
 
     @RequestMapping
     public String create(@RequestParam("courseId") Long courseId, Model model) {
+        final Course course = courseDao.get(courseId);
+        userProfileBo.checkEditAuthorization(course);
         Assessment assessment = new Assessment();
-        assessment.setCourse(courseDao.get(courseId));
+        assessment.setCourse(course);
         assessment.setAssessmentDate(new Date());
         model.addAttribute(ASSESSMENT_ATTR_NAME, assessment);
         return EDIT_VIEW;
@@ -97,6 +101,7 @@ public class AssessmentController {
         if (assessment == null) {
             throw new RuntimeException("Assessment not found");
         }
+        userProfileBo.checkEditAuthorization(assessment);
         if (assessment.getAssessmentFillings() != null && !assessment.
                 getAssessmentFillings().isEmpty()) {
             FlashHelper.setRedirectError(req,
@@ -125,4 +130,5 @@ public class AssessmentController {
         model.addAttribute(ASSESSMENT_QUESTIONS_ATTR_NAME, assessment.
                 getQuestions());
     }
+
 }

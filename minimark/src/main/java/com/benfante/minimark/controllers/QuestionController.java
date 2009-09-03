@@ -2,6 +2,7 @@ package com.benfante.minimark.controllers;
 
 import com.benfante.minimark.beans.QuestionBean;
 import com.benfante.minimark.blo.QuestionBo;
+import com.benfante.minimark.blo.UserProfileBo;
 import com.benfante.minimark.dao.CourseDao;
 import com.benfante.minimark.dao.QuestionDao;
 import com.benfante.minimark.po.ClosedQuestion;
@@ -42,6 +43,8 @@ public class QuestionController {
     private QuestionDao questionDao;
     @Resource
     private QuestionBo questionBo;
+    @Resource
+    private UserProfileBo userProfileBo;
 
     @RequestMapping
     public String edit(@RequestParam("id") Long id, Model model) {
@@ -49,6 +52,7 @@ public class QuestionController {
         if (question == null) {
             throw new RuntimeException("Question not found");
         }
+        userProfileBo.checkEditAuthorization(question.getCourse());
         QuestionBean questionBean = new QuestionBean();
         questionBean.setId(question.getId());
         questionBean.setTitle(question.getTitle());
@@ -89,6 +93,7 @@ public class QuestionController {
         } else {
             question = questionDao.get(questionBean.getId());
         }
+        userProfileBo.checkEditAuthorization(question.getCourse());
         question.setTitle(questionBean.getTitle());
         question.setContent(questionBean.getContent());
         question.setContentFilter(questionBean.getContentFilter());
@@ -113,6 +118,7 @@ public class QuestionController {
     @RequestMapping
     public String list(@RequestParam("course.id") Long courseId, Model model) {
         Course course = courseDao.get(courseId);
+        userProfileBo.checkEditAuthorization(course);
         final QuestionBean questionBean = new QuestionBean();
         Course courseBean = new Course();
         courseBean.setId(courseId);
@@ -129,6 +135,7 @@ public class QuestionController {
             @ModelAttribute(QUESTION_SEARCH_ATTR_NAME) QuestionBean questionBean,
             Model model) {
         Course course = courseDao.get(questionBean.getCourse().getId());
+        userProfileBo.checkEditAuthorization(course);
         model.addAttribute(QUESTION_SEARCH_ATTR_NAME, questionBean);
         model.addAttribute(QUESTION_SEARCH_RESULT_ATTR_NAME, questionBo.search(
                 questionBean));
@@ -139,6 +146,7 @@ public class QuestionController {
     @RequestMapping
     public String create(@RequestParam("courseId") Long courseId, Model model) {
         Course course = courseDao.get(courseId);
+        userProfileBo.checkEditAuthorization(course);
         QuestionBean questionBean = new QuestionBean();
         questionBean.setCourse(course);
         model.addAttribute(QUESTION_ATTR_NAME, questionBean);
@@ -151,6 +159,7 @@ public class QuestionController {
         if (question == null) {
             throw new RuntimeException("Question not found");
         }
+        userProfileBo.checkEditAuthorization(question.getCourse());
         Long courseId = question.getCourse().getId();
         questionDao.delete(question);
         return "redirect:list.html?course.id=" + courseId;

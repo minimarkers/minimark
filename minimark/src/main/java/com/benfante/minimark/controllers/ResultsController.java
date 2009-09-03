@@ -3,6 +3,7 @@ package com.benfante.minimark.controllers;
 import com.benfante.minimark.blo.AssessmentPdfBuilder;
 import com.benfante.minimark.blo.ExcelResultBuilder;
 import com.benfante.minimark.blo.ResultCalculationBo;
+import com.benfante.minimark.blo.UserProfileBo;
 import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.dao.AssessmentFillingDao;
 import com.benfante.minimark.po.Assessment;
@@ -43,10 +44,13 @@ public class ResultsController {
     private ExcelResultBuilder excelResultBuilder;
     @Resource
     private ResultCalculationBo resultCalculationBo;
+    @Resource
+    private UserProfileBo userProfileBo;
 
     @RequestMapping
     public void list(@RequestParam("id") Long id, Model model) {
         Assessment assessment = assessmentDao.get(id);
+        userProfileBo.checkEditAuthorization(assessment);
         List<AssessmentFilling> fillings = assessmentFillingDao.
                 findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier(
                 assessment.getId());
@@ -58,6 +62,7 @@ public class ResultsController {
     public String evaluateAll(@RequestParam("id") Long id,
             HttpServletRequest req, Model model) {
         Assessment assessment = assessmentDao.get(id);
+        userProfileBo.checkEditAuthorization(assessment);
         List<AssessmentFilling> fillings = assessmentFillingDao.
                 findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier(
                 assessment.getId());
@@ -72,6 +77,7 @@ public class ResultsController {
     public String evaluate(@RequestParam("id") Long id, HttpServletRequest req,
             Model model) {
         AssessmentFilling assessmentFilling = assessmentFillingDao.get(id);
+        userProfileBo.checkEditAuthorization(assessmentFilling.getAssessment());
         resultCalculationBo.calculate(assessmentFilling);
         FlashHelper.setRedirectNotice(req, "Flash.AssessmentEvaluated");
         return "redirect:list.html?id=" + assessmentFilling.getAssessment().getId();
@@ -81,6 +87,7 @@ public class ResultsController {
     public String delete(@RequestParam("id") Long id, HttpServletRequest req,
             Model model) {
         AssessmentFilling assessmentFilling = assessmentFillingDao.get(id);
+        userProfileBo.checkEditAuthorization(assessmentFilling.getAssessment());
         final Long assessmentId = assessmentFilling.getAssessment().getId();
         assessmentFillingDao.delete(assessmentFilling);
         FlashHelper.setRedirectNotice(req, "Flash.AssessmentDeleted");
@@ -91,6 +98,7 @@ public class ResultsController {
     public void pdf(@RequestParam("id") Long id, HttpServletRequest req,
             HttpServletResponse res, Locale locale) {
         AssessmentFilling assessmentInfo = assessmentFillingDao.get(id);
+        userProfileBo.checkEditAuthorization(assessmentInfo.getAssessment());
         OutputStream out = null;
         try {
             byte[] pdfBytes =
@@ -127,6 +135,7 @@ public class ResultsController {
     public void pdfs(@RequestParam("id") Long id, HttpServletRequest req,
             HttpServletResponse res, Locale locale) {
         Assessment assessment = assessmentDao.get(id);
+        userProfileBo.checkEditAuthorization(assessment);
         List<AssessmentFilling> assessments = assessmentFillingDao.
                 findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier(id);
         OutputStream out = null;
@@ -162,6 +171,7 @@ public class ResultsController {
     public void xls(@RequestParam("id") Long id, HttpServletRequest req,
             HttpServletResponse res, Locale locale) {
         Assessment assessment = assessmentDao.get(id);
+        userProfileBo.checkEditAuthorization(assessment);
         List<AssessmentFilling> assessments = assessmentFillingDao.
                 findByAssessmentIdOrderByLastNameAndFirstNameAndIdentifier(id);
         OutputStream out = null;

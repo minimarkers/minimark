@@ -63,6 +63,7 @@ public class CourseController {
         if (course == null) {
             throw new RuntimeException("Course not found");
         }
+        userProfileBo.checkEditAuthorization(course);
         model.addAttribute(COURSE_ATTR_NAME, course);
         return EDIT_VIEW;
     }
@@ -71,6 +72,7 @@ public class CourseController {
     @Validation(view = EDIT_VIEW)
     public String save(@ModelAttribute(COURSE_ATTR_NAME) Course course,
             BindingResult result, SessionStatus status) {
+        userProfileBo.checkEditAuthorization(course);
         courseDao.store(course);
         status.setComplete();
         return "redirect:list.html";
@@ -96,6 +98,7 @@ public class CourseController {
     public String delete(@RequestParam("id") Long id, HttpServletRequest req,
             Model model) {
         Course course = courseDao.get(id);
+        userProfileBo.checkEditAuthorization(course);
         if (course == null) {
             throw new RuntimeException("Course not found");
         }
@@ -115,6 +118,7 @@ public class CourseController {
         if (course == null) {
             throw new RuntimeException("Course not found");
         }
+        userProfileBo.checkEditAuthorization(course);
         model.addAttribute(COURSE_ATTR_NAME, course);
         model.addAttribute(IMPORT_QUESTIONS_ATTR_NAME, new ImportQuestionsBean());
     }
@@ -125,6 +129,7 @@ public class CourseController {
             IMPORT_QUESTIONS_ATTR_NAME) ImportQuestionsBean importQuestionsBean,
             BindingResult result, HttpServletRequest request,
             SessionStatus status, Locale locale) {
+        userProfileBo.checkEditAuthorization(course);
         try {
             List<Question> questions = importerBo.readQuestionSet(
                     new StringReader(new String(importQuestionsBean.
