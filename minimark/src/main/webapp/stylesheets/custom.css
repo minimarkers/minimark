@@ -501,6 +501,14 @@ div.error_flash p {
     height: 25px;
 }
 
+.statusBar_question {
+    float: left;
+    border-right: solid 1px silver;
+    padding-right: 2px;
+    margin-right: 2px;
+    height: 25px;
+}
+
 /* Status bar end */
 
 .fullWidth {

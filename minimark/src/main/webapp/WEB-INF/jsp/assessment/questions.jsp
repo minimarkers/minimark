@@ -48,6 +48,33 @@
     </div>
 </div>
 
+<div id="statusBar">
+    <div id="statusBar_content">
+        <div id="statusBar_left">
+            <div class="statusBar_question">
+                <spring:message code="OpenShortQuestions" text="?OpenShortQuestions?"/>: <span id="OpenShortQuestionsCount">${assessment.countOpenShortQuestions}</span>
+            </div>
+            <div class="statusBar_question">
+                <spring:message code="OpenLongQuestions" text="?OpenLongQuestions?"/>: <span id="OpenLongQuestionsCount">${assessment.countOpenLongQuestions}</span>
+            </div>
+            <div class="statusBar_question">
+                <spring:message code="ClosedSingleQuestions" text="?ClosedSingleQuestions?"/>: <span id="ClosedSingleQuestionsCount">${assessment.countClosedSingleQuestions}</span>
+            </div>
+            <div class="statusBar_question">
+                <spring:message code="ClosedMultiQuestions" text="?ClosedMultiQuestions?"/>: <span id="ClosedMultiQuestionsCount">${assessment.countClosedMultiQuestions}</span>
+            </div>
+            <div class="statusBar_question">
+                <spring:message code="TotalQuestions" text="?TotalQuestions?"/>: <span id="TotalQuestionsCount">${assessment.countAllQuestions}</span>
+            </div>
+            <div class="statusBar_question">
+                <spring:message code="TotalWeight" text="?TotalWeight?"/>: <span id="TotalWeightSum">${assessment.questionsTotalWeight}</span>
+            </div>
+        </div>
+        <div id="statusBar_right">
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     function searchQuestions() {
         questionABo.updateQuestionSearchResult({

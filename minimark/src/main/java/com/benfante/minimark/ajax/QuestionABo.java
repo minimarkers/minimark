@@ -8,7 +8,9 @@ import com.benfante.minimark.beans.QuestionBean;
 import com.benfante.minimark.blo.AssessmentBo;
 import com.benfante.minimark.blo.QuestionBo;
 import com.benfante.minimark.controllers.AssessmentController;
+import com.benfante.minimark.dao.AssessmentDao;
 import com.benfante.minimark.dao.AssessmentQuestionDao;
+import com.benfante.minimark.po.Assessment;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.directwebremoting.Browser;
@@ -35,6 +37,8 @@ public class QuestionABo {
     private AssessmentBo assessmentBo;
     @Resource
     private AssessmentQuestionDao assessmentQuestionDao;
+    @Resource
+    private AssessmentDao assessmentDao;
 
     @RemoteMethod
     public void updateQuestionSearchResult(final QuestionBean questionBean) {
@@ -58,12 +62,14 @@ public class QuestionABo {
     public void addQuestionToAssessment(Long questionId, final Long assessmentId) {
         assessmentBo.addQuestionToAssessment(questionId, assessmentId);
         refreshAssessmentQuestions(assessmentId);
+        refreshQuestionsStatusBar(assessmentId);
     }
 
     @RemoteMethod
     public void removeQuestionFromAssessment(Long assessmentQuestionId, final Long assessmentId) {
         assessmentBo.removeQuestionFromAssessment(assessmentQuestionId);
         refreshAssessmentQuestions(assessmentId);
+        refreshQuestionsStatusBar(assessmentId);
     }
 
     @RemoteMethod
@@ -95,4 +101,29 @@ public class QuestionABo {
         });
     }
 
+    private void refreshQuestionsStatusBar(final Long assessmentId) {
+        final WebContext ctx = WebContextFactory.get();
+        ScriptSession scriptSession = ctx.getScriptSession();
+        Browser.withSession(scriptSession.getId(), new Runnable() {
+
+            public void run() {
+                try {
+                    Assessment assessment = assessmentDao.get(assessmentId);
+                    Util.setValue("OpenShortQuestionsCount", assessment.getCountOpenShortQuestions(), false);
+                    Util.setValue("OpenLongQuestionsCount", assessment.getCountOpenLongQuestions(), false);
+                    Util.setValue("ClosedSingleQuestionsCount", assessment.getCountClosedSingleQuestions(), false);
+                    Util.setValue("ClosedMultiQuestionsCount", assessment.getCountClosedMultiQuestions(), false);
+                    Util.setValue("TotalQuestionsCount", assessment.getCountAllQuestions(), false);
+                    Util.setValue("TotalWeightSum", assessment.getQuestionsTotalWeight().toString(), false);
+                } catch (Exception ex) {
+                    Util.setValue("OpenShortQuestionsCount", "E", false);
+                    Util.setValue("OpenLongQuestionsCount", "E", false);
+                    Util.setValue("ClosedSingleQuestionsCount", "E", false);
+                    Util.setValue("ClosedMultiQuestionsCount", "E", false);
+                    Util.setValue("TotalQuestionsCount", "E", false);
+                    Util.setValue("TotalWeightSum", "E", false);
+                }
+            }
+        });
+    }
 }

@@ -1,6 +1,7 @@
 package com.benfante.minimark.po;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -243,4 +244,84 @@ public class Assessment extends EntityBase {
     public void setShuffleQuestions(Boolean shuffleQuestions) {
         this.shuffleQuestions = shuffleQuestions;
     }
+
+    @Transient
+    public int getCountAllQuestions() {
+        return getQuestions().size();
+    }
+
+    @Transient
+    public int getCountOpenShortQuestions() {
+        int result = 0;
+        for (AssessmentQuestion assessmentQuestion : getQuestions()) {
+            final Question question = assessmentQuestion.getQuestion();
+            if (question instanceof OpenQuestion) {
+                final OpenQuestion openQuestion = (OpenQuestion) question;
+                if (OpenQuestion.VISUALIZATION_SHORT.equals(openQuestion.
+                        getVisualization())) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    @Transient
+    public int getCountOpenLongQuestions() {
+        int result = 0;
+        for (AssessmentQuestion assessmentQuestion : getQuestions()) {
+            final Question question = assessmentQuestion.getQuestion();
+            if (question instanceof OpenQuestion) {
+                final OpenQuestion openQuestion = (OpenQuestion) question;
+                if (OpenQuestion.VISUALIZATION_LONG.equals(openQuestion.
+                        getVisualization())) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    @Transient
+    public int getCountClosedSingleQuestions() {
+        int result = 0;
+        for (AssessmentQuestion assessmentQuestion : getQuestions()) {
+            final Question question = assessmentQuestion.getQuestion();
+            if (question instanceof ClosedQuestion) {
+                final ClosedQuestion closedQuestion = (ClosedQuestion) question;
+                if (!closedQuestion.isMultipleAnswer()) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    @Transient
+    public int getCountClosedMultiQuestions() {
+        int result = 0;
+        for (AssessmentQuestion assessmentQuestion : getQuestions()) {
+            final Question question = assessmentQuestion.getQuestion();
+            if (question instanceof ClosedQuestion) {
+                final ClosedQuestion closedQuestion = (ClosedQuestion) question;
+                if (closedQuestion.isMultipleAnswer()) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    @Transient
+    public BigDecimal getQuestionsTotalWeight() {
+        double result = 0;
+        for (AssessmentQuestion assessmentQuestion : getQuestions()) {
+            final Question question = assessmentQuestion.getQuestion();
+            result += question.getWeight().doubleValue();
+        }
+        final BigDecimal bdResult = BigDecimal.valueOf(result);
+        bdResult.setScale(2, RoundingMode.HALF_EVEN);
+        return bdResult;
+    }
+
 }
