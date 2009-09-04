@@ -5,8 +5,10 @@ import com.benfante.minimark.po.Assessment;
 import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.CourseTeacher;
 import com.benfante.minimark.po.UserProfile;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Resource;
+import org.apache.commons.lang.ArrayUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -83,7 +85,12 @@ public class UserProfileBo {
 
     public boolean canUserMonitorAssessment(UserProfile userProfile,
             Assessment assessment) {
-        boolean result = true;
+        boolean result = false;
+        if (canCurrentUserEditAssessment(assessment) || ArrayUtils.contains(
+                assessment.getMonitoringUsersAsArray(), userProfile.getUser().
+                getUsername())) {
+            result = true;
+        }
         return result;
     }
 

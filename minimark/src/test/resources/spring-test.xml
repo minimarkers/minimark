@@ -10,4 +10,8 @@
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename" value="src/main/webapp/WEB-INF/messages"/>
     </bean>
+
+    <bean id="userProfileBo" class="com.benfante.minimark.blo.UserProfileBoMock">
+        <property name="authenticatedUsername" value="lucio.benfante"/>
+    </bean>
 </beans>

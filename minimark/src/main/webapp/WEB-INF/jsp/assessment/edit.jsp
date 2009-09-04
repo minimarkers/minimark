@@ -84,6 +84,10 @@
     <form:label path="newPassword"><spring:message code="Password" text="?Password?"/>:</form:label><form:password path="newPassword" showPassword="true" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <form:errors path="confirmPassword" cssClass="errorBox"/>
     <form:label path="confirmPassword"><spring:message code="ConfirmPassword" text="?ConfirmPassword?"/>:</form:label><form:password path="confirmPassword" showPassword="true" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
+    <form:errors path="monitoringUsers" cssClass="errorBox"/>
+    <form:label path="monitoringUsers"><spring:message code="MonitoredBy" text="?MonitoredBy?"/>:</form:label>
+    <form:input path="monitoringUsers" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
+    <div class="form-aligned form-help-text"><span><spring:message code="help.monitoringUsersField" text="?help.monitoringUsersField?"/></span></div>
     <div class="formButtons">
         <a href="list.html" class="action action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Save' text='?Save?'/>" class="submit-button"/>
     </div>

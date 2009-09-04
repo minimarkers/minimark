@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.Cascade;
 import org.parancoe.persistence.po.hibernate.EntityBase;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
@@ -68,6 +69,7 @@ public class Assessment extends EntityBase {
     @Min(value = 0.0, applyIf = "exposedResult == 'passed'")
     protected BigDecimal minPassedValue;
     protected Boolean shuffleQuestions = Boolean.FALSE;
+    protected String monitoringUsers;
 
     @ManyToOne
     public Course getCourse() {
@@ -245,6 +247,23 @@ public class Assessment extends EntityBase {
         this.shuffleQuestions = shuffleQuestions;
     }
 
+    public String getMonitoringUsers() {
+        return monitoringUsers;
+    }
+
+    public void setMonitoringUsers(String monitoringUsers) {
+        this.monitoringUsers = monitoringUsers;
+    }
+
+    @Transient
+    public String[] getMonitoringUsersAsArray() {
+        if (StringUtils.isNotBlank(getMonitoringUsers())) {
+            return getMonitoringUsers().split(",");
+        } else {
+            return new String[0];
+        }
+    }
+
     @Transient
     public int getCountAllQuestions() {
         return getQuestions().size();
@@ -323,5 +342,4 @@ public class Assessment extends EntityBase {
         bdResult.setScale(2, RoundingMode.HALF_EVEN);
         return bdResult;
     }
-
 }

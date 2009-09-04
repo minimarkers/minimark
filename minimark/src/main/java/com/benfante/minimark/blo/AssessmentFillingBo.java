@@ -16,6 +16,7 @@ import com.benfante.minimark.po.Question;
 import com.benfante.minimark.po.QuestionFilling;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,8 @@ public class AssessmentFillingBo {
 
     @Resource
     private AssessmentFillingDao assessmentFillingDao;
+    @Resource
+    private UserProfileBo userProfileBo;
 
     @Transactional
     public AssessmentFilling generateAssessmentFilling(Assessment assessment) {
@@ -118,7 +121,7 @@ public class AssessmentFillingBo {
         List<AssessmentFilling> result =
                 assessmentFillingDao.searchByCriteria(crit);
         Collections.sort(result, new AssessmentFillingStatusComparator());
-        return result;
+        return filterByAuthorization(result);
     }
 
     /**
@@ -135,7 +138,18 @@ public class AssessmentFillingBo {
         List<AssessmentFilling> result =
                 assessmentFillingDao.searchByCriteria(crit);
         Collections.sort(result, new AssessmentFillingStatusComparator());
-        return result;
+        return filterByAuthorization(result);
+    }
+
+    private List<AssessmentFilling> filterByAuthorization(List<AssessmentFilling> fillings) {
+        Iterator<AssessmentFilling> fit = fillings.iterator();
+        while (fit.hasNext()) {
+            AssessmentFilling assessmentFilling = fit.next();
+            if (!userProfileBo.canCurrentUserMonitorAssessment(assessmentFilling.getAssessment())) {
+                fit.remove();
+            }
+        }
+        return fillings;
     }
 
     /**
