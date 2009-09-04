@@ -7,6 +7,7 @@
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>minimark Web Application</name>
+    <inceptionYear>2009</inceptionYear>
     <url>http://www.parancoe.org</url>
     <build>
         <finalName>minimark</finalName>
@@ -77,6 +78,46 @@
                     </configuration>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.google.code.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <configuration>
+                    <header>${basedir}/LICENSE_HEADER</header>
+                    <excludes>
+                        <exclude>target/**</exclude>
+                        <exclude>m2-target/**</exclude>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>LICENSE_HEADER</exclude>
+                        <exclude>nb-configuration.xml</exclude>
+                        <exclude>nbactions.xml</exclude>
+                        <exclude>profiles.xml</exclude>
+                        <exclude>src/main/webapp/templates/clarity/**</exclude>
+                        <exclude>src/main/webapp/files/questionFileExample.txt</exclude>
+                        <exclude>**/*.svg</exclude>
+                        <exclude>src/main/webapp/images/silk/**</exclude>
+                        <exclude>src/main/webapp/javascripts/**</exclude>
+                        <exclude>src/test/resources/test/files/benfante.txt</exclude>
+                    </excludes>
+                    <properties>
+                        <name>${project.name}</name>
+                        <year>${project.inceptionYear}</year>
+                        <holder>Lucio Benfante</holder>
+                        <contact>lucio.benfante@gmail.com</contact>
+                    </properties>
+                    <encoding>UTF-8</encoding>
+                    <mapping>
+                        <yml>SCRIPT_STYLE</yml>
+                        <jspf>DYNASCRIPT_STYLE</jspf>
+                    </mapping>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <repositories>
@@ -98,6 +139,10 @@
             <id>zt-repo</id>
             <name>Zero turnaround repo</name>
             <url>http://repos.zeroturnaround.com/maven2</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>mc-release</id>
+            <url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
         </pluginRepository>
     </pluginRepositories>
     <dependencies>

@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2009 Lucio Benfante <lucio.benfante@gmail.com>
+ *
+ * This file is part of minimark Web Application.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.benfante.minimark.util;
 
 import java.io.IOException;
@@ -11,7 +28,7 @@ import javax.swing.text.html.parser.ParserDelegator;
  * A converter from HTML to FO.
  *
  * @author Lucio Benfante (<A HREF="mailto:benfante@dei.unipd.it">benfante@dei.unipd.it</A>)
- * @version $Id: HTMLFOConverter.java,v 3640fc57fc07 2009/07/16 14:37:52 lucio $
+ * @version $Id: HTMLFOConverter.java,v 307ad60f2f38 2009/09/04 07:37:53 lucio $
  */
 public class HTMLFOConverter {
     private StringBuffer foString;
