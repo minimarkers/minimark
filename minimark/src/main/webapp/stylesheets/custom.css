@@ -580,6 +580,8 @@ div.error_flash p {
     line-height: 16px!important;
     padding: 8px;
     float: left;
+    margin: 0 50px;
+    width: 90%;
 }
 
 .filteredContent p {

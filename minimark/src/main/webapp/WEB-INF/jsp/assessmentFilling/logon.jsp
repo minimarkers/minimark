@@ -36,6 +36,6 @@
         <form:label path="password"><spring:message code="Password" text="?Password?"/>:</form:label><form:password path="password" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
     </c:if>
     <div class="formButtons">
-        <input type="submit" value="<spring:message code='Start' text='?Start?'/>" class="submit-button"/>&nbsp;&nbsp;<a href="${cp}" class="action action-back"><spring:message code="Back" text="?Back?"/></a>
+        <a href="${cp}/" class="action action-back"><spring:message code="Back" text="?Back?"/></a>&nbsp;&nbsp;<input type="submit" value="<spring:message code='Start' text='?Start?'/>" class="submit-button"/>
     </div>
 </form:form>
