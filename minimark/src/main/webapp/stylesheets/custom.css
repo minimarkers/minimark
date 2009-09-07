@@ -579,9 +579,8 @@ div.error_flash p {
 .fixedAnswerText {
     line-height: 16px!important;
     padding: 8px;
-    float: left;
     margin: 0 50px;
-    width: 90%;
+    width: 80%;
 }
 
 .filteredContent p {
