@@ -56,7 +56,7 @@
             <!-- Please leave this line intact -->
             <p>Template design by <a href="http://www.sixshootermedia.com">Six Shooter Media</a>.<br />
                 <!-- you can delete below here -->
-                <a href="http://wwww.parancoe.org"><img src="${cp}/images/powered_parancoe.png" alt="Parancoe powered" border="0"/></a> &copy; <a href="http://www.benfante.com">Lucio Benfante</a></p>
+                <a href="http://wwww.parancoe.org"><img src="${cp}/images/powered_parancoe.png" alt="Parancoe powered" style="border: 0"/></a> &copy; <a href="http://www.benfante.com">Lucio Benfante</a></p>
         </div>
 
         <% if (!BaseConf.isProduction()) {%>
