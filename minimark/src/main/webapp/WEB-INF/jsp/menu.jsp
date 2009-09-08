@@ -28,10 +28,4 @@
         <li><a href="${cp}/assessment/list.html"><spring:message code="menu_assessments" text="?menu_assessments?"/></a></li>
         <li><a href="${cp}/monitoring/fillings.html"><spring:message code="menu_monitoring" text="?menu_monitoring?"/></a></li>
         </authz:authorize>
-        <authz:authorize ifNotGranted="ROLE_ADMIN,ROLE_PARANCOE">
-        <li><a href="${cp}/login.secure"><spring:message code="Login" text="?Login?"/></a></li>
-        </authz:authorize>
-        <authz:authorize ifAnyGranted="ROLE_ADMIN,ROLE_PARANCOE">
-        <li><a href="${cp}/logout.secure"><spring:message code="Logout" text="?Logout?"/></a></li>
-        </authz:authorize>
 </ul>

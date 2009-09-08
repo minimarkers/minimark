@@ -76,10 +76,11 @@ td.left-aligned {
 /* Tables end */
 
 #languages {
-    float: right;
     text-align: right;
     padding-right: 25px;
     font-size: 85%;
+    height: auto!important;
+    min-height: 36px;
 }
 
 #languages span.selected {
@@ -94,6 +95,15 @@ td.left-aligned {
 
 #languages a:hover {
     border-bottom:1px solid #aaa;
+}
+
+#profile {
+    float: right;
+    text-align: right;
+    padding: 0 25px;
+    margin: 0;
+    font-size: 12px;
+    line-height: 12px;
 }
 
 #loginTitle {
@@ -118,7 +128,9 @@ td.left-aligned {
 
 h1#logo {
     margin-bottom: 0;
-    height: 85px;
+    height: 70px;
+    float: left;
+    width: 250px;
 }
 
 ul#nav {
@@ -541,6 +553,10 @@ div.error_flash p {
 
 .smallText {
     font-size: 10px;
+}
+
+.strong {
+    font-weight: bold;
 }
 
 /* assessment filling start */
