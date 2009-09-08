@@ -59,7 +59,7 @@ public class AssessmentFilling extends EntityBase {
     protected String lastName;
     @NotBlank
     protected String identifier;
-    @Expression("password == assessment.password")
+    @Expression(value="password == assessment.password", applyIf="assessment.password IS NOT BLANK")
     protected String password;
     protected Boolean loggedIn;
     protected Date submittedDate;
