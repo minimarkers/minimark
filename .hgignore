@@ -1,0 +1,4 @@
+syntag: regexp
+^minimark/nbactions.xml
+^minimark/profiles.xml
+^minimark/target/
