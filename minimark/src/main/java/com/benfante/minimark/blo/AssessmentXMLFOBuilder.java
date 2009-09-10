@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
  * A FO builder for assessments.
  *
  * @author Lucio Benfante (<A HREF="mailto:benfante@dei.unipd.it">benfante@dei.unipd.it</A>)
- * @version $Id: AssessmentXMLFOBuilder.java,v 307ad60f2f38 2009/09/04 07:37:53 lucio $
+ * @version $Id: AssessmentXMLFOBuilder.java,v a5f181bf61ba 2009/09/10 15:19:12 lucio $
  */
 @Component
 public class AssessmentXMLFOBuilder {
@@ -95,7 +95,7 @@ public class AssessmentXMLFOBuilder {
                 append('\n');
         result.append("  <fo:layout-master-set>").append('\n');
         result.append(
-                "    <fo:simple-page-master master-name=\"all\" page-height=\"210mm\" page-width=\"297mm\" margin-top=\"1cm\" margin-bottom=\"0.5cm\" margin-left=\"1.5cm\" margin-right=\"1.5cm\">").
+                "    <fo:simple-page-master master-name=\"normal\" page-height=\"210mm\" page-width=\"297mm\" margin-top=\"1cm\" margin-bottom=\"0.5cm\" margin-left=\"1.5cm\" margin-right=\"1.5cm\">").
                 append('\n');
         result.append(
                 "      <fo:region-body margin-top=\"0cm\" margin-bottom=\"1.5cm\" column-count=\"2\" column-gap=\"0.25in\"/>").
@@ -103,10 +103,29 @@ public class AssessmentXMLFOBuilder {
         result.append("      <fo:region-before extent=\"0cm\"/>").append('\n');
         result.append("      <fo:region-after extent=\"1cm\"/>").append('\n');
         result.append("    </fo:simple-page-master>").append('\n');
+
+        result.append("    <fo:simple-page-master master-name=\"blank\" page-height=\"210mm\" page-width=\"297mm\" margin-top=\"1cm\" margin-bottom=\"0.5cm\" margin-left=\"1.5cm\" margin-right=\"1.5cm\">")
+                .append('\n');
+        result.append("      <fo:region-body/>").append('\n');
+        result.append("      <fo:region-before region-name=\"header-blank\" extent=\"297mm\"/>").append('\n');
+        result.append("      <fo:region-after extent=\"1cm\"/>").append('\n');
+        result.append("    </fo:simple-page-master>").append('\n');
+        result.append("    <fo:page-sequence-master master-name=\"all\">").append('\n');
+        result.append("      <fo:repeatable-page-master-alternatives>").append('\n');
+        result.append("        <fo:conditional-page-master-reference blank-or-not-blank=\"not-blank\" master-reference=\"normal\"/>").append('\n');
+        result.append("        <fo:conditional-page-master-reference blank-or-not-blank=\"blank\" master-reference=\"blank\"/>").append('\n');
+        result.append("      </fo:repeatable-page-master-alternatives>").append('\n');
+        result.append("    </fo:page-sequence-master>").append('\n');
+
         result.append("  </fo:layout-master-set>").append('\n');
         result.append(
-                "  <fo:page-sequence master-reference=\"all\" font-family=\"sans-serif\" font-size=\"9pt\" line-height=\"11pt\" space-after.optimum=\"12pt\">").
+                "  <fo:page-sequence id=\"assprintseq\" master-reference=\"all\" font-family=\"sans-serif\" font-size=\"9pt\" line-height=\"11pt\" space-after.optimum=\"12pt\" force-page-count=\"end-on-even\">").
                 append('\n');
+
+        result.append("    <fo:static-content flow-name=\"header-blank\">");
+        result.append("      <fo:block space-before=\"100mm\" text-align-last=\"center\">").append(messageSource.getMessage("IntentionallyLeftBlank", null, "?IntentionallyLeftBlank?", locale)).append("</fo:block>");
+        result.append("    </fo:static-content>");
+
         result.append("    <fo:static-content flow-name=\"xsl-region-after\">").
                 append('\n');
         result.append("      <fo:block>").append('\n');
@@ -133,14 +152,14 @@ public class AssessmentXMLFOBuilder {
         result.append("              <fo:table-cell text-align=\"center\">").
                 append('\n');
         result.append("                <fo:block>").append('\n');
-        result.append("                  ").append(assessment.getSubmittedDate()!=null?dateTimeFormat.format(assessment.getSubmittedDate()):messageSource.getMessage("NotSubmitted", null, "?Not submitted?", locale)).
+        result.append("                  ").append(assessment.getSubmittedDate()!=null?dateTimeFormat.format(assessment.getSubmittedDate()):messageSource.getMessage("NotSubmitted", null, "?NotSubmitted?", locale)).
                 append('\n');
         result.append("                </fo:block>").append('\n');
         result.append("              </fo:table-cell>").append('\n');
         result.append("              <fo:table-cell text-align=\"end\">").append(
                 '\n');
         result.append("                <fo:block>").append('\n');
-        result.append(messageSource.getMessage("PageNOfM", new String[] {"<fo:page-number/>", "<fo:page-number-citation ref-id='last-page'/>"}, "?PageNOfM?", locale)).
+        result.append(messageSource.getMessage("PageNOfM", new String[] {"<fo:page-number/>", "<fo:page-number-citation-last ref-id='assprintseq'/>"}, "?PageNOfM?", locale)).
                 append('\n');
         result.append("                </fo:block>").append('\n');
         result.append("              </fo:table-cell>").append('\n');
