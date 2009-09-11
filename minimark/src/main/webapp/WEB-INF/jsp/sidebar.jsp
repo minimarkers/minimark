@@ -25,8 +25,8 @@
 <p class="about">
     <c:choose>
         <c:when test="${requestScope.lang eq 'it'}">
-            Minimark è un applicazione che permette ai docenti di gestire i propri compiti
-            in forma elettronica e di farli svolgere ai propri studenti, producendo i
+            Minimark è un applicazione che permette ai docenti di gestire le proprie
+            prove di valutazione in forma elettronica e di farle svolgere ai propri studenti, producendo i
             risultati in forma automatica o semi-automatica.
         </c:when>
         <c:otherwise>
