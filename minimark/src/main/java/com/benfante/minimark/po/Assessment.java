@@ -353,10 +353,27 @@ public class Assessment extends EntityBase {
         double result = 0;
         for (AssessmentQuestion assessmentQuestion : getQuestions()) {
             final Question question = assessmentQuestion.getQuestion();
-            result += question.getWeight().doubleValue();
+            if (question.getWeight() != null) {
+                result += question.getWeight().doubleValue();
+            }
         }
         final BigDecimal bdResult = BigDecimal.valueOf(result);
         bdResult.setScale(2, RoundingMode.HALF_EVEN);
         return bdResult;
+    }
+
+    @Transient
+    public boolean getContainsDuplicatedQuestions() {
+        boolean result = false;
+        for (int i = 0; i < getQuestions().size(); i++) {
+            Question q1 = getQuestions().get(i).getQuestion();
+            for (int j = i+1; j < getQuestions().size(); j++) {
+                Question q2 = getQuestions().get(j).getQuestion();
+                if (q1.equals(q2)) {
+                    return true;
+                }
+            }
+        }
+        return result;
     }
 }
