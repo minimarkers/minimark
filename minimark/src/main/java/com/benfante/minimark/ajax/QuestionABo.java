@@ -128,6 +128,11 @@ public class QuestionABo {
                     Util.setValue("ClosedMultiQuestionsCount", assessment.getCountClosedMultiQuestions(), false);
                     Util.setValue("TotalQuestionsCount", assessment.getCountAllQuestions(), false);
                     Util.setValue("TotalWeightSum", assessment.getQuestionsTotalWeight().toString(), false);
+                    if (assessment.getContainsDuplicatedQuestions()) {
+                        Util.setStyle("duplicatedQuestionsWarning", "display", "block");
+                    } else {
+                        Util.setStyle("duplicatedQuestionsWarning", "display", "none");
+                    }
                 } catch (Exception ex) {
                     Util.setValue("OpenShortQuestionsCount", "E", false);
                     Util.setValue("OpenLongQuestionsCount", "E", false);
@@ -135,6 +140,7 @@ public class QuestionABo {
                     Util.setValue("ClosedMultiQuestionsCount", "E", false);
                     Util.setValue("TotalQuestionsCount", "E", false);
                     Util.setValue("TotalWeightSum", "E", false);
+                    Util.setStyle("duplicatedQuestionsWarning", "display", "none");
                 }
             }
         });

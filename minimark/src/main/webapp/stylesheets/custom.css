@@ -538,6 +538,16 @@ div.error_flash p {
     height: 25px;
 }
 
+.statusBar_warning {
+    color: gray;
+    font-weight: bolder;
+    background-color: #fff900;
+    font-size: 12px;
+    font-family: monospace;
+    margin: 2px 2px;
+    padding: 0 2px;
+}
+
 /* Status bar end */
 
 .fullWidth {

@@ -90,6 +90,7 @@
             </div>
         </div>
         <div id="statusBar_right">
+            <div id="duplicatedQuestionsWarning" class="statusBar_warning" <c:if test="${!assessment.containsDuplicatedQuestions}">style="display: none;"</c:if>><spring:message code="status.warning.duplicated"  text="?status.warning.duplicated?"/></div>
         </div>
     </div>
 </div>
