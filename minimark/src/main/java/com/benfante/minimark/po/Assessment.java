@@ -20,6 +20,7 @@ package com.benfante.minimark.po;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -60,7 +61,7 @@ public class Assessment extends EntityBase {
     public static final String EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS =
             "sum_correct_minus_wrong_answers";
     private List<AssessmentFilling> assessmentFillings;
-    protected List<AssessmentQuestion> questions;
+    protected List<AssessmentQuestion> questions = new LinkedList<AssessmentQuestion>();
     protected Course course;
     protected Boolean active = Boolean.FALSE;
     @NotBlank
