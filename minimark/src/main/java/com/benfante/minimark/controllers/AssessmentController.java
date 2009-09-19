@@ -18,6 +18,7 @@
 package com.benfante.minimark.controllers;
 
 import com.benfante.minimark.beans.QuestionBean;
+import com.benfante.minimark.blo.AssessmentBo;
 import com.benfante.minimark.blo.QuestionBo;
 import com.benfante.minimark.blo.UserProfileBo;
 import com.benfante.minimark.dao.AssessmentDao;
@@ -26,6 +27,7 @@ import com.benfante.minimark.po.Assessment;
 import com.benfante.minimark.po.Course;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.parancoe.web.util.FlashHelper;
@@ -65,6 +67,8 @@ public class AssessmentController {
     private UserProfileBo userProfileBo;
     @Resource
     private QuestionBo questionBo;
+    @Resource
+    private AssessmentBo assessmentBo;
 
     @RequestMapping
     public String edit(@RequestParam("id") Long id, Model model) {
@@ -136,6 +140,7 @@ public class AssessmentController {
         if (assessment == null) {
             throw new RuntimeException("Assessment not found");
         }
+        userProfileBo.checkEditAuthorization(assessment);
         model.addAttribute(ASSESSMENT_ATTR_NAME, assessment);
         final QuestionBean questionBean = new QuestionBean();
         Course courseBean = new Course();
@@ -146,6 +151,18 @@ public class AssessmentController {
                 questionBean));
         model.addAttribute(ASSESSMENT_QUESTIONS_ATTR_NAME, assessment.
                 getQuestions());
+    }
+
+    @RequestMapping
+    public String copy(@RequestParam("id") Long id, Model model, Locale locale) {
+        Assessment assessment = assessmentDao.get(id);
+        if (assessment == null) {
+            throw new RuntimeException("Assessment not found");
+        }
+        userProfileBo.checkEditAuthorization(assessment);
+        Assessment newAssessment = assessmentBo.copyAssessment(assessment, locale);
+        model.addAttribute(ASSESSMENT_ATTR_NAME, newAssessment);
+        return EDIT_VIEW;
     }
 
 }

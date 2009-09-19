@@ -31,12 +31,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,6 +58,8 @@ public class AssessmentBo {
     private AssessmentQuestionDao assessmentQuestionDao;
     @Resource
     private QuestionBo questionBo;
+    @Resource
+    private MessageSource messageSource;
 
     /**
      * Add a question to an assessment.
@@ -254,6 +258,42 @@ public class AssessmentBo {
                 result = true;
                 break;
             }
+        }
+        return result;
+    }
+
+    /**
+     * Build a non-persistent copy of an assessment and its questions.
+     *
+     * @param assessment The source assessment
+     * @return The new assessment
+     */
+    public Assessment copyAssessment(Assessment assessment, Locale locale) {
+        Assessment result = new Assessment();
+        result.setAllowStudentPrint(assessment.getAllowStudentPrint());
+        result.setAssessmentDate(new Date());
+        result.setConfirmPassword(assessment.getPassword());
+        result.setCourse(assessment.getCourse());
+        result.setDescription(assessment.getDescription());
+        result.setDuration(assessment.getDuration());
+        result.setEvaluationClosedMinimumEvaluation(assessment.getEvaluationClosedMinimumEvaluation());
+        result.setEvaluationClosedType(assessment.getEvaluationClosedType());
+        result.setEvaluationMaxValue(assessment.getEvaluationMaxValue());
+        result.setEvaluationType(assessment.getEvaluationType());
+        result.setExposedResult(assessment.getExposedResult());
+        result.setMinPassedValue(assessment.getMinPassedValue());
+        result.setMonitoringUsers(assessment.getMonitoringUsers());
+        result.setNewPassword(assessment.getPassword());
+        result.setPassword(assessment.getPassword());
+        result.setShowInHomePage(assessment.getShowInHomePage());
+        result.setShuffleQuestions(assessment.getShuffleQuestions());
+        result.setTitle(assessment.getTitle()+" ["+messageSource.getMessage(
+                "Copy", null, "?Copy?", locale)+"]");
+        for (AssessmentQuestion assessmentQuestion : assessment.getQuestions()) {
+            final AssessmentQuestion copiedAssessmentQuestion =
+                    questionBo.copyAssessmentQuestion(assessmentQuestion);
+            copiedAssessmentQuestion.setAssessment(result);
+           result.getQuestions().add(copiedAssessmentQuestion);
         }
         return result;
     }

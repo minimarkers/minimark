@@ -23,14 +23,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
 import javax.annotation.Resource;
 import com.benfante.minimark.dao.QuestionDao;
 import com.benfante.minimark.dao.TagDao;
 import com.benfante.minimark.dao.TagQuestionLinkDao;
+import com.benfante.minimark.po.AssessmentQuestion;
 import com.benfante.minimark.po.ClosedQuestion;
 import com.benfante.minimark.po.OpenQuestion;
 import com.benfante.minimark.po.Tag;
 import com.benfante.minimark.po.TagQuestionLink;
+import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -86,17 +89,19 @@ public class QuestionBo {
             } else if ("closed".equals(questionBean.getType())) {
                 crit = DetachedCriteria.forClass(ClosedQuestion.class);
             } else {
-                throw new IllegalArgumentException("Unknown question type (" + questionBean.
-                        getType() + ")");
+                throw new IllegalArgumentException("Unknown question type (" +
+                        questionBean.getType() + ")");
             }
         }
         if (StringUtils.isNotBlank(questionBean.getTitle())) {
-            crit.add(Restrictions.ilike("title", questionBean.getTitle(), MatchMode.ANYWHERE));
+            crit.add(Restrictions.ilike("title", questionBean.getTitle(),
+                    MatchMode.ANYWHERE));
         }
         if (questionBean.getWeight() != null) {
             crit.add(Restrictions.eq("weight", questionBean.getWeight()));
         }
-        if (questionBean.getCourse() != null && questionBean.getCourse().getId() != null) {
+        if (questionBean.getCourse() != null &&
+                questionBean.getCourse().getId() != null) {
             crit.add(Restrictions.eq("course.id",
                     questionBean.getCourse().getId()));
         }
@@ -173,5 +178,20 @@ public class QuestionBo {
                 currentTags.add(tagLink);
             }
         }
+    }
+
+    /**
+     * Build a non-persistent copy of an assessment question.
+     *
+     * @param assessmentQuestion  The source assessmentQuestion
+     * @return The new assessmentQuestion
+     */
+    public AssessmentQuestion copyAssessmentQuestion(
+            AssessmentQuestion assessmentQuestion) {
+        AssessmentQuestion result = new AssessmentQuestion();
+        result.setAssessment(assessmentQuestion.getAssessment());
+        result.setOrdering(assessmentQuestion.getOrdering());
+        result.setQuestion(assessmentQuestion.getQuestion());
+        return result;
     }
 }

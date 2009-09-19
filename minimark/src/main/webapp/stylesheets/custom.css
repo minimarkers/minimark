@@ -230,6 +230,10 @@ ul#nav {
     background: url(../images/silk/icons/cross.png) no-repeat center left;
 }
 
+.action-copy, .action-copy:hover {
+    background: url(../images/silk/icons/page_copy.png) no-repeat center left;
+}
+
 /* Actions end */
 
 /* Forms */

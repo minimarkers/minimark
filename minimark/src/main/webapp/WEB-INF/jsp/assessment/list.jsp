@@ -50,6 +50,7 @@
         </display:column>
         <display:column>
             <a class="action action-edit" href="${cp}/assessment/edit.html?id=${ca.id}"><spring:message code="Edit" text="?Edit?"/></a>
+            <a class="action action-copy" href="${cp}/assessment/copy.html?id=${ca.id}"><spring:message code="Copy" text="?Copy?"/></a>
             <spring:message code='confirmDeleteAssessment' text='?confirmDeleteAssessment?' var="confirmDeleteAssessmentMessage"/>
             <a class="action action-delete" href="${cp}/assessment/delete.html?id=${ca.id}" onclick="return confirm('${confirmDeleteAssessmentMessage}')"><spring:message code="Delete" text="?Delete?"/></a>
             <a class="action action-detail-go" href="${cp}/assessment/questions.html?id=${ca.id}"><spring:message code="Questions" text="?Questions?"/></a>
