@@ -183,7 +183,7 @@ public class ImporterBo {
         switch (type) {
             case 'A':
                 OpenQuestion openLongQuestion = new OpenQuestion();
-                openLongQuestion.setTitle("Imported (" + id + ")");
+                openLongQuestion.setTitle(Integer.toString(id));
                 openLongQuestion.setContent(text);
                 openLongQuestion.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
                 openLongQuestion.setVisualization(OpenQuestion.VISUALIZATION_LONG);
@@ -193,7 +193,7 @@ public class ImporterBo {
                 break;
             case 'T':
                 OpenQuestion openShortQuestion = new OpenQuestion();
-                openShortQuestion.setTitle("Imported (" + id + ")");
+                openShortQuestion.setTitle(Integer.toString(id));
                 openShortQuestion.setContent(text);
                 openShortQuestion.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
                 openShortQuestion.setVisualization(OpenQuestion.VISUALIZATION_SHORT);
@@ -203,7 +203,7 @@ public class ImporterBo {
                 break;
             case 'R':
                 ClosedQuestion closedSingleQuestion = new ClosedQuestion();
-                closedSingleQuestion.setTitle("Imported (" + id + ")");
+                closedSingleQuestion.setTitle(Integer.toString(id));
                 closedSingleQuestion.setContent(text);
                 closedSingleQuestion.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
                 closedSingleQuestion.setFixedAnswers(answers);
@@ -212,7 +212,7 @@ public class ImporterBo {
                 break;
             case 'C':
                 ClosedQuestion closedMultiQuestion = new ClosedQuestion();
-                closedMultiQuestion.setTitle("Imported (" + id + ")");
+                closedMultiQuestion.setTitle(Integer.toString(id));
                 closedMultiQuestion.setContent(text);
                 closedMultiQuestion.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
                 closedMultiQuestion.setFixedAnswers(answers);
