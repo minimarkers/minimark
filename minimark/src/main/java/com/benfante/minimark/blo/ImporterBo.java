@@ -47,7 +47,8 @@ public class ImporterBo {
     @Resource
     private QuestionDao questionDao;
 
-    public List<Question> readQuestionSet(Reader r) throws ParseException, IOException {
+    public List<Question> readQuestionSet(Reader r) throws ParseException,
+            IOException {
         List<Question> result = new LinkedList<Question>();
         int lineCount = 0;
         String line = null;
@@ -65,25 +66,22 @@ public class ImporterBo {
                 continue;
             }
             char questionType = 0;
-            int questionId = 0;
+            String questionId = "";
             StringBuffer questionText = new StringBuffer();
             List<FixedAnswer> answers = new LinkedList<FixedAnswer>();
             String tmp;
             if (line.charAt(0) != 'd') {
-                throw new ParseException("Start of question not found", lineCount);
+                throw new ParseException("Start of question not found",
+                        lineCount);
             }
             StringTokenizer tk = new StringTokenizer(line, "|");
             tk.nextToken(); // skip the initial 'd'
             // question id
-            try {
-                tmp = tk.nextToken();
-                if (tmp != null) {
-                    questionId = Integer.parseInt(tmp);
-                } else {
-                    throw new ParseException("Question id not found", lineCount);
-                }
-            } catch (NumberFormatException e) {
-                throw new ParseException("The question id must be an integer", lineCount);
+            tmp = tk.nextToken();
+            if (tmp != null) {
+                questionId = tmp;
+            } else {
+                throw new ParseException("Question id not found", lineCount);
             }
             // question type
             tmp = tk.nextToken();
@@ -113,7 +111,8 @@ public class ImporterBo {
 //                        throw new ParseException("Answer scrambling flag unknown", lineCount);
 //                }
             } else {
-                throw new ParseException("Answer scrambling flag not found", lineCount);
+                throw new ParseException("Answer scrambling flag not found",
+                        lineCount);
             }
             // question text
             tmp = tk.nextToken();
@@ -149,72 +148,83 @@ public class ImporterBo {
                         } else if (correctChar == 'n') {
                             correct = false;
                         } else {
-                            throw new ParseException("Correct char unknown", lineCount);
+                            throw new ParseException("Correct char unknown",
+                                    lineCount);
                         }
                     } else {
-                        throw new ParseException("Correct char not found (" + tmp + ")", lineCount);
+                        throw new ParseException("Correct char not found (" +
+                                tmp + ")", lineCount);
                     }
                     tmp = tk.nextToken();
                     String answerText = null;
                     if ((tmp != null) && (tmp.length() > 0)) {
                         answerText = tmp;
                     } else {
-                        throw new ParseException("Answer text not found", lineCount);
+                        throw new ParseException("Answer text not found",
+                                lineCount);
                     }
                     FixedAnswer fixedAnswer = new FixedAnswer();
                     fixedAnswer.setContent(answerText);
-                    fixedAnswer.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
+                    fixedAnswer.setContentFilter(
+                            TextFilterUtils.HTML_FILTER_CODE);
                     fixedAnswer.setCorrect(correct);
                     fixedAnswer.setWeight(BigDecimal.ONE);
                     answers.add(fixedAnswer);
                 }
             }
-            Question newQuestion = makeQuestion(questionType, questionId, questionText.toString(), answers);
+            Question newQuestion = makeQuestion(questionType, questionId,
+                    questionText.toString(), answers);
             result.add(newQuestion);
         }
         return result;
     }
 
     private Question makeQuestion(char type,
-            int id,
+            String id,
             String text,
             List<FixedAnswer> answers) {
         Question result = null;
         switch (type) {
             case 'A':
                 OpenQuestion openLongQuestion = new OpenQuestion();
-                openLongQuestion.setTitle(Integer.toString(id));
+                openLongQuestion.setTitle(id);
                 openLongQuestion.setContent(text);
-                openLongQuestion.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
-                openLongQuestion.setVisualization(OpenQuestion.VISUALIZATION_LONG);
+                openLongQuestion.setContentFilter(
+                        TextFilterUtils.HTML_FILTER_CODE);
+                openLongQuestion.setVisualization(
+                        OpenQuestion.VISUALIZATION_LONG);
                 openLongQuestion.setAnswerMaxLength(1024);
                 openLongQuestion.setWeight(new BigDecimal("3.0"));
                 result = openLongQuestion;
                 break;
             case 'T':
                 OpenQuestion openShortQuestion = new OpenQuestion();
-                openShortQuestion.setTitle(Integer.toString(id));
+                openShortQuestion.setTitle(id);
                 openShortQuestion.setContent(text);
-                openShortQuestion.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
-                openShortQuestion.setVisualization(OpenQuestion.VISUALIZATION_SHORT);
+                openShortQuestion.setContentFilter(
+                        TextFilterUtils.HTML_FILTER_CODE);
+                openShortQuestion.setVisualization(
+                        OpenQuestion.VISUALIZATION_SHORT);
                 openShortQuestion.setAnswerMaxLength(256);
                 openShortQuestion.setWeight(new BigDecimal("1.0"));
                 result = openShortQuestion;
                 break;
             case 'R':
                 ClosedQuestion closedSingleQuestion = new ClosedQuestion();
-                closedSingleQuestion.setTitle(Integer.toString(id));
+                closedSingleQuestion.setTitle(id);
                 closedSingleQuestion.setContent(text);
-                closedSingleQuestion.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
+                closedSingleQuestion.setContentFilter(
+                        TextFilterUtils.HTML_FILTER_CODE);
                 closedSingleQuestion.setFixedAnswers(answers);
                 closedSingleQuestion.setWeight(new BigDecimal("1.0"));
                 result = closedSingleQuestion;
                 break;
             case 'C':
                 ClosedQuestion closedMultiQuestion = new ClosedQuestion();
-                closedMultiQuestion.setTitle(Integer.toString(id));
+                closedMultiQuestion.setTitle(id);
                 closedMultiQuestion.setContent(text);
-                closedMultiQuestion.setContentFilter(TextFilterUtils.HTML_FILTER_CODE);
+                closedMultiQuestion.setContentFilter(
+                        TextFilterUtils.HTML_FILTER_CODE);
                 closedMultiQuestion.setFixedAnswers(answers);
                 closedMultiQuestion.setWeight(new BigDecimal("1.0"));
                 result = closedMultiQuestion;

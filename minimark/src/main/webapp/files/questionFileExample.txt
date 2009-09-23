@@ -8,7 +8,7 @@ c ===============
 c RISPOSTE CHIUSE: hardware e software
 c ===============
 
-d|109|R|s|A cosa servono le periferiche di un calcolatore elettronico?
+d|A textual title|R|s|A cosa servono le periferiche di un calcolatore elettronico?
 y|consentono all'utente di interagire con il calcolatore
 y|rendono pi&ugrave; intuitivo l'uso dei sistemi informatici
 n|consentono a pi&ugrave; utenti di utilizzare lo stesso sistema informatico
