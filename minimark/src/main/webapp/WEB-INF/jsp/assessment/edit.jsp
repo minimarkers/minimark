@@ -79,6 +79,8 @@
     </form:select><br/>
     <form:errors path="evaluationClosedMinimumEvaluation" cssClass="errorBox"/>
     <form:label path="evaluationClosedMinimumEvaluation"><spring:message code="EvaluationClosedMinimumEvaluation" text="?EvaluationClosedMinimumEvaluation?"/>:</form:label><form:input path="evaluationClosedMinimumEvaluation" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
+    <form:errors path="blankAnswerWeight" cssClass="errorBox"/>
+    <form:label path="blankAnswerWeight"><spring:message code="BlankAnswerWeight" text="?BlankAnswerWeight?"/>:</form:label><form:input path="blankAnswerWeight" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <form:errors path="allowStudentPrint" cssClass="errorBox"/>
     <form:label path="allowStudentPrint"><spring:message code="StudentPrint" text="?StudentPrint?"/>:</form:label>
     <form:select path="allowStudentPrint">

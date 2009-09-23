@@ -118,4 +118,16 @@ public class ClosedQuestionFilling extends QuestionFilling {
         return result;
     }
 
+    @Override
+    public boolean answerIsBlank() {
+        boolean result = true;
+        for (FixedAnswerFilling fixedAnswerFilling : fixedAnswers) {
+            if (fixedAnswerFilling.getSelected() != null && fixedAnswerFilling.getSelected().booleanValue()) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
 }

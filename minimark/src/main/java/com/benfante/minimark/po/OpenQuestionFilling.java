@@ -21,6 +21,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * An open question filling
@@ -61,4 +62,8 @@ public class OpenQuestionFilling extends QuestionFilling {
         return null;
     }
 
+    @Override
+    public boolean answerIsBlank() {
+        return StringUtils.isBlank(this.getAnswer());
+    }
 }

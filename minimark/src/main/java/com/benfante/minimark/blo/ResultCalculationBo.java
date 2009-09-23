@@ -42,17 +42,17 @@ public class ResultCalculationBo {
      * @return The evaluation
      */
     public BigDecimal calculate(AssessmentFilling assessment) {
-        BigDecimal result = BigDecimal.ZERO;
-        BigDecimal minimumEvaluation = assessment.getAssessment().
-                getEvaluationClosedMinimumEvaluation();
-        evaluateAllQuestions(assessment, minimumEvaluation);
-        String evaluationType = assessment.getAssessment().getEvaluationType();
+        BigDecimal result = new BigDecimal("0.00");
+        final Assessment assessmentDef = assessment.getAssessment();
+        evaluateAllQuestions(assessment,
+                assessmentDef.getEvaluationClosedMinimumEvaluation());
+        String evaluationType = assessmentDef.getEvaluationType();
         if (evaluationType == null || Assessment.EVALUATION_SIMPLE_SUM.equals(
                 evaluationType)) {
             result = calculateSimpleSum(assessment);
         } else if (Assessment.EVALUATION_NORMALIZED_SUM.equals(
                 evaluationType)) {
-            result = calculateNormalizedSum(assessment, assessment.getAssessment().
+            result = calculateNormalizedSum(assessment, assessmentDef.
                     getEvaluationMaxValue());
         }
         assessment.setEvaluationResult(result);
@@ -67,13 +67,10 @@ public class ResultCalculationBo {
      * @return The evaluation
      */
     public BigDecimal calculateSimpleSum(AssessmentFilling assessment) {
-        BigDecimal result = BigDecimal.ZERO;
+        BigDecimal result = new BigDecimal("0.00");
         for (QuestionFilling questionFilling : assessment.getQuestions()) {
-            if (questionFilling.getMark() != null) {
-                // result = result + (mark*weight)
-                result = result.add(questionFilling.getMark().multiply(
-                        questionFilling.getWeight()));
-            }
+            result = addQuestionMarkedWeight(questionFilling, result, assessment.getAssessment().
+                    getBlankAnswerWeight());
         }
         return result;
     }
@@ -89,19 +86,16 @@ public class ResultCalculationBo {
     public BigDecimal calculateNormalizedSum(AssessmentFilling assessment,
             BigDecimal maxValue) {
         if (maxValue == null) {
-            maxValue = BigDecimal.valueOf(100.0);
+            maxValue = new BigDecimal("100.00");
         }
-        BigDecimal result = BigDecimal.ZERO;
+        BigDecimal result = new BigDecimal("0.00");
         for (QuestionFilling questionFilling : assessment.getQuestions()) {
-            if (questionFilling.getMark() != null) {
-                // result = result + (mark*weight)
-                result = result.add(questionFilling.getMark().multiply(
-                        questionFilling.getWeight()));
-            }
+            result = addQuestionMarkedWeight(questionFilling, result, assessment.getAssessment().
+                    getBlankAnswerWeight());
         }
         final BigDecimal totalWeight = assessment.getTotalWeight();
         if (!BigDecimal.ZERO.equals(totalWeight)) {
-            result = result.multiply(maxValue).divide(totalWeight,
+            result = result.multiply(maxValue).divide(totalWeight, 2,
                     RoundingMode.HALF_EVEN);
         }
         return result;
@@ -137,17 +131,33 @@ public class ResultCalculationBo {
         }
     }
 
-    public void evaluateOpenQuestion(OpenQuestionFilling openQuestionFilling) {
+    private BigDecimal addQuestionMarkedWeight(QuestionFilling questionFilling,
+            BigDecimal result, BigDecimal blankAnswerWeight) {
+        if (blankAnswerWeight != null && questionFilling.answerIsBlank()) {
+            result = result.add(blankAnswerWeight);
+        } else {
+            if (questionFilling.getMark() != null) {
+                // result = result + (mark*weight)
+                result =
+                        result.add(questionFilling.getMark().
+                        multiply(questionFilling.getWeight()));
+            }
+        }
+        return result;
+    }
+
+    private void evaluateOpenQuestion(OpenQuestionFilling openQuestionFilling) {
         if (openQuestionFilling.getMark() == null) {
-            openQuestionFilling.setMark(BigDecimal.ZERO);
+            openQuestionFilling.setMark(new BigDecimal("0.00"));
         }
     }
 
-    public void evaluateClosedQuestion(
+    private void evaluateClosedQuestion(
             ClosedQuestionFilling closedQuestionFilling, String evaluationType,
             BigDecimal minimumEvaluation) {
-        BigDecimal result = BigDecimal.ZERO;
-        if (evaluationType == null || Assessment.EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS.
+        BigDecimal result = new BigDecimal("0.00");
+        if (evaluationType == null ||
+                Assessment.EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS.
                 equals(evaluationType)) {
             final BigDecimal weightCorrect =
                     closedQuestionFilling.weightCorrectAnswers();
@@ -157,15 +167,17 @@ public class ResultCalculationBo {
                     weightWrongAnswers();
             final BigDecimal weightSelectedWrong = closedQuestionFilling.
                     weightSelectedWrongAnswers();
-            BigDecimal normalizedCorrect = BigDecimal.ONE;
+            BigDecimal normalizedCorrect = new BigDecimal("1.00");
             if (!BigDecimal.ZERO.equals(weightCorrect)) {
                 // nc = #selectedCorrect/#correct
-                normalizedCorrect = weightSelectedCorrect.divide(weightCorrect);
+                normalizedCorrect = weightSelectedCorrect.divide(weightCorrect,
+                        2, RoundingMode.HALF_EVEN);
             }
-            BigDecimal normalizedWrong = BigDecimal.ONE;
+            BigDecimal normalizedWrong = new BigDecimal("1.00");
             if (!BigDecimal.ZERO.equals(weightWrong)) {
                 // nw = #selectedWrong/#wrong
-                normalizedWrong = weightSelectedWrong.divide(weightWrong);
+                normalizedWrong = weightSelectedWrong.divide(weightWrong, 2,
+                        RoundingMode.HALF_EVEN);
             }
             // r = nc-nw
             result = normalizedCorrect.subtract(normalizedWrong);
@@ -175,10 +187,11 @@ public class ResultCalculationBo {
                     closedQuestionFilling.weightCorrectAnswers();
             final BigDecimal weightSelectedCorrect =
                     closedQuestionFilling.weightSelectedCorrectAnswers();
-            result = BigDecimal.ONE;
+            result = new BigDecimal("1.00");
             if (!BigDecimal.ZERO.equals(weightCorrect)) {
                 // r = #selectedCorrect/#correct
-                result = weightSelectedCorrect.divide(weightCorrect, 2, RoundingMode.HALF_EVEN);
+                result = weightSelectedCorrect.divide(weightCorrect, 2,
+                        RoundingMode.HALF_EVEN);
             }
         }
         // r = max(r, minimumEvaluation)

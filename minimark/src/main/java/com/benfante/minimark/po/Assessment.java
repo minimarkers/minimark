@@ -61,7 +61,8 @@ public class Assessment extends EntityBase {
     public static final String EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS =
             "sum_correct_minus_wrong_answers";
     private List<AssessmentFilling> assessmentFillings;
-    protected List<AssessmentQuestion> questions = new LinkedList<AssessmentQuestion>();
+    protected List<AssessmentQuestion> questions =
+            new LinkedList<AssessmentQuestion>();
     protected Course course;
     protected Boolean active = Boolean.FALSE;
     @NotBlank
@@ -88,6 +89,7 @@ public class Assessment extends EntityBase {
     protected BigDecimal minPassedValue;
     protected Boolean shuffleQuestions = Boolean.FALSE;
     protected String monitoringUsers;
+    protected BigDecimal blankAnswerWeight;
 
     @ManyToOne
     public Course getCourse() {
@@ -273,6 +275,14 @@ public class Assessment extends EntityBase {
         this.monitoringUsers = monitoringUsers;
     }
 
+    public BigDecimal getBlankAnswerWeight() {
+        return blankAnswerWeight;
+    }
+
+    public void setBlankAnswerWeight(BigDecimal blankAnswerWeight) {
+        this.blankAnswerWeight = blankAnswerWeight;
+    }
+
     @Transient
     public String[] getMonitoringUsersAsArray() {
         if (StringUtils.isNotBlank(getMonitoringUsers())) {
@@ -368,7 +378,7 @@ public class Assessment extends EntityBase {
         boolean result = false;
         for (int i = 0; i < getQuestions().size(); i++) {
             Question q1 = getQuestions().get(i).getQuestion();
-            for (int j = i+1; j < getQuestions().size(); j++) {
+            for (int j = i + 1; j < getQuestions().size(); j++) {
                 Question q2 = getQuestions().get(j).getQuestion();
                 if (q1.equals(q2)) {
                     return true;

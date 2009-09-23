@@ -261,6 +261,9 @@ form label, form input, form select, form textarea {
 form label {
     height: 20px;
     line-height: 20px;
+    padding-right:5px;
+    text-align:right;
+    width:15em;
 }
 
 form input {
@@ -284,11 +287,6 @@ form br {
 }
 form p {
     padding:1em 0 2em;
-}
-form label {
-    padding-right:5px;
-    text-align:right;
-    width:10em;
 }
 
 form optgroup option {
@@ -316,7 +314,7 @@ form .submit-button {
 }
 
 div .form-aligned {
-    margin-left: 10.5em;
+    margin-left: 15.5em;
 }
 
 div.form-help-text span {

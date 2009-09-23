@@ -37,7 +37,7 @@ import org.parancoe.persistence.po.hibernate.EntityBase;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "questionType", discriminatorType = DiscriminatorType.STRING)
-public class QuestionFilling extends EntityBase {
+public abstract class QuestionFilling extends EntityBase {
 
     protected String title;
     protected String content;
@@ -141,4 +141,6 @@ public class QuestionFilling extends EntityBase {
     public String getFilteredContent() {
         return TextFilterUtils.formatText(this.content, this.contentFilter);
     }
+
+    public abstract boolean answerIsBlank();
 }
