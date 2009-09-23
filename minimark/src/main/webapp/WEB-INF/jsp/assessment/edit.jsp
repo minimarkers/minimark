@@ -73,7 +73,7 @@
     <form:label path="evaluationClosedType"><spring:message code="EvaluationClosedType" text="?EvaluationClosedType?"/>:</form:label>
     <form:select path="evaluationClosedType">
         <spring:message code="ETCSumCorrectMinusWrongAnswers" text="?ETCSumCorrectMinusWrongAnswers?" var="ETCSumCorrectMinusWrongAnswersLabel"/>
-        <form:option value="sum_correct_answers" label="${ETCSumCorrectMinusWrongAnswersLabel}"/>
+        <form:option value="sum_correct_minus_wrong_answers" label="${ETCSumCorrectMinusWrongAnswersLabel}"/>
         <spring:message code="ETCSumCorrectAnswers" text="?ETCSumCorrectAnswers?" var="ETCSumCorrectAnswersLabel"/>
         <form:option value="sum_correct_answers" label="${ETCSumCorrectAnswersLabel}"/>
     </form:select><br/>
