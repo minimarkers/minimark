@@ -50,7 +50,7 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 @NamedQueries({
     @NamedQuery(name = "Assessment.findByTeacherUsername",
     query =
-    "select a from Course c join c.assessments a join c.courseTeachers ct where ct.userProfile.user.username = ?")
+    "select a from Course c join c.assessments a join c.courseTeachers ct where ct.userProfile.user.username = ? order by a.assessmentDate desc")
 })
 public class Assessment extends EntityBase {
 

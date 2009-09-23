@@ -106,6 +106,7 @@ public class QuestionBo {
                     questionBean.getCourse().getId()));
         }
         crit.addOrder(Order.asc("title"));
+        crit.addOrder(Order.asc("content"));
         if (StringUtils.isNotBlank(questionBean.getTags())) {
             crit.createAlias("tags", "tags");
             crit.createAlias("tags.tag", "tag");
