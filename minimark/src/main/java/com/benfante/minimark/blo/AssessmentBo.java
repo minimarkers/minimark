@@ -27,6 +27,7 @@ import com.benfante.minimark.po.AssessmentQuestion;
 import com.benfante.minimark.po.AssessmentTemplate;
 import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.Question;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -272,6 +273,7 @@ public class AssessmentBo {
         Assessment result = new Assessment();
         result.setAllowStudentPrint(assessment.getAllowStudentPrint());
         result.setAssessmentDate(new Date());
+        result.setBlankAnswerWeight(assessment.getBlankAnswerWeight());
         result.setConfirmPassword(assessment.getPassword());
         result.setCourse(assessment.getCourse());
         result.setDescription(assessment.getDescription());
