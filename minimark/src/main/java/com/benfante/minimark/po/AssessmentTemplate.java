@@ -20,6 +20,7 @@ package com.benfante.minimark.po;
 import com.benfante.minimark.beans.QuestionRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,6 +28,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import org.apache.commons.lang.StringUtils;
 import org.parancoe.persistence.po.hibernate.EntityBase;
@@ -59,6 +62,7 @@ public class AssessmentTemplate extends EntityBase {
     @NotNull(applyIf = "evaluationType == 'normalized_sum'")
     protected BigDecimal evaluationMaxValue;
     protected BigDecimal evaluationClosedMinimumEvaluation = BigDecimal.ZERO;
+    protected BigDecimal blankAnswerWeight;
     @Min(value = 0.0)
     protected Long duration = Long.valueOf(0);
     protected Boolean allowStudentPrint = Boolean.FALSE;
@@ -68,6 +72,7 @@ public class AssessmentTemplate extends EntityBase {
     protected BigDecimal minPassedValue;
     protected String tagSelectors;
     protected Boolean shuffleQuestions = Boolean.FALSE;
+    protected Date assessmentDate;
 
     @ManyToOne
     public Course getCourse() {
@@ -76,6 +81,14 @@ public class AssessmentTemplate extends EntityBase {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public BigDecimal getBlankAnswerWeight() {
+        return blankAnswerWeight;
+    }
+
+    public void setBlankAnswerWeight(BigDecimal blankAnswerWeight) {
+        this.blankAnswerWeight = blankAnswerWeight;
     }
 
     @Column(length = 1024)
@@ -189,6 +202,15 @@ public class AssessmentTemplate extends EntityBase {
         this.questionRequests = questionRequests;
     }
 
+    @Temporal(TemporalType.DATE)
+    public Date getAssessmentDate() {
+        return assessmentDate;
+    }
+
+    public void setAssessmentDate(Date assessmentDate) {
+        this.assessmentDate = assessmentDate;
+    }
+
     public void buildQuestionRequests() {
         int dim = Math.max(10, questionRequests.size());
         questionRequests.clear();
@@ -224,5 +246,13 @@ public class AssessmentTemplate extends EntityBase {
             }
         }
         tagSelectors = sb.toString();
+    }
+
+    public void updateAssessmentDate() {
+        final Date today = new Date();
+        if (this.getAssessmentDate() == null || this.getAssessmentDate().before(
+                today)) {
+            this.setAssessmentDate(today);
+        }
     }
 }

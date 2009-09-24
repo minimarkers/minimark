@@ -27,7 +27,6 @@ import com.benfante.minimark.po.AssessmentQuestion;
 import com.benfante.minimark.po.AssessmentTemplate;
 import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.Question;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -194,7 +193,12 @@ public class AssessmentBo {
     public Assessment createFromTemplate(AssessmentTemplate template) {
         Assessment result = new Assessment();
         result.setCourse(template.getCourse());
-        result.setAssessmentDate(new Date());
+        if (template.getAssessmentDate() == null) {
+            result.setAssessmentDate(new Date());
+        } else {
+            result.setAssessmentDate(template.getAssessmentDate());
+        }
+        result.setBlankAnswerWeight(template.getBlankAnswerWeight());
         result.setDescription(template.getDescription());
         result.setDuration(template.getDuration());
         result.setEvaluationClosedMinimumEvaluation(template.
@@ -272,7 +276,8 @@ public class AssessmentBo {
     public Assessment copyAssessment(Assessment assessment, Locale locale) {
         Assessment result = new Assessment();
         result.setAllowStudentPrint(assessment.getAllowStudentPrint());
-        result.setAssessmentDate(new Date());
+        result.setAssessmentDate(assessment.getAssessmentDate());
+        result.updateAssessmentDate();
         result.setBlankAnswerWeight(assessment.getBlankAnswerWeight());
         result.setConfirmPassword(assessment.getPassword());
         result.setCourse(assessment.getCourse());

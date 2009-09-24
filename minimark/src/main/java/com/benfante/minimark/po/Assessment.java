@@ -387,4 +387,13 @@ public class Assessment extends EntityBase {
         }
         return result;
     }
+
+    public void updateAssessmentDate() {
+        final Date today = new Date();
+        if (this.getAssessmentDate() == null || this.getAssessmentDate().before(
+                today)) {
+            this.setAssessmentDate(today);
+        }
+    }
+
 }

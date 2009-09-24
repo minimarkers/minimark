@@ -94,6 +94,7 @@ public class AssessmentTemplateController {
         } else {
             template = templates.get(0);
         }
+        template.updateAssessmentDate();
         template.buildQuestionRequests();
         model.addAttribute(ASSESSMENT_TEMPLATE_ATTR_NAME, template);
         return EDIT_VIEW;

@@ -30,6 +30,8 @@
     <form:label path="title"><spring:message code="Title" text="?Title?"/>:</form:label><form:input path="title" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/>&nbsp;*<br/>
     <form:errors path="description" cssClass="errorBox"/>
     <form:label path="description"><spring:message code="Description" text="?Description?"/>:</form:label><form:textarea path="description" cols="25" rows="5" cssErrorClass="fieldInError"/>&nbsp;*<br/>
+    <form:errors path="assessmentDate" cssClass="errorBox"/>
+    <form:label path="assessmentDate"><spring:message code="Date" text="?Date?"/>:</form:label><form:input path="assessmentDate" maxlength="10" size="10" cssErrorClass="fieldInError full-size"/><img id="assessmentDateCalendar" src="${cp}/images/silk/icons/calendar.png" alt="Calendar icon" class="calendar-icon"/>&nbsp;<span class="form-help-text">(dd/MM/yyyy)</span>&nbsp;*<br/>
     <form:errors path="duration" cssClass="errorBox"/>
     <form:label path="duration"><spring:message code="Duration" text="?Duration?"/>:</form:label><form:input path="duration" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <div class="form-aligned form-help-text"><span><spring:message code="help.durationField" text="?help.durationField?"/></span></div>
@@ -55,12 +57,14 @@
     <form:label path="evaluationClosedType"><spring:message code="EvaluationClosedType" text="?EvaluationClosedType?"/>:</form:label>
     <form:select path="evaluationClosedType">
         <spring:message code="ETCSumCorrectMinusWrongAnswers" text="?ETCSumCorrectMinusWrongAnswers?" var="ETCSumCorrectMinusWrongAnswersLabel"/>
-        <form:option value="sum_correct_answers" label="${ETCSumCorrectMinusWrongAnswersLabel}"/>
+        <form:option value="sum_correct_minus_wrong_answers" label="${ETCSumCorrectMinusWrongAnswersLabel}"/>
         <spring:message code="ETCSumCorrectAnswers" text="?ETCSumCorrectAnswers?" var="ETCSumCorrectAnswersLabel"/>
         <form:option value="sum_correct_answers" label="${ETCSumCorrectAnswersLabel}"/>
     </form:select><br/>
     <form:errors path="evaluationClosedMinimumEvaluation" cssClass="errorBox"/>
     <form:label path="evaluationClosedMinimumEvaluation"><spring:message code="EvaluationClosedMinimumEvaluation" text="?EvaluationClosedMinimumEvaluation?"/>:</form:label><form:input path="evaluationClosedMinimumEvaluation" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
+    <form:errors path="blankAnswerWeight" cssClass="errorBox"/>
+    <form:label path="blankAnswerWeight"><spring:message code="BlankAnswerWeight" text="?BlankAnswerWeight?"/>:</form:label><form:input path="blankAnswerWeight" maxlength="255" cssClass="full-size" cssErrorClass="fieldInError full-size"/><br/>
     <form:errors path="allowStudentPrint" cssClass="errorBox"/>
     <form:label path="allowStudentPrint"><spring:message code="StudentPrint" text="?StudentPrint?"/>:</form:label>
     <form:select path="allowStudentPrint">
@@ -97,6 +101,7 @@
 </form:form>
 
 <script type="text/javascript">
+    attachCalendar('assessmentDateCalendar', 'assessmentDate', false);
 
     new Field.Observer('evaluationType', 0.5, showETFields);
     new Field.Observer('exposedResult', 0.5, showERFields);
