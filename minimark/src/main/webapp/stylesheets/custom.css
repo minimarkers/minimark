@@ -339,7 +339,7 @@ span.form-help-text {
 .errorBox {
     display: block;
     color: red;
-    margin-left: 10.5em;
+    margin-left: 15.5em;
 }
 
 .fieldInError {
@@ -352,7 +352,7 @@ textarea.rowEditing {
 }
 
 div.formButtons {
-    margin: 1em 1em 1em 10.5em;
+    margin: 1em 1em 1em 15.5em;
 }
 
 #content .calendar-icon {
