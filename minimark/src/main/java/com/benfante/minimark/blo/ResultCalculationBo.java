@@ -69,8 +69,7 @@ public class ResultCalculationBo {
     public BigDecimal calculateSimpleSum(AssessmentFilling assessment) {
         BigDecimal result = new BigDecimal("0.00");
         for (QuestionFilling questionFilling : assessment.getQuestions()) {
-            result = addQuestionMarkedWeight(questionFilling, result, assessment.getAssessment().
-                    getBlankAnswerWeight());
+            result = addQuestionMarkedWeight(questionFilling, result);
         }
         return result;
     }
@@ -90,8 +89,7 @@ public class ResultCalculationBo {
         }
         BigDecimal result = new BigDecimal("0.00");
         for (QuestionFilling questionFilling : assessment.getQuestions()) {
-            result = addQuestionMarkedWeight(questionFilling, result, assessment.getAssessment().
-                    getBlankAnswerWeight());
+            result = addQuestionMarkedWeight(questionFilling, result);
         }
         final BigDecimal totalWeight = assessment.getTotalWeight();
         if (!BigDecimal.ZERO.equals(totalWeight)) {
@@ -131,18 +129,37 @@ public class ResultCalculationBo {
         }
     }
 
-    private BigDecimal addQuestionMarkedWeight(QuestionFilling questionFilling,
-            BigDecimal result, BigDecimal blankAnswerWeight) {
+    /**
+     * Calculate the weigthed evaluation of a question. It also store this
+     * result in the filled question itself.
+     *
+     * @param questionFilling the question to evaluate.
+     *
+     * @return The weighted evaluation of the question.
+     */
+    public BigDecimal calculateQuestionMarkedWeight(
+            QuestionFilling questionFilling) {
+        BigDecimal result = null;
+        BigDecimal blankAnswerWeight = questionFilling.getAssessmentFilling().
+                getAssessment().getBlankAnswerWeight();
         if (blankAnswerWeight != null && questionFilling.answerIsBlank()) {
-            result = result.add(blankAnswerWeight);
+            result = blankAnswerWeight;
         } else {
             if (questionFilling.getMark() != null) {
                 // result = result + (mark*weight)
-                result =
-                        result.add(questionFilling.getMark().
-                        multiply(questionFilling.getWeight()));
+                result = questionFilling.getMark().multiply(
+                        questionFilling.getWeight());
+            } else {
+                result = new BigDecimal("0.00");
             }
         }
+        questionFilling.setMarkedWeight(result);
+        return result;
+    }
+
+    private BigDecimal addQuestionMarkedWeight(QuestionFilling questionFilling,
+            BigDecimal result) {
+        result = result.add(calculateQuestionMarkedWeight(questionFilling));
         return result;
     }
 
@@ -156,8 +173,7 @@ public class ResultCalculationBo {
             ClosedQuestionFilling closedQuestionFilling, String evaluationType,
             BigDecimal minimumEvaluation) {
         BigDecimal result = new BigDecimal("0.00");
-        if (evaluationType == null ||
-                Assessment.EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS.
+        if (evaluationType == null || Assessment.EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS.
                 equals(evaluationType)) {
             final BigDecimal weightCorrect =
                     closedQuestionFilling.weightCorrectAnswers();

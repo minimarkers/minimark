@@ -46,6 +46,7 @@ public abstract class QuestionFilling extends EntityBase {
     protected String visualization;
     private AssessmentFilling assessmentFilling;
     private BigDecimal mark;
+    private BigDecimal markedWeight;
     private Question originalQuestion;
     private Long ordering;
 
@@ -105,6 +106,14 @@ public abstract class QuestionFilling extends EntityBase {
 
     public void setMark(BigDecimal mark) {
         this.mark = mark;
+    }
+
+    public BigDecimal getMarkedWeight() {
+        return markedWeight;
+    }
+
+    public void setMarkedWeight(BigDecimal markedWeight) {
+        this.markedWeight = markedWeight;
     }
 
     @ManyToOne

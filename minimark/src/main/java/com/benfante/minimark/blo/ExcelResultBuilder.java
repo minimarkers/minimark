@@ -232,7 +232,7 @@ public class ExcelResultBuilder {
         List<QuestionFilling> orderedQuestions = new LinkedList<QuestionFilling>(assessment.getQuestions());
         Collections.sort(orderedQuestions, new QuestionFillingOriginalComparator());
         for (QuestionFilling question : orderedQuestions) {
-            double mark = question.getMark() != null ? question.getMark().
+            double mark = question.getMarkedWeight() != null ? question.getMarkedWeight().
                     doubleValue() : 0.0;
             if (question instanceof ClosedQuestionFilling) {
                 numberCell = new Number(columnNumber, rowNumber, mark,
