@@ -117,14 +117,17 @@ public class AssessmentFillingController {
             FlashHelper.setRedirectError(req, "AssessmentAlreadyStarted");
             if (prevFilling.getSubmittedDate() != null) { // already submitted, return to the resul
                 status.setComplete();
+                logger.info(prevFilling.getLastName()+" "+prevFilling.getFirstName()+" looked at the result of the assessment "+prevFilling.getId()+" (original:"+prevFilling.getAssessment().getId()+")");
                 return "redirect:showResult.html?id=" + prevFilling.getId();
             } else { // return to the filling page
+                logger.info(prevFilling.getLastName()+" "+prevFilling.getFirstName()+" went again to fill the assessment "+prevFilling.getId()+" (original:"+prevFilling.getAssessment().getId()+")");
                 return "redirect:fill.html";
             }
         } else {
             assessmentFilling.setLoggedIn(Boolean.TRUE);
             assessmentFilling.setStartDate(new Date());
             assessmentFillingDao.store(assessmentFilling);
+            logger.info(assessmentFilling.getLastName()+" "+assessmentFilling.getFirstName()+" logged in assessment "+assessmentFilling.getId()+" (original:"+assessmentFilling.getAssessment().getId()+")");
             return "redirect:fill.html";
         }
     }
@@ -146,6 +149,7 @@ public class AssessmentFillingController {
         assessmentFilling.setSubmittedDate(new Date());
         resultCalculationBo.calculate(assessmentFilling);
         status.setComplete();
+        logger.info(assessmentFilling.getLastName()+" "+assessmentFilling.getFirstName()+" stored the assessment "+assessmentFilling.getId()+" (original:"+assessmentFilling.getAssessment().getId()+")");
         return "redirect:showResult.html?id=" + assessmentFilling.getId();
     }
 
