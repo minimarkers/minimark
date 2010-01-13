@@ -274,6 +274,37 @@ public class ResultCalculationBoTest extends MinimarkBaseTest {
         assertEquals(new BigDecimal("-0.25"), question.getMark());
     }
 
+    public void testEvaluateClosedQuestion8() {
+        Assessment assessment = new Assessment();
+        assessment.setEvaluationClosedType(Assessment.EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS);
+        AssessmentFilling assessmentFilling = new AssessmentFilling();
+        assessmentFilling.setAssessment(assessment);
+        ClosedQuestionFilling question = new ClosedQuestionFilling();
+        question.setAssessmentFilling(assessmentFilling);
+        question.setWeight(null);
+        List<FixedAnswerFilling> fixedAnswers =
+                new LinkedList<FixedAnswerFilling>();
+        FixedAnswerFilling fixedAnswer = new FixedAnswerFilling();
+        fixedAnswer.setWeight(null);
+        fixedAnswer.setCorrect(Boolean.TRUE);
+        fixedAnswer.setSelected(Boolean.FALSE);
+        fixedAnswers.add(fixedAnswer);
+        fixedAnswer = new FixedAnswerFilling();
+        fixedAnswer.setWeight(null);
+        fixedAnswer.setCorrect(Boolean.FALSE);
+        fixedAnswer.setSelected(Boolean.FALSE);
+        fixedAnswers.add(fixedAnswer);
+        fixedAnswer = new FixedAnswerFilling();
+        fixedAnswer.setWeight(null);
+        fixedAnswer.setCorrect(Boolean.FALSE);
+        fixedAnswer.setSelected(Boolean.FALSE);
+        fixedAnswers.add(fixedAnswer);
+        question.setFixedAnswers(fixedAnswers);
+        resultCalculationBo.evaluateQuestion(question, BigDecimal.valueOf(-0.25));
+        assertNotNull(question.getMark());
+        assertEquals(new BigDecimal("0.00"), question.getMark());
+    }
+
     public void testEvaluateBlankClosedQuestion() {
         Assessment assessment = new Assessment();
         assessment.setEvaluationClosedType(Assessment.EVALUATION_CLOSED_SUM_CORRECT_MINUS_WRONG_ANSWERS);

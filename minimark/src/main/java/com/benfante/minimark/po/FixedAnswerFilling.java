@@ -26,12 +26,13 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.parancoe.persistence.po.hibernate.EntityBase;
 
 /**
- * A fixed answer
+ * A fixed answer.
  *
  * @author lucio
  */
 @Entity
 public class FixedAnswerFilling extends EntityBase {
+
     protected String content;
     protected String contentFilter;
     protected BigDecimal weight;
@@ -107,4 +108,9 @@ public class FixedAnswerFilling extends EntityBase {
         return TextFilterUtils.formatText(this.content, this.contentFilter);
     }
 
+    @Transient
+    public BigDecimal getNotNullWeight() {
+        // return this.getWeight();
+        return this.getWeight() != null ? this.getWeight() : BigDecimal.ZERO;
+    }
 }

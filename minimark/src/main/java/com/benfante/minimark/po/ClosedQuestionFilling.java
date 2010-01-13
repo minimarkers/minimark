@@ -80,7 +80,7 @@ public class ClosedQuestionFilling extends QuestionFilling {
         BigDecimal result = BigDecimal.ZERO;
         for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
             if (fixedAnswer.getCorrect() != null && fixedAnswer.getCorrect()) {
-                result = result.add(fixedAnswer.getWeight());
+                result = result.add(fixedAnswer.getNotNullWeight());
             }
         }
         return result;
@@ -91,7 +91,7 @@ public class ClosedQuestionFilling extends QuestionFilling {
         for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
             if ((fixedAnswer.getCorrect() != null && fixedAnswer.getCorrect())
                     && (fixedAnswer.getSelected() != null && fixedAnswer.getSelected())) {
-                result = result.add(fixedAnswer.getWeight());
+                result = result.add(fixedAnswer.getNotNullWeight());
             }
         }
         return result;
@@ -101,7 +101,7 @@ public class ClosedQuestionFilling extends QuestionFilling {
         BigDecimal result = BigDecimal.ZERO;
         for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
             if (fixedAnswer.getCorrect() == null || !fixedAnswer.getCorrect()) {
-                result = result.add(fixedAnswer.getWeight());
+                result = result.add(fixedAnswer.getNotNullWeight());
             }
         }
         return result;
@@ -112,7 +112,7 @@ public class ClosedQuestionFilling extends QuestionFilling {
         for (FixedAnswerFilling fixedAnswer : getFixedAnswers()) {
             if ((fixedAnswer.getCorrect() == null || !fixedAnswer.getCorrect())
                     && (fixedAnswer.getSelected() != null && fixedAnswer.getSelected())) {
-                result = result.add(fixedAnswer.getWeight());
+                result = result.add(fixedAnswer.getNotNullWeight());
             }
         }
         return result;

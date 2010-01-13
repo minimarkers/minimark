@@ -39,6 +39,10 @@
         </property>
     </bean>
 
+    <!--  override bean definition in parancoe-servlet.xml  -->
+    <!-- sends exceptions to genericError.jsp -->
+    <bean id="exceptionResolver" class="com.benfante.minimark.MinimarkExceptionResolver" autowire="byType"/>
+
     <!-- begin security section -->
     <bean name="pluginSecurityFilterDefinitions" class="java.lang.String">
         <constructor-arg>
