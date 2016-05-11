@@ -28,6 +28,7 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("OpenQuestion")
 public class OpenQuestion extends Question {
+
     public static final String VISUALIZATION_LONG = "long";
     public static final String VISUALIZATION_SHORT = "short";
 
@@ -40,4 +41,19 @@ public class OpenQuestion extends Question {
     public void setAnswerMaxLength(Integer answerMaxLength) {
         this.answerMaxLength = answerMaxLength;
     }
+    
+    @Override
+    public String toExportedForm() {
+        StringBuilder result = new StringBuilder(super.toExportedForm());
+        result.append("d|").append(this.getId()).append('|');
+        if (VISUALIZATION_LONG.equals(this.getVisualization())) {
+            result.append("A|");
+        } else {
+            result.append("T|");
+        }
+        result.append("u|");
+        result.append(this.getFilteredContent()).append('\n');
+        return result.toString();
+    }
+    
 }

@@ -57,6 +57,7 @@ public class CourseController {
 
     public static final String COURSE_ATTR_NAME = "course";
     public static final String IMPORT_QUESTIONS_ATTR_NAME = "importQuestions";
+    public static final String EXPORTED_QUESTIONS_ATTR_NAME = "exportedQuestions";
     public static final String EDIT_VIEW = "course/edit";
     public static final String LIST_VIEW = "course/list";
     @Resource
@@ -140,6 +141,20 @@ public class CourseController {
         model.addAttribute(IMPORT_QUESTIONS_ATTR_NAME, new ImportQuestionsBean());
     }
 
+    @RequestMapping
+    public String exportQuestions(@RequestParam("courseId") Long id, Model model) {
+        String result = "";
+        Course course = courseDao.get(id);
+        if (course == null) {
+            throw new RuntimeException("Course not found");
+        }
+        userProfileBo.checkEditAuthorization(course);
+        result = importerBo.exportCourseQuestions(course);
+        model.addAttribute(COURSE_ATTR_NAME, course);
+        model.addAttribute(EXPORTED_QUESTIONS_ATTR_NAME, result);
+        return "course/exportQuestions";
+    }
+    
     @RequestMapping
     public String doImportQuestions(
             @ModelAttribute(COURSE_ATTR_NAME) Course course, @ModelAttribute(

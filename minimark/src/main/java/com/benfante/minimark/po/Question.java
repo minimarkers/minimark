@@ -182,4 +182,13 @@ public class Question extends EntityBase {
         return TextFilterUtils.formatText(this.content, this.contentFilter);
     }
 
+    public String toExportedForm() {
+        StringBuilder result = new StringBuilder();
+        result.append("c ==============\n");
+        result.append("c id: ").append(this.getId()).append('\n');
+        result.append("c title: ").append(this.getTitle()).append('\n');
+        result.append("c type: ").append(this.getTypeCode()).append('\n');
+        result.append("c ==============\n\n");
+        return result.toString();
+    }
 }

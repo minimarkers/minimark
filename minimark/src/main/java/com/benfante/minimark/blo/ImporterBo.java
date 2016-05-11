@@ -244,4 +244,13 @@ public class ImporterBo {
             questionDao.store(question);
         }
     }
+
+    public String exportCourseQuestions(Course course) {
+        StringBuilder result = new StringBuilder();
+        for (Question question : course.getQuestions()) {
+            result.append(question.toExportedForm());
+            result.append("\n");
+        }
+        return result.toString();
+    }
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<%--
 
     Copyright (C) 2009 Lucio Benfante <lucio.benfante@gmail.com>
 
@@ -17,18 +16,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
--->
-<Context path="/minimark" reloadable="true">
-  <!--
-    <Resource
-        auth="Container"
-        name="jdbc/minimarkDS"
-        type="javax.sql.DataSource"
-        driverClassName="org.hsqldb.jdbcDriver"
-        password=""
-        username="sa"
-        url="jdbc:hsqldb:mem:minimark"
-        maxActive="5"/>
-   -->
-  <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="25" name="jdbc/minimarkDS" password="minimarkPwd1" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/minimark" username="minimark"/>
-</Context>
+--%>
+<%@ include file="/WEB-INF/jsp/common.jspf" %>
+<h3><spring:message code="ExportQuestionInCourse" text="?ExportQuestionInCourse?"/></h3>
+<p><spring:message code="ExportQuestionInCourseMessage" text="?ExportQuestionInCourseMessage?" arguments="${course.name}" argumentSeparator="|"/></p>
+<pre>
+<c:out value="${exportedQuestions}" escapeXml="true"/>
+</pre>

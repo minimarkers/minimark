@@ -56,4 +56,27 @@ public class ClosedQuestion extends Question {
         }
         return (count > 1);
     }
+    
+    @Override
+    public String toExportedForm() {
+        StringBuilder result = new StringBuilder(super.toExportedForm());
+        result.append("d|").append(this.getId()).append('|');
+        if (isMultipleAnswer()) {
+            result.append("C|");
+        } else {
+            result.append("R|");
+        }
+        result.append("s|");
+        result.append(this.getFilteredContent()).append('\n');
+        for (FixedAnswer fixedAnswer : this.getFixedAnswers()) {
+            if (Boolean.TRUE.equals(fixedAnswer.getCorrect())) {
+                result.append("y|");
+            } else {
+                result.append("n|");
+            }
+            result.append(fixedAnswer.getFilteredContent()).append('\n');
+        }
+        return result.toString();
+    }
+    
 }
