@@ -23,12 +23,17 @@ import com.benfante.minimark.blo.UserProfileBo;
 import com.benfante.minimark.dao.CourseDao;
 import com.benfante.minimark.po.Course;
 import com.benfante.minimark.po.Question;
+import com.benfante.minimark.util.Utilities;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringReader;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 import org.parancoe.web.util.FlashHelper;
 import org.parancoe.web.validation.Validation;
 import org.springframework.context.MessageSource;
@@ -55,9 +60,9 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
     CourseController.IMPORT_QUESTIONS_ATTR_NAME})
 public class CourseController {
 
+    private static final Logger logger = Logger.getLogger(CourseController.class);
     public static final String COURSE_ATTR_NAME = "course";
     public static final String IMPORT_QUESTIONS_ATTR_NAME = "importQuestions";
-    public static final String EXPORTED_QUESTIONS_ATTR_NAME = "exportedQuestions";
     public static final String EDIT_VIEW = "course/edit";
     public static final String LIST_VIEW = "course/list";
     @Resource
@@ -142,7 +147,7 @@ public class CourseController {
     }
 
     @RequestMapping
-    public String exportQuestions(@RequestParam("courseId") Long id, Model model) {
+    public void exportQuestions(@RequestParam("courseId") Long id, HttpServletRequest req, HttpServletResponse res) {
         String result = "";
         Course course = courseDao.get(id);
         if (course == null) {
@@ -150,9 +155,31 @@ public class CourseController {
         }
         userProfileBo.checkEditAuthorization(course);
         result = importerBo.exportCourseQuestions(course);
-        model.addAttribute(COURSE_ATTR_NAME, course);
-        model.addAttribute(EXPORTED_QUESTIONS_ATTR_NAME, result);
-        return "course/exportQuestions";
+        OutputStream out = null;
+        try {
+            byte[] contentBytes = result.getBytes("UTF-8");
+            out = res.getOutputStream();
+            res.setContentType("text/plain");
+            res.setContentLength(contentBytes.length);
+            res.setHeader("Content-Disposition",
+                    " attachment; filename=\"" + course.getName() + "_questions.txt\"");
+            res.setHeader("Expires", "0");
+            res.setHeader("Cache-Control",
+                    "must-revalidate, post-check=0, pre-check=0");
+            res.setHeader("Pragma", "public");
+            out.write(contentBytes);
+            out.flush();
+        } catch (Exception ex) {
+            logger.error("Can't export questions for course " +
+                    course.getName() + " (" + course.getId() + ")", ex);
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ioe) {
+                }
+            }
+        }
     }
     
     @RequestMapping
